@@ -1,5 +1,6 @@
 import React from "react";
 import pharmaco from "../Images/pharmaco.webp";
+import "./Welcome.css";
 
 const Welcome = () => {
   return (
