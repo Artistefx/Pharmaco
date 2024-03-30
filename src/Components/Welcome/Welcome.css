@@ -1,0 +1,49 @@
+.WelcomeImg {
+    text-align: center; 
+  }
+  
+  .ImageContainer {
+    margin-top: 20px;
+    margin-bottom: 20px; 
+  }
+  
+  .ImageContainer img {
+    width: 1300px; 
+    height: 500px;
+    object-fit: cover;
+  }
+  
+  .ButtonContainer {
+    display: flex;
+    justify-content: center; 
+    gap: 40px; 
+  }
+  
+  .ButtonContainer a {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    width: 250px;
+    height: 40px;
+  }
+  
+  
+  .WelcomeImg a {
+    background: #f6f1eb;
+    color: #333333;
+    padding: 10px 20px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  
+  .WelcomeImg a:hover {
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+  }
