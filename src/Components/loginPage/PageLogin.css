@@ -5,6 +5,7 @@
     justify-content: center;
     height: 100vh;
     background: #e0eafc; /* Arrière-plan bleu clair basé sur l'image fournie */
+    
 }
 
 .videoContainer {
@@ -67,33 +68,48 @@
 }
 
 .inputGroup {
-    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 30px; /* Bordures arrondies pour les champs de saisie */
+    padding: 0.5rem;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 .inputGroup input {
-    width: calc(100% - 20px);
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    margin-top: 8px;
-    outline: none;
+    flex: 1; /* Prendre l'espace restant */
+    height: 40px; /* Hauteur fixe pour une taille cohérente */
+    border: none; /* Supprimer la bordure par défaut */
+    margin-left: 1rem; /* Espace après l'icône */
+    font-size: 1rem; /* Taille de police réactive */
+    outline: none; /* Supprimer le contour de mise en évidence */
 }
 
-.loginButton, .googleSignInButton {
-    padding: 10px;
-    margin-top: 1rem;
-    border: none;
-    border-radius: 10px;
-    background-color: #4C9AFF;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    width: calc(100% - 20px);
+.inputIcon {
+    min-width: 24px; /* Ensure icons don't shrink */
+    color: #7a7a7a; /* Icon color */
 }
+.loginButton, .googleSignInButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem; /* Espace entre l'icône et le texte */
+    height: 50px; /* Hauteur fixe pour taper facilement sur les appareils tactiles */
+    font-size: 1rem;
+    transition: background-color 0.3s; /* Transition en douceur de la couleur de fond au survol */
+    background-color: #4C9AFF; /* Couleur bleue d'origine */
+
+}
+
+.loginButton span, .googleSignInButton span {
+    display: block; /* Ensures proper spacing */
+}
+
+
 
 .loginButton:hover, .googleSignInButton:hover {
-    background-color: #3578E5;
-}
+    background-color: #3578E5; /* Couleur au survol */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Effet de soulèvement au survol */}
 
 .separator {
     font-size: 0.9rem;
@@ -117,7 +133,7 @@
     align-self: flex-end;
 }
 
-@media (max-width: 680px) {
+@media (max-width: 768px) {
     .loginPage {
         flex-direction: column;
     }
@@ -132,5 +148,14 @@
         top: 10%;
         left: 50%;
         transform: translate(-50%, -50%);
+    }
+
+    .loginForm {
+        width: auto;
+        padding: 0 2rem; /* Padding instead of margin for better edge spacing */
+    }
+    
+    .inputGroup input, .loginButton, .googleSignInButton {
+        font-size: 0.9rem; /* Slightly smaller font on small devices */
     }
 }
