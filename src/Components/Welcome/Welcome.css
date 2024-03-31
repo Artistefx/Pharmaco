@@ -1,5 +1,7 @@
 .WelcomeImg {
     text-align: center; 
+    background-color: beige;
+    padding-bottom: 10px;
   }
   
   .ImageContainer {
@@ -16,7 +18,9 @@
   .ButtonContainer {
     display: flex;
     justify-content: center; 
-    gap: 40px; 
+    gap: 40px;
+    margin-top: 35px;
+    margin-bottom: 35px;
   }
   
   .ButtonContainer a {
@@ -29,7 +33,7 @@
   
   
   .ButtonContainer a {
-    background: #f0f2e6;
+    background: #4C9AFF;
     color: #333333;
     padding: 10px 20px;
     border: none;
@@ -56,7 +60,7 @@
   .welcome-offer {
     border-radius: 20px;
     width: 24%;
-    background-color: #F0F2E6 !important;
+    background-color: #4C9AFF !important;
     cursor: pointer;
   }
   
@@ -84,6 +88,7 @@
     margin: 10px 0;
     color: #000000;
     font-size: 23px;
+    text-transform: uppercase;
   }
   
   .offer-description {
@@ -109,4 +114,17 @@
     font-size: 12px;
     padding: 3px 5px;
     font-weight: 700;
-  } 
+  }
+
+  .NouveautContainer{
+    padding-top: 30px;
+    padding-bottom: 30px;
+    max-width: 80%;
+    margin: auto;
+  }
+
+  .NouveautContainer h2{
+    text-align: center;
+    margin-bottom: 10px;
+    color: #fff;
+  }
