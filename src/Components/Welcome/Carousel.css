@@ -84,12 +84,12 @@
 
   .slick-dots li button:before {
     font-size: 12px; /* This increases the size of the dots */
-    color: white; /* This changes the color of the dots to white */
+    color: rgb(0, 0, 0); /* This changes the color of the dots to white */
 }
 
 /* Style for active dot */
 .slick-dots li.slick-active button:before {
-    color: white !important; /* Ensures the active dot is also white */
+    color: rgb(0, 0, 0) !important; /* Ensures the active dot is also white */
 }
 
 /* Optionally, if you want to increase the spacing around the dots */
