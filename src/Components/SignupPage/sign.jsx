@@ -19,15 +19,15 @@ function Sign() {
        
         <div className="div">
         
-          <input type='text' name='nom' id='nom' value="First name"  /><br/>
+          <input type='text' name='nom' id='nom' placeholder="First name"  /><br/>
         </div>
         <div className="div">
           
-          <input type='text' name='prenom' id='prenom' value="Last name" /><br/>
+          <input type='text' name='prenom' id='prenom' placeholder="Last name" /><br/>
         </div>
         <div className="div">
               
-          <input type='email' name='email' id='Email' value="Email" required /><br/>
+          <input type='email' name='email' id='Email' placeholder="Email" required /><br/>
         </div>
         <div className="div">
              
@@ -39,7 +39,7 @@ function Sign() {
         </div>
         <div className="div">
             
-          <input type='tel' name='tel' id='tel' required value="Phone number" /><br/>
+          <input type='tel' name='tel' id='tel' required placeholder="Phone number" /><br/>
         </div>
         <div>
         <br/>
