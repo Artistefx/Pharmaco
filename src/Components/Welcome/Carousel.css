@@ -5,7 +5,7 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     margin: 15px; /* Adjust as needed to create space between the cards */
     padding: 20px;
-    font-family: 'Arial', sans-serif; /* Use a modern font */
+    font-family: Montserrat, sans-serif; /* Use a modern font */
     display: flex;
     flex-direction: column;
     align-items: center;
