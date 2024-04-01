@@ -1,10 +1,10 @@
 import './App.css';
-import Sign from './Components/SignupPage/sign.jsx';
+import Welcome from './Components/Welcome/Welcome';
 
 function App() {
   return (
     <div className="App">
-      <Sign />
+      <Welcome />
     </div>
   );
 }
