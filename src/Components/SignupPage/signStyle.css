@@ -19,14 +19,13 @@
   
   }
   .form-frame {
-    border: 5px solid hwb(129 5% 84%);
+    border: 5px solid #ffcc00;
     border-radius: 5px;
     padding: 20px;
     margin-bottom: 20px;
     margin-top: 20px;
     justify-content: center;
-    font-family: Verdana, Arial, Helvetica, sans-serif;; 
-    
+    font-family: Verdana, Arial, Helvetica, sans-serif;
     }
   
   
