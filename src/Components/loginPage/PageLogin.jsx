@@ -44,10 +44,10 @@ function PageLogin() {
                 </div>
                 <h1 className='loginTitle'>Welcome to Pharmaco</h1>
                 <form className='loginForm'>
-                    <div className="inputGroup">
-                        <MdOutlineAlternateEmail className='inputIcon' />
-                        <input type="email" placeholder='User name or Email' />
-                    </div>
+                <div className="inputGroup">
+    <MdOutlineAlternateEmail className='inputIcon' />
+    <input type="email" placeholder='User name or Email' className='loginInput' /> {/* Added className for styling */}
+</div>
                     <div className="inputGroup">
                         <MdLockOutline className='inputIcon' />
                         <input type='password' placeholder='Password' />
