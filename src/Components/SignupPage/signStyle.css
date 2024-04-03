@@ -19,7 +19,7 @@
   
   }
   .form-frame {
-    border: 5px solid hwb(129 5% 84%);
+    border: 5px solid #ffcc00;
     border-radius: 5px;
     padding: 20px;
     margin-bottom: 20px;
@@ -50,7 +50,7 @@
   
   
   .additional-container{
-    background-image: url(/image/pharma4.jpg); 
+    background-image: url(./images/pharma4.jpg); 
       background-size:   cover;   
       background-position: center; 
   }
