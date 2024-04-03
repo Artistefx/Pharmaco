@@ -68,8 +68,7 @@ const ProductDisplay = () => {
           </div>
         </div>
         <div className="productdisplay-right-buttons">
-          <button className="productdisplay-right-button-add">Ajouter au panier</button>
-          <button className="productdisplay-right-button-buy">Acheter</button>
+          <button>Ajouter au panier</button>
         </div>
       </div>
     </div>
