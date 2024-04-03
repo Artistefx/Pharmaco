@@ -5,7 +5,6 @@
   }
   
   .ImageContainer {
-    margin-top: 20px;
     margin-bottom: 20px; 
   }
   
@@ -47,10 +46,15 @@
     text-decoration: none;
   }
 
+  .OffreContainer1{
+    padding-bottom: 30px;
+    background-color: #000000;
+  }
+
   .OffreContainer{
     display: flex;
     justify-content: space-between;
-    max-width: 73.8%;
+    max-width: 80%;
     margin: auto;
     margin-top: 25px;
     gap: 20px;
@@ -130,7 +134,7 @@
     color: #000000;
   }
 
-  .ComitementContainer1 h2{
+  .ComitementContainer1 h2 , .OffreContainer1 h2{
     padding-top: 30px;
     text-align: center;
     margin-bottom: 10px;

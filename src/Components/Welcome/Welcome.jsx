@@ -71,6 +71,9 @@ const Welcome = () => {
           <a href="http://localhost:3000/">suppléments</a>
           <a href="http://localhost:3000/">Equipement</a>
         </div>
+      </div>
+      <div className="OffreContainer1">
+        <h2>Nos Offres Du Mois</h2>
         <div className="OffreContainer">
           <WelcomeOffer
             link="http://localhost:3000/"

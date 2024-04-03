@@ -1,0 +1,117 @@
+.ProductDisplay {
+  margin-top: 60px;
+  display: flex;
+}
+
+.productdisplay-left {
+  display: flex;
+  gap: 17px;
+  width: 32%;
+  margin-left: 60px;
+}
+
+.productdisplay-img-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.productdisplay-img-list img {
+  height: 63px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.3s ease; /* Smooth transition for scaling */
+  border: 2px solid transparent; /* Transparent border added */
+  box-sizing: border-box; /* Ensures the border is included in the element's dimensions */
+}
+
+.productdisplay-img-list img:hover {
+    border: 2px solid #ff4141; /* Border color changes on hover */
+    transform: scale(1.05); /* Slightly enlarges the hovered image */
+  }
+
+.productdisplay-main-img {
+  width: 400px;
+  height: 400px;
+}
+
+.productdisplay-right {
+  width: 68%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-left: 60px;
+}
+
+.productdisplay-right h1 {
+  color: #3d3d3d;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.productdisplay-right-prices {
+  display: flex;
+  gap: 30px;
+  margin-top: 40px 0px;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.productdisplay-right-price-old {
+  color: #818181;
+  text-decoration: line-through;
+}
+
+.productdisplay-right-price-new {
+  color: #ff4141;
+}
+
+.productdisplay-right-quantite h3 {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  color: #656565;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.productdisplay-right-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.productdisplay-right-buttons button {
+  padding: 20px 40px;
+  width: 230px;
+  height: 60px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  background-color: #ff4141;
+  margin-bottom: 40px;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+.productdisplay-right-buttons button:hover {
+  background-color: #ff0000;
+}
+
+.productdisplay-right-quantite-selector {
+  display: flex;
+  align-items: center;
+}
+
+.productdisplay-right-quantite-selector button {
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  color: white;
+  background-color: #000000;
+  margin: 0 10px;
+}
+
+.productdisplay-right-quantite-selector span {
+  font-size: 18px;
+}
