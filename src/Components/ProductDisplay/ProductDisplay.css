@@ -1,9 +1,11 @@
 .ProductDisplay {
   margin-top: 60px;
   display: flex;
+  background-color: antiquewhite;
 }
 
 .productdisplay-left {
+  margin-top: 40px;
   display: flex;
   gap: 17px;
   width: 32%;
@@ -26,9 +28,9 @@
 }
 
 .productdisplay-img-list img:hover {
-    border: 2px solid #ff4141; /* Border color changes on hover */
-    transform: scale(1.05); /* Slightly enlarges the hovered image */
-  }
+  border: 2px solid #ff4141; /* Border color changes on hover */
+  transform: scale(1.05); /* Slightly enlarges the hovered image */
+}
 
 .productdisplay-main-img {
   width: 400px;
@@ -39,7 +41,7 @@
   width: 68%;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
   margin-left: 60px;
 }
 
@@ -67,7 +69,6 @@
 }
 
 .productdisplay-right-quantite h3 {
-  margin-top: 25px;
   margin-bottom: 25px;
   color: #656565;
   font-size: 20px;
