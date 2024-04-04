@@ -1,7 +1,7 @@
 .ProductDisplay {
   margin-top: 60px;
   display: flex;
-  background-color: antiquewhite;
+  background-color: rgb(255, 255, 255);
 }
 
 .productdisplay-left {
