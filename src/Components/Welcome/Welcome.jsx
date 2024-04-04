@@ -1,5 +1,5 @@
 import React from "react";
-import pharmaco from "./Assets/pharmaco.webp";
+/* import pharmaco from "./Assets/pharmaco.webp"; */
 import WelcomeOffer from "./WelcomeOffer";
 import "./Welcome.css";
 import suplement from "./Assets/Suplement.jpg";
@@ -9,6 +9,7 @@ import comm3 from "./Assets/commitement3.webp";
 import comm4 from "./Assets/commitement4.webp";
 import Carousel from "./Carousel";
 import AnimatedCard from "./AnimatedCard";
+import ShuffleHero from "./ShuffleHero";
 
 const items = [
   {
@@ -61,16 +62,8 @@ const items = [
 const Welcome = () => {
   return (
     <div className="Welcome">
-      <div className="WelcomeImg">
-        <div className="ImageContainer">
-          <img src={pharmaco} alt="pharmaco" />
-        </div>
-        <div className="ButtonContainer">
-          <a href="http://localhost:3000/">Antibiotiques</a>
-          <a href="http://localhost:3000/">Anti-inflammatoires</a>
-          <a href="http://localhost:3000/">suppléments</a>
-          <a href="http://localhost:3000/">Equipement</a>
-        </div>
+      <div className="hero">
+        <ShuffleHero />
       </div>
       <div className="OffreContainer1">
         <h2>Nos Offres Du Mois</h2>
