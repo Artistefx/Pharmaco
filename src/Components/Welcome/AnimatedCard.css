@@ -1,0 +1,72 @@
+.animated-card {
+    position: relative;
+    width: 280px;
+    height: 450px;
+    overflow: hidden;
+    border-radius: 8px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.card-details {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 0.5s ease, background-color 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.card-title, .card-description {
+    transition: transform 0.5s ease, color 0.3s ease;
+}
+
+.card-title {
+    margin: 0 0 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #FFF;
+}
+
+.card-description {
+    font-size: 16px;
+    margin: 0 0 20px;
+    color: #DDD;
+}
+
+.card-button {
+    display:inline-block;
+    padding: 10px 20px;
+    background-color: #000000;
+    color: white;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background-color 0.3s;
+    width: 70%;
+}
+
+.card-button:hover {
+    background-color: #121518;
+}
+
+.animated-card:hover .card-image img {
+    opacity: 0.3;
+}
+
+.animated-card:hover .card-details,
+.animated-card:hover .card-title,
+.animated-card:hover .card-description,
+.animated-card:hover .card-button {
+    opacity: 1;
+    transform: translateY(0);
+}

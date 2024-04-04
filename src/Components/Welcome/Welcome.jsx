@@ -1,9 +1,15 @@
 import React from "react";
-import pharmaco from "./Assets/pharmaco.webp";
+/* import pharmaco from "./Assets/pharmaco.webp"; */
 import WelcomeOffer from "./WelcomeOffer";
 import "./Welcome.css";
 import suplement from "./Assets/Suplement.jpg";
+import comm1 from "./Assets/commitement1.webp";
+import comm2 from "./Assets/commitement2.webp";
+import comm3 from "./Assets/commitement3.webp";
+import comm4 from "./Assets/commitement4.webp";
 import Carousel from "./Carousel";
+import AnimatedCard from "./AnimatedCard";
+import ShuffleHero from "./ShuffleHero";
 
 const items = [
   {
@@ -56,16 +62,11 @@ const items = [
 const Welcome = () => {
   return (
     <div className="Welcome">
-      <div className="WelcomeImg">
-        <div className="ImageContainer">
-          <img src={pharmaco} alt="pharmaco" />
-        </div>
-        <div className="ButtonContainer">
-          <a href="http://localhost:3000/">Antibiotiques</a>
-          <a href="http://localhost:3000/">Anti-inflammatoires</a>
-          <a href="http://localhost:3000/">suppléments</a>
-          <a href="http://localhost:3000/">Equipement</a>
-        </div>
+      <div className="hero">
+        <ShuffleHero />
+      </div>
+      <div className="OffreContainer1">
+        <h2>Nos Offres Du Mois</h2>
         <div className="OffreContainer">
           <WelcomeOffer
             link="http://localhost:3000/"
@@ -98,8 +99,33 @@ const Welcome = () => {
         </div>
       </div>
       <div className="NouveautContainer">
-        <h2>Nos Nouveautés</h2>
+        <h2>Nos Réductions</h2>
         <Carousel items={items} />
+      </div>
+      <div className="ComitementContainer1">
+        <h2>Nos Engagements</h2>
+        <div className="ComitementContainer">
+          <AnimatedCard
+            title="Conseils Professionnels"
+            description="Conseils de santé par des pharmaciens qualifiés."
+            image={comm1}
+          />
+          <AnimatedCard
+            title="Confidentialité et Sécurité"
+            description=" Protection rigoureuse de vos données personnelles."
+            image={comm2}
+          />
+          <AnimatedCard
+            title="Livraison Rapide"
+            description="Vos produits de santé livrés rapidement."
+            image={comm3}
+          />
+          <AnimatedCard
+            title="Service Client"
+            description="Assistance attentive et réactive pour vous."
+            image={comm4}
+          />
+        </div>
       </div>
     </div>
   );
