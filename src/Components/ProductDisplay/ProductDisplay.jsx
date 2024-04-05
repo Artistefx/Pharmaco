@@ -11,7 +11,7 @@ const ProductDisplay = () => {
 
   const handleImageClick = (e) => {
     setSource(e.target.src);
-  }
+  };
 
   const handleIncrease = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
@@ -20,14 +20,19 @@ const ProductDisplay = () => {
   const handleDecrease = () => {
     setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
   };
+
+  const handleAddToCart = () => {
+    console.log("Added to cart");
+  };
+
   return (
     <div className="ProductDisplay">
       <div className="productdisplay-left">
         <div className="productdisplay-img-list">
           <img src={source1} alt="" onClick={handleImageClick} />
-          <img src={source2} alt="" onClick={handleImageClick}/>
-          <img src={source3} alt="" onClick={handleImageClick}/>
-          <img src={source4} alt="" onClick={handleImageClick}/>
+          <img src={source2} alt="" onClick={handleImageClick} />
+          <img src={source3} alt="" onClick={handleImageClick} />
+          <img src={source4} alt="" onClick={handleImageClick} />
         </div>
         <div className="productdisplay-img">
           <img className="productdisplay-main-img" src={source} alt="" />
@@ -39,36 +44,39 @@ const ProductDisplay = () => {
           <div className="productdisplay-right-price-old">100$</div>
           <div className="productdisplay-right-price-new">90$</div>
         </div>
-        <div className="productdisplay-right-description">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-          malesuada, odio ac vestibulum bibendum, nunc nisi tincidunt metus,
-          eget tempor purus felis nec justo. Sed nec ex nec eros pharetra
-          accumsan.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-          malesuada, odio ac vestibulum bibendum, nunc nisi tincidunt metus,
-          eget tempor purus felis nec justo. Sed nec ex nec eros pharetra
-          accumsan.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-          malesuada, odio ac vestibulum bibendum, nunc nisi tincidunt metus,
-          eget tempor purus felis nec justo. Sed nec ex nec eros pharetra
-          accumsan.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-          malesuada, odio ac vestibulum bibendum, nunc nisi tincidunt metus,
-          eget tempor purus felis nec justo. Sed nec ex nec eros pharetra
-          accumsan.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-          malesuada, odio ac vestibulum bibendum, nunc nisi tincidunt metus,
-          eget tempor purus felis nec justo. Sed nec ex nec eros pharetra
-          accumsan.
+        <div className="productdisplay-right-description mb-3">
+          <div>
+            <h3 className="inline-block">Catégorie : </h3>
+            <p className="inline-block ml-5"> category </p>
+          </div>
+          <div>
+            <h3 className="inline-block">Fournisseur : </h3>
+            <p className="inline-block ml-5"> Fournisseur </p>
+          </div>
+          <div className="flex items-center">
+            <h3 className="text-center text-nowrap">Description : </h3>
+            <p className="ml-5">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam quod, quae quia
+            </p>
+          </div>
+          <div>
+            <h3 className="inline-block">Quantité en stock : </h3>
+            <p className="inline-block ml-5"> 10 </p>
+          </div>
         </div>
-        <div className="productdisplay-right-quantite">
-            <h3>Sélectionner Quantité :</h3>
-          <div className="productdisplay-right-quantite-selector">
+        <div className="productdisplay-right-quantite flex items-center">
+          <h3>Sélectionner Quantité :</h3>
+          <div className="productdisplay-right-quantite-selector ml-5">
             <button onClick={handleDecrease}>-</button>
             <span>{quantity}</span>
             <button onClick={handleIncrease}>+</button>
           </div>
         </div>
-        <div className="productdisplay-right-buttons">
-          <button>Ajouter au panier</button>
+        <div className="mt-3">
+          {quantity > 0 && quantity < 10 ? <p className="text-green-500">En stock</p> : <p className="text-red-500">En rupture de stock</p>}
+        </div>
+        <div className="productdisplay-right-buttons mt-4">
+          {quantity > 0 && quantity < 10 ? <button onClick={handleAddToCart}>Ajouter au panier</button> : null }
         </div>
       </div>
     </div>
