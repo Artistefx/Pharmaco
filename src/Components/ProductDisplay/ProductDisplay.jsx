@@ -5,7 +5,7 @@ import source3 from "./Assets/commitement3.webp";
 import source4 from "./Assets/commitement4.webp";
 import "./ProductDisplay.css";
 
-const ProductDisplay = () => {
+const ProductDisplay = (props) => {
   const [quantity, setQuantity] = useState(1);
   const [source, setSource] = useState(source1);
 
@@ -39,29 +39,29 @@ const ProductDisplay = () => {
         </div>
       </div>
       <div className="productdisplay-right">
-        <h1>product name</h1>
+        <h1>{props.product.name}</h1>
         <div className="productdisplay-right-prices">
-          <div className="productdisplay-right-price-old">100$</div>
-          <div className="productdisplay-right-price-new">90$</div>
+          <div className="productdisplay-right-price-old">{props.product.oldPrice}DH</div>
+          <div className="productdisplay-right-price-new">{props.product.newPrice}DH</div>
         </div>
         <div className="productdisplay-right-description mb-3">
           <div>
             <h3 className="inline-block">Catégorie : </h3>
-            <p className="inline-block ml-5"> category </p>
+            <p className="inline-block ml-5">{props.product.category}</p>
           </div>
           <div>
             <h3 className="inline-block">Fournisseur : </h3>
-            <p className="inline-block ml-5"> Fournisseur </p>
+            <p className="inline-block ml-5">{props.product.supplier}</p>
           </div>
           <div className="flex items-center">
             <h3 className="text-center text-nowrap">Description : </h3>
-            <p className="ml-5">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam quod, quae quia
+            <p className="ml-5 mb-2">
+              {props.product.description}
             </p>
           </div>
           <div>
             <h3 className="inline-block">Quantité en stock : </h3>
-            <p className="inline-block ml-5"> 10 </p>
+            <p className="inline-block ml-5">{props.product.stock}</p>
           </div>
         </div>
         <div className="productdisplay-right-quantite flex items-center">
@@ -73,9 +73,9 @@ const ProductDisplay = () => {
           </div>
         </div>
         <div className="mt-3">
-          {quantity > 0 && quantity < 10 ? <p className="text-green-500">En stock</p> : <p className="text-red-500">En rupture de stock</p>}
+          {quantity > 0 && quantity < 10 ? <p className="text-green-500 text-lg">En stock</p> : <p className="text-red-500 text-lg">En rupture de stock</p>}
         </div>
-        <div className="productdisplay-right-buttons mt-4">
+        <div className="productdisplay-right-buttons mt-2">
           {quantity > 0 && quantity < 10 ? <button onClick={handleAddToCart}>Ajouter au panier</button> : null }
         </div>
       </div>
