@@ -73,10 +73,10 @@ const ProductDisplay = (props) => {
           </div>
         </div>
         <div className="mt-3">
-          {quantity > 0 && quantity < 10 ? <p className="text-green-500 text-lg">En stock</p> : <p className="text-red-500 text-lg">En rupture de stock</p>}
+          {quantity > 0 && quantity <= 10 ? <p className="text-green-500 text-lg">En stock</p> : <p className="text-red-500 text-lg">En rupture de stock</p>}
         </div>
-        <div className="productdisplay-right-buttons mt-2">
-          {quantity > 0 && quantity < 10 ? <button onClick={handleAddToCart}>Ajouter au panier</button> : null }
+        <div className="productdisplay-right-buttons mt-1.5">
+          {quantity > 0 && quantity <= 10 ? <button onClick={handleAddToCart}>Ajouter au panier</button> : <button disabled>Ajouter au panier</button> }
         </div>
       </div>
     </div>
