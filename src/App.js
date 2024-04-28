@@ -11,7 +11,7 @@ import Login from './Components/loginPage/PageLogin';
 function App() {
   return (
     <div className="App">
-      <ProductPage/>
+      <Welcome/>
     </div>
   );
 }
