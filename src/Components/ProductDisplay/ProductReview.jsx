@@ -134,7 +134,7 @@ const Comments = ({ comments }) => (
 
 const ProductReview = () => {
     return (
-        <section className="md:py-6 bg-black text-zinc-300 relative overflow-hidden z-10">
+        <section className="md:py-6 bg-black text-zinc-300 relative overflow-hidden z-10 items-center">
             <h3 className="text-2xl font-bold text-white text-center mb-6">Comments sur Produit</h3>
             <div className="container px-4 mx-auto">
                 <div className="flex justify-center max-w-6xl mx-auto">

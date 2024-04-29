@@ -38,26 +38,19 @@ const ProductDisplay = (props) => {
           <img className="productdisplay-main-img" src={source} alt="" />
         </div>
       </div>
-      <div className="productdisplay-right">
+      <div className="productdisplay-right relative">
         <h1>{props.product.name}</h1>
         <div className="productdisplay-right-prices">
-          <div className="productdisplay-right-price-old">{props.product.oldPrice}DH</div>
-          <div className="productdisplay-right-price-new">{props.product.newPrice}DH</div>
+          <div className="productdisplay-right-price-old">
+            {props.product.oldPrice}DH
+          </div>
+          <div className="productdisplay-right-price-new">
+            {props.product.newPrice}DH
+          </div>
         </div>
         <div className="productdisplay-right-description mb-3">
           <div>
-            <h3 className="inline-block">Catégorie : </h3>
-            <p className="inline-block ml-5">{props.product.category}</p>
-          </div>
-          <div>
-            <h3 className="inline-block">Fournisseur : </h3>
-            <p className="inline-block ml-5">{props.product.supplier}</p>
-          </div>
-          <div className="flex items-center">
-            <h3 className="text-center text-nowrap">Description : </h3>
-            <p className="ml-5 mb-2">
-              {props.product.description}
-            </p>
+            <p className="inline-block">{props.product.description}</p>
           </div>
           <div>
             <h3 className="inline-block">Quantité en stock : </h3>
@@ -72,11 +65,23 @@ const ProductDisplay = (props) => {
             <button onClick={handleIncrease}>+</button>
           </div>
         </div>
-        <div className="mt-3">
-          {quantity > 0 && quantity <= 10 ? <p className="text-green-500 text-lg">En stock</p> : <p className="text-red-500 text-lg">En rupture de stock</p>}
+        <div className="mt-3 mb-3">
+          {quantity > 0 && quantity <= 10 ? (
+            <p className="text-green-500 text-lg align-bottom">En stock</p>
+          ) : (
+            <p className="text-red-500 text-lg">En rupture de stock</p>
+          )}
         </div>
-        <div className="productdisplay-right-buttons mt-1.5">
-          {quantity > 0 && quantity <= 10 ? <button onClick={handleAddToCart}>Ajouter au panier</button> : <button disabled>Ajouter au panier</button> }
+        <div className="Total">
+          <h3 className="inline-block">Total :</h3>
+          <p className="inline-block ml-5">{props.product.newPrice * quantity}DH</p>
+        </div>
+        <div className="productdisplay-right-buttons mt-1.5 absolute bottom-0 left-0">
+          {quantity > 0 && quantity <= 10 ? (
+            <button onClick={handleAddToCart}>Ajouter au panier</button>
+          ) : (
+            <button disabled>Ajouter au panier</button>
+          )}
         </div>
       </div>
     </div>
