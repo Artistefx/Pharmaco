@@ -1,6 +1,7 @@
 import ProductDisplay from "./ProductDisplay";
 import ProductReview from "./ProductReview";
 import ProductDescription from "./ProductDescription";
+import "./ProductPage.css";
 
 const ProductPage = () => {
   const product = {
