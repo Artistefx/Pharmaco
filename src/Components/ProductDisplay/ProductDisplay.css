@@ -1,8 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .ProductDisplay {
-  margin-top: 100px;
+  margin-top: 60px;
   display: flex;
   background-color: rgb(255, 255, 255);
-  margin-bottom: 100px;
+  margin-bottom: 0px;
 }
 
 .productdisplay-left {
@@ -58,7 +62,7 @@
   margin-top: 40px 0px;
   font-size: 24px;
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .productdisplay-right-price-old {
@@ -75,13 +79,13 @@
   flex-direction: column;
 }
 
-.productdisplay-right-description h3 , .Total h3 {
+.productdisplay-right-description h3 {
   color: #656565;
   font-size: 20px;
   font-weight: 600;
 }
 
-.productdisplay-right-description p , .Total p {
+.productdisplay-right-description p {
   color: #000000;
   font-size: 18px;
   font-weight: 500;
@@ -108,6 +112,7 @@
   font-weight: 600;
   color: white;
   background-color: #ff4141;
+  margin-bottom: 20px;
   cursor: pointer;
   outline: none;
   border: none;
