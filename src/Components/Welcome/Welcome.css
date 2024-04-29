@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .WelcomeImg {
   text-align: center;
   background-color: beige;
