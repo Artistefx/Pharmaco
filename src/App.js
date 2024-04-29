@@ -13,7 +13,7 @@ import Panier  from "./Components/Panier/Panier.jsx";
 function App() {
   return (
     <div className="App">
-      <Panier/>
+      <ProductPage/>
     </div>
   );
 }
