@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .WelcomeImg {
   text-align: center;
   background-color: beige;
@@ -10,7 +11,8 @@
 
 .hero{
   padding-top: 100px;
-  height: 800px;
+  height: 100vh;
+  align-items: center;
 }
 
 .ImageContainer {
