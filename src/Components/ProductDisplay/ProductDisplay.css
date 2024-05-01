@@ -1,8 +1,8 @@
 .ProductDisplay {
-  margin-top: 60px;
+  margin-top: 100px;
   display: flex;
   background-color: rgb(255, 255, 255);
-  margin-bottom: 0px;
+  margin-bottom: 100px;
 }
 
 .productdisplay-left {
@@ -58,7 +58,7 @@
   margin-top: 40px 0px;
   font-size: 24px;
   font-weight: 700;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .productdisplay-right-price-old {
@@ -75,13 +75,13 @@
   flex-direction: column;
 }
 
-.productdisplay-right-description h3 {
+.productdisplay-right-description h3 , .Total h3 {
   color: #656565;
   font-size: 20px;
   font-weight: 600;
 }
 
-.productdisplay-right-description p {
+.productdisplay-right-description p , .Total p {
   color: #000000;
   font-size: 18px;
   font-weight: 500;
@@ -108,7 +108,6 @@
   font-weight: 600;
   color: white;
   background-color: #ff4141;
-  margin-bottom: 20px;
   cursor: pointer;
   outline: none;
   border: none;
