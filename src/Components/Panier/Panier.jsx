@@ -50,7 +50,7 @@ const Panier = () => {
     };
     
     return (
-      <div className="shopping-cart-container">
+      <div className="shopping-cart-container" >
       <Cart items={items} onItemsUpdate={updateItems} onItemRemove={handleRemoveItem} />
       <OrderSummary items={items} />
       <footer/>
