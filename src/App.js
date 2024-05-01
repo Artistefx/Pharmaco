@@ -6,11 +6,12 @@ import ShuffleHero from './Components/Welcome/ShuffleHero';
 import SignUp from './Components/SignupPage/sign';
 import Login from './Components/loginPage/PageLogin';
 import Navbar from './Components/NavBar/navbar';
+import Checkout from './Components/CheckoutPage/checkout'
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
+      <Checkout />
     </div>
   );
 }
