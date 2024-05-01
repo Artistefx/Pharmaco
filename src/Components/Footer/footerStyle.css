@@ -1,114 +1,104 @@
-
-
-body{
-    background-color: #eef8ff ;
-   
-}
-
-footer{
-    width: 100%;
-    position: absolute;
-    bottom:0 ;
-    background: linear-gradient(to right, #84cebe,#17625d);
+.footer-container {
+    background: linear-gradient(to right, #97d9cb, #17625d);
     color: #fff;
-    padding: 30px 0 0px;
-    
-    font-size: 15px;
-    line-height: 10px;
+    padding: 10px 0;
+    left: 0;
+    right: 0;
 }
 
-.row{
-    width: 85%;
+.footer-container {
+    width: 100%;
+    margin: 0;
+    display: relative;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 1;
+}
+.footer-row {
+    width: 80%;
     margin: auto;
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-between;
-
 }
-.col{
+
+.col {
     flex-basis: 20%;
     padding: 5px;
 }
-.col:nth-child(2), .col:nth-child(3){
+.col:nth-child(2),
+.col:nth-child(3) {
     flex-basis: 15%;
 }
 
-
-
-
-.col h3{
-width: fit-content ;
-margin-bottom: 40px;
-position: relative;
-font-size: 25px;
-color:  #0f1616;
-
-}
-
-.email-id{
-    width: fit-content ;
-    border-bottom: 1px solid #ccc;
-    margin: 20px 0;
-}
-footer ul {
-   
-    
-    padding: 0;
-}
-ul li{
-    list-style: none;
-    margin-bottom:12px ;
-    justify-content: space-between;
-}
-
-ul li a{
-    text-decoration: none;
+.footer-column h3 {
+    width: fit-content;
+    font-size: 20px;
     color: #fff;
+    margin-bottom: 20px;
 }
 
-.social-icons .fab{
+.footer-column ul {
+    padding: 0;
+    margin: 0;
+}
+
+ ul li {
+    list-style-type: none;
+    margin-bottom: 10px;
+}
+
+ ul li a {
+    color: #fff;
+    text-decoration: none;
+    justify-content: space-between;
+    cursor: pointer;
+}
+ul li a:hover {
+    color: blue; 
+}
+.social-icons {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.social-icons .fab {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    text-align:center ;
-    line-height: 40px;
-    font-size:30px ;
+    text-align: center;
+    line-height: 30px;
+    font-size: 30px;
     color: #ece5e5;
-    
-    margin-right: 15px;
+    margin-right: 5px;
+    text-align: center;
     cursor: pointer;
 }
-hr{
+
+hr {
     width: 90%;
     border-bottom: 1px solid #ccc;
     margin: 20px auto;
 }
-
-.copyright{
-    text-align: center;
+.hr1 {
+    width: 70%;
+    border-bottom: 1px solid #f0e9e9;
+    margin: 20px auto;
 }
 
-.p1{
+.copyright {
+    text-align: center;
+}
+.p1 {
     line-height: 1.5;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-
-
-.log{
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
-    width: 100%; 
-    height: 100px; 
-    border-radius: 50%;
-    margin-bottom: 20px;
-}
-
-.hr1{
-    width: 80%;
-    border-bottom: 1px solid #f0e9e9;
-    margin-right: 50%;
-    
+.col h3 {
+    width: fit-content;
+    margin-bottom: 40px;
+    font-size: 25px;
+    color: #0f1616;
 }
