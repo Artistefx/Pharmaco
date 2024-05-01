@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import image1 from './PanierAssets/Medicament1.jpg';
 import image2 from './PanierAssets/Medicament2.jpg'
 import Cart from './Cart.jsx';
+import OrderSummary from './OrderSummary.jsx'
+import footer from '../Footer/footer.jsx'
 
 const products = [
   {
@@ -48,10 +50,11 @@ const Panier = () => {
     };
     
     return (
-        <div className="app">
-          <Cart items={items} onItemsUpdate={updateItems} onItemRemove={handleRemoveItem}
-          />
-        </div>
+      <div className="shopping-cart-container">
+      <Cart items={items} onItemsUpdate={updateItems} onItemRemove={handleRemoveItem} />
+      <OrderSummary items={items} />
+      <footer/>
+    </div>
       );
     };
 
