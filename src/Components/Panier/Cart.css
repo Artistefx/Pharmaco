@@ -1,3 +1,5 @@
+
+
 .cart-container {
   flex-grow: 1; /* Takes up all available space minus what the summary requires */
   display: flex;
@@ -142,4 +144,19 @@
   text-align: center; /* Center the title text */
   margin-top: 0;
   margin-bottom: 20px; /* Space below the title */
+}
+.cart-item-price{
+  text-align: center;
+}
+.quantity-input{
+  text-align: center;
+  color:darkcyan;
+  background-color: transparent;
+  
+}
+.quantity-btn decrease{
+  padding-left: 30%;
+}
+.cart-item-remove{
+  padding-block: 10px;
 }

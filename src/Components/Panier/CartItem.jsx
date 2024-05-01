@@ -21,9 +21,10 @@ const CartItem = ({ item, onUpdate, onRemove }) => {
             <button className="quantity-btn decrease" onClick={() => handleQuantityChange(item.quantity - 1)} disabled={item.quantity <= 1}>-</button>
             <input type="number" className="quantity-input" value={item.quantity} readOnly />
             <button className="quantity-btn increase" onClick={() => handleQuantityChange(item.quantity + 1)}>+</button>
-          </div>
-          <p className="cart-item-price">{item.price} DH</p>
+            <p className="cart-item-price">{item.price} DH</p>
           <button className="cart-item-remove" onClick={handleRemoveClick}>×</button>
+          </div>
+          
         </div>
       </div>
     </div>
