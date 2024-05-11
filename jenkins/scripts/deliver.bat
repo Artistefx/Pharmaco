@@ -1,8 +1,7 @@
 @echo off
 
 
-npm install 
-npm run build
+npm start
 
 start /B npm start
 timeout /T 1
