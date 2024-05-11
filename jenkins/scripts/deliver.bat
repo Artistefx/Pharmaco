@@ -2,6 +2,7 @@
 
 npm run build
 
+npm install 
 start /B npm start
 timeout /T 1
 echo %! > .pidfile
