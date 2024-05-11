@@ -4,16 +4,15 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
         stage('Deliver') {
             steps {
-                sh 'chmod -R +rwx ./jenkins/scripts/deliver.sh'
-                sh 'chmod -R +rwx ./jenkins/scripts/kill.sh'
-                sh './jenkins/scripts/deliver.sh'
+                // Assuming the scripts are Windows batch files; change permissions not required on Windows
+                bat 'call .\\jenkins\\scripts\\deliver.bat'
                 input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh './jenkins/scripts/kill.sh'
+                bat 'call .\\jenkins\\scripts\\kill.bat'
             }
         }
     }
