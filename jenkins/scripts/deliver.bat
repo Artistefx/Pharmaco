@@ -1,6 +1,6 @@
 @echo off
 
-npm run build
+CI=false react-scripts run build
 
 npm install 
 start /B npm start
