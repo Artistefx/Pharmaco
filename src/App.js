@@ -15,7 +15,7 @@ import Filter from './Components/FilterPage/filter.jsx';
 function App() {
   return (
     <div className="App">
-      <Filter/>
+      <Welcome/>
     </div>
   );
 }
