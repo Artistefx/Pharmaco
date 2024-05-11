@@ -9,12 +9,13 @@ import Login from './Components/loginPage/PageLogin';
 import Navbar from './Components/NavBar/navbar';
 import Checkout from './Components/CheckoutPage/checkout'
 import Panier  from "./Components/Panier/Panier.jsx";
+import Filter from './Components/FilterPage/filter.jsx';
 
 
 function App() {
   return (
     <div className="App">
-      <Checkout />
+      <Filter/>
     </div>
   );
 }
