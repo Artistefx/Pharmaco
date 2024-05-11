@@ -1,8 +1,9 @@
 @echo off
 
-CI=false react-scripts run build
 
 npm install 
+npm run build
+
 start /B npm start
 timeout /T 1
 echo %! > .pidfile
