@@ -1,10 +1,13 @@
 import ProductDisplay from "./ProductDisplay";
 import ProductReview from "./ProductReview";
 import ProductDescription from "./ProductDescription";
+import { useParams } from "react-router-dom";
 
 const ProductPage = () => {
+  const { productId } = useParams();
+
   const product = {
-    name: "product name",
+    name: productId,
     oldPrice: 100,
     newPrice: 90,
     category: "category",

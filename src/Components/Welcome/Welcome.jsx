@@ -11,6 +11,7 @@ import Carousel from "./Carousel";
 import AnimatedCard from "./AnimatedCard";
 import ShuffleHero from "./ShuffleHero";
 
+
 const items = [
   {
     id: 1,
@@ -20,6 +21,7 @@ const items = [
     priceReduction: 100,
     priceOriginal: 200,
     TauxReduction: "50%",
+    quantite: 1,
   },
   {
     id: 2,
@@ -29,6 +31,7 @@ const items = [
     priceReduction: 100,
     priceOriginal: 200,
     TauxReduction: "50%",
+    quantite: 1,
   },
   {
     id: 3,
@@ -38,6 +41,7 @@ const items = [
     priceReduction: 100,
     priceOriginal: 200,
     TauxReduction: "50%",
+    quantite: 1,
   },
   {
     id: 4,
@@ -47,6 +51,7 @@ const items = [
     priceReduction: 100,
     priceOriginal: 200,
     TauxReduction: "50%",
+    quantite: 1,
   },
   {
     id: 5,
@@ -56,6 +61,7 @@ const items = [
     priceReduction: 100,
     priceOriginal: 200,
     TauxReduction: "50%",
+    quantite: 1,
   },
 ];
 
@@ -69,28 +75,28 @@ const Welcome = () => {
         <h2>Nos Offres Du Mois</h2>
         <div className="OffreContainer">
           <WelcomeOffer
-            link="http://localhost:3000/"
+            link={`http://localhost:3000/productPage/${1}`}
             img={suplement}
             alt="pharmaco"
             title="Antibiotiques"
             description="Les antibiotiques sont des médicaments qui détruisent ou bloquent la croissance des bactéries."
           />
           <WelcomeOffer
-            link="http://localhost:3000/"
+            link={`http://localhost:3000/productPage/${2}`}
             img={suplement}
             alt="pharmaco"
             title="Antibiotiques"
             description="Les antibiotiques sont des médicaments qui détruisent ou bloquent la croissance des bactéries."
           />
           <WelcomeOffer
-            link="http://localhost:3000/"
+            link={`http://localhost:3000/productPage/${3}`}
             img={suplement}
             alt="pharmaco"
             title="Antibiotiques"
             description="Les antibiotiques sont des médicaments qui détruisent ou bloquent la croissance des bactéries."
           />
           <WelcomeOffer
-            link="http://localhost:3000/"
+            link={`http://localhost:3000/productPage/${4}`}
             img={suplement}
             alt="pharmaco"
             title="Antibiotiques"

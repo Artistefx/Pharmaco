@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import image1 from './PanierAssets/Medicament1.jpg';
 import image2 from './PanierAssets/Medicament2.jpg'
 import Cart from './Cart.jsx';
-import OrderSummary from './OrderSummary.jsx'
-import footer from '../Footer/footer.jsx'
+import OrderSummary from './OrderSummary.jsx';
+import footer from '../Footer/footer.jsx';
 
 const products = [
   {

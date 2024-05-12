@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import { useState , useContext } from "react";
 import source1 from "./Assets/commitement1.webp";
 import source2 from "./Assets/commitement2.webp";
 import source3 from "./Assets/commitement3.webp";
 import source4 from "./Assets/commitement4.webp";
 import "./ProductDisplay.css";
+import { CartContext } from "../Panier/CartProvider";
 
 const ProductDisplay = (props) => {
   const [quantity, setQuantity] = useState(1);
   const [source, setSource] = useState(source1);
+  const { addToCart } =useContext(CartContext);
 
   const handleImageClick = (e) => {
     setSource(e.target.src);
@@ -22,7 +24,14 @@ const ProductDisplay = (props) => {
   };
 
   const handleAddToCart = () => {
-    console.log("Added to cart");
+    addToCart({
+      id: props.product.id,
+      image: source,
+      name: props.product.name,
+      priceReduction: props.product.newPrice * quantity,
+      quantity: quantity,
+      TauxReduction : 0,
+    });
   };
 
   return (

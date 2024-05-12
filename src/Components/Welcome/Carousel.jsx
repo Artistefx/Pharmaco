@@ -1,8 +1,10 @@
 import React from "react";
+import { useContext } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Carousel.css"; // This is your custom CSS file for the carousel.
+import { CartContext } from "../Panier/CartProvider";
 
 const Carousel = ({ items }) => {
   const settings = {
@@ -14,6 +16,12 @@ const Carousel = ({ items }) => {
     autoplay: true,
     autoplaySpeed: 2500,
     arrows: false
+  };
+
+  const { addToCart } = useContext(CartContext);
+
+  const handleAddToCart = (item) => {
+    addToCart(item);
   };
 
   return (
@@ -31,7 +39,7 @@ const Carousel = ({ items }) => {
               </span>
               <div className="discount-tag">{item.TauxReduction}</div>
             </div>
-            <button className="add-to-cart-btn">Ajouter au panier</button>
+            <button className="add-to-cart-btn" onClick={() => handleAddToCart(item)}>Ajouter au panier</button>
           </div>
         </div>
       ))}
