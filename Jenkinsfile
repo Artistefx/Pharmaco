@@ -25,9 +25,9 @@ pipeline {
             }
         }
         stage('Push to DockerHub') {
-            steps {
-                bat "echo %DOCKERHUB_CREDENTIALS_USR% | docker login --username %DOCKERHUB_CREDENTIALS_USR% --password-stdin"
-                bat "docker push ${IMAGE_NAME}:${BUILD_NUMBER}"
+            withCredentials([usernamePassword(credentialsId: '56', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                bat "echo ${DOCKERHUB_PASSWORD} | docker login --username ${DOCKERHUB_USERNAME} --password-stdin"
+            bat "docker push ${IMAGE_NAME}:${BUILD_NUMBER}"
             }
         }
         stage('Clean Up Old Docker Images') {
