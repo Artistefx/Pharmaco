@@ -3,7 +3,7 @@ pipeline {
     tools {nodejs "node 22"}
     environment {
         DOCKERHUB_CREDENTIALS = credentials('56')
-        IMAGE_NAME = 'Artistefx/Pharmaco'
+        IMAGE_NAME = 'artistefx/pharmaco'
     }
     stages {
         stage('Build') {
