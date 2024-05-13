@@ -2,8 +2,7 @@ pipeline {
     agent any
     tools {nodejs "node 22"}
     environment {
-        DOCKER_CREDENTIALS_ID = '56'
-        DOCKERHUB_CREDENTIALS = credentials(DOCKER_CREDENTIALS_ID)
+        DOCKERHUB_CREDENTIALS = credentials('56')
         IMAGE_NAME = 'Artistefx/Pharmaco'
     }
     stages {
