@@ -1,21 +1,15 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import userIcon from "./Assets/icons8-utilisateur-sexe-neutre-64.png";
 import searchIcon from "./Assets/icons8-chercher-50.png";
 import panierIcon from "./Assets/icons8-panier-64.png";
 
-const products = [
-  { name: "Product 1", href: "#" },
-  { name: "Product 2", href: "#" },
-  { name: "Product 3", href: "#" },
-  { name: "Product 4", href: "#" },
-];
+
 const navigation = [
   { name: "Home", href: "/", current: false },
   { name: "Product", href: "/filtre", current: false },
-  { name: "New arrivals", href: "./filtre", current: false },
+  { name: "New arrivals", href: "/filtre", current: false },
   { name: "Our company", href: "/", current: false },
 ];
 
@@ -126,7 +120,7 @@ export default function Example({ toggleCart }) {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="/signup"
+                            href={"/signup"}
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
@@ -139,7 +133,7 @@ export default function Example({ toggleCart }) {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="/signout"
+                            href={"/signout"}
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
@@ -160,8 +154,8 @@ export default function Example({ toggleCart }) {
                 {navigation.map((item) => (
                   <Disclosure.Button
                     key={item.name}
-                    as="a"
-                    href={item.href}
+                    as="link"
+                    to={item.href}
                     className={classNames(
                       item.current
                         ? "bg-gray-900 text-white"

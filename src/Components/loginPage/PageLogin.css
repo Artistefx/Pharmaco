@@ -5,7 +5,6 @@
     justify-content: center;
     height: 100vh;
     background: #e0eafc; /* Arrière-plan bleu clair basé sur l'image fournie */
-    
 }
 
 .videoContainer {
@@ -74,6 +73,7 @@
     border-radius: 30px; /* Bordures arrondies pour les champs de saisie */
     padding: 0.5rem;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 13px;
 }
 
 .inputGroup input {
@@ -83,6 +83,7 @@
     margin-left: 1rem; /* Espace après l'icône */
     font-size: 1rem; /* Taille de police réactive */
     outline: none; /* Supprimer le contour de mise en évidence */
+    
 }
 
 .inputIcon {

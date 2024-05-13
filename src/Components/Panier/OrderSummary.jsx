@@ -1,10 +1,16 @@
 // OrderSummary.jsx
 import React from 'react';
+import { useContext } from 'react';
+import { CartContext } from "./CartProvider";
+const OrderSummary = () => {
 
-const OrderSummary = ({ items }) => {
-  const calculateTotal = () => items.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
+  const { cartItems } =useContext(CartContext);
 
-  const calculateQuantity = () => items.reduce((acc,item) =>  acc + item.quantity , 0);
+  const items = cartItems;
+
+  const calculateTotal = () => items.reduce((acc, item) => acc + item.priceReduction * item.quantite, 0).toFixed(2);
+
+  const calculateQuantity = () => items.reduce((acc,item) =>  acc + item.quantite , 0);
   return (
     <div className="order-summary">
       <h3>Order Summary</h3>

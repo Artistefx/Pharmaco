@@ -8,13 +8,12 @@ import SignUp from "./Components/SignupPage/sign";
 import Login from "./Components/loginPage/PageLogin";
 import Navbar from "./Components/NavBar/navbar";
 import Checkout from "./Components/CheckoutPage/checkout";
-import Panier from "./Components/Panier/Panier";
 import Filter from "./Components/FilterPage/filter";
 import Footer from "./Components/Footer/footer";
 import sommePage from "./Components/SommePage/sommePage";
 import ScrollToTop from "./Components/ScrollReset";
 import Cart from "./Components//Panier/CartComp";
-import CartProvider from "./Components/Panier/CartProvider";
+import OrderSummary from "./Components/Panier/OrderSummary";
 
 function App() {
   const [isCartVisible, setIsCartVisible] = useState(false);
@@ -24,25 +23,23 @@ function App() {
   };
   return (
     <div className="App">
+      <Navbar toggleCart={toggleCart} />
+      {isCartVisible && <Cart />}
       <BrowserRouter>
-        <CartProvider>
-          <ScrollToTop />
-          <Navbar toggleCart={toggleCart} />
-          {isCartVisible && <Cart />}
-          <Routes>
-            <Route path="/" element={<Welcome />} />
-            <Route path="/product" element={<ProductDisplay />} />
-            <Route path="/productPage/:productId" element={<ProductPage />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/panier" element={<Panier />} />
-            <Route path="/filtre" element={<Filter />} />
-            <Route path="/somme" element={<sommePage />} />
-          </Routes>
-          <Footer />
-        </CartProvider>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<Welcome />} />
+          <Route path="/product" element={<ProductDisplay />} />
+          <Route path="/productPage/:productId" element={<ProductPage />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/filtre" element={<Filter />} />
+          <Route path="/somme" element={<sommePage />} />
+          <Route path="/orderSummary" element={<OrderSummary />} />
+        </Routes>
       </BrowserRouter>
+      <Footer />
     </div>
   );
 }
