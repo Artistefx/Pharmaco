@@ -1,6 +1,11 @@
 pipeline {
     agent any
     tools {nodejs "node 22"}
+    environment {
+        DOCKER_CREDENTIALS_ID = '56'
+        DOCKERHUB_CREDENTIALS = credentials(DOCKER_CREDENTIALS_ID)
+        IMAGE_NAME = 'Artistefx/Pharmaco'
+    }
     stages {
         stage('Build') {
             steps {
@@ -15,13 +20,6 @@ pipeline {
                 bat 'call .\\jenkins\\scripts\\kill.bat'
             }
         } */
-    }
-    environment {
-        DOCKER_CREDENTIALS_ID = '56'
-        DOCKERHUB_CREDENTIALS = credentials(DOCKER_CREDENTIALS_ID)
-        IMAGE_NAME = 'Artistefx/Pharmaco'
-    }
-    stages {
         stage('Build Docker Image') {
             steps {
                 bat "docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} ."
