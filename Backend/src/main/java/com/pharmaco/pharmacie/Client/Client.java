@@ -1,10 +1,9 @@
 package com.pharmaco.pharmacie.Client;
 
 import java.util.List;
-
 import com.pharmaco.pharmacie.Commande.Commande;
-
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,7 +22,7 @@ public class Client {
     private String MotDePasse;
     private String Sexe;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client" , fetch = FetchType.EAGER)
     private List<Commande> commandes;
 
 
