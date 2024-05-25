@@ -1,13 +1,13 @@
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useContext} from "react";
+import { useContext } from "react";
 import { CartContext } from "../Panier/CartProvider";
 
 export default function Example() {
   const [open, setOpen] = useState(true);
 
-  const { cartItems, removeFromCart} =useContext(CartContext);
+  const { cartItems, removeFromCart } = useContext(CartContext);
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -41,7 +41,7 @@ export default function Example() {
                     <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                       <div className="flex items-start justify-between">
                         <Dialog.Title className="text-lg font-medium text-gray-900">
-                          Shopping cart
+                          Panier
                         </Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <button
@@ -50,7 +50,7 @@ export default function Example() {
                             onClick={() => setOpen(false)}
                           >
                             <span className="absolute -inset-0.5" />
-                            <span className="sr-only">Close panel</span>
+                            <span className="sr-only">Fermer le panier</span>
                             <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                           </button>
                         </div>
@@ -80,7 +80,10 @@ export default function Example() {
                                           {product.name}
                                         </a>
                                       </h3>
-                                      <p className="ml-4">{product.priceReduction * product.quantite}</p>
+                                      <p className="ml-4">
+                                        {product.priceReduction *
+                                          product.quantite}
+                                      </p>
                                     </div>
                                     <p className="mt-1 text-sm text-gray-500">
                                       -{product.TauxReduction} off
@@ -88,7 +91,7 @@ export default function Example() {
                                   </div>
                                   <div className="flex flex-1 items-end justify-between text-sm">
                                     <p className="text-gray-500">
-                                      Qty : {product.quantite}
+                                      Qte : {product.quantite}
                                     </p>
 
                                     <div className="flex">
@@ -97,7 +100,7 @@ export default function Example() {
                                         className="font-medium text-indigo-600 hover:text-indigo-500"
                                         onClick={() => removeFromCart(product)}
                                       >
-                                        Remove
+                                        Annuler
                                       </button>
                                     </div>
                                   </div>
@@ -111,11 +114,17 @@ export default function Example() {
 
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                       <div className="flex justify-between text-base font-medium text-gray-900">
-                        <p>Subtotal</p>
-                        <p>{cartItems.reduce((acc, item) => acc + item.priceReduction * item.quantite, 0)}</p>
+                        <p>Sous-total</p>
+                        <p>
+                          {cartItems.reduce(
+                            (acc, item) =>
+                              acc + item.priceReduction * item.quantite,
+                            0
+                          )}
+                        </p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">
-                        Shipping and taxes calculated at checkout.
+                        frais de livraison et taxes calculés lors du paiement
                       </p>
                       <div className="mt-6">
                         <a
@@ -127,13 +136,13 @@ export default function Example() {
                       </div>
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>
-                          or{" "}
+                          ou{" "}
                           <button
                             type="button"
                             className="font-medium text-indigo-600 hover:text-indigo-500"
                             onClick={() => setOpen(false)}
                           >
-                            Continue Shopping
+                            Continuer vos achats
                             <span aria-hidden="true"> &rarr;</span>
                           </button>
                         </p>
