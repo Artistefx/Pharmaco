@@ -12,9 +12,10 @@
   }
   
   .product-image {
-    max-width: 100%;
-    height: auto;
+    width: 200px; /* Full width for the image */
+    height: 200px; /* Fixed height for the image */
     margin-bottom: 16px; /* Space below the image */
+    object-fit: cover;
   }
   
   .product-name {

@@ -1,4 +1,6 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 /* import pharmaco from "./Assets/pharmaco.webp"; */
 import WelcomeOffer from "./WelcomeOffer";
 import "./Welcome.css";
@@ -11,61 +13,17 @@ import Carousel from "./Carousel";
 import AnimatedCard from "./AnimatedCard";
 import ShuffleHero from "./ShuffleHero";
 
-
-const items = [
-  {
-    id: 1,
-    image: suplement,
-    name: "Product 1",
-    description: "Description of product 1",
-    priceReduction: 100,
-    priceOriginal: 200,
-    TauxReduction: "50%",
-    quantite: 1,
-  },
-  {
-    id: 2,
-    image: suplement,
-    name: "Product 2",
-    description: "Description of product 1",
-    priceReduction: 100,
-    priceOriginal: 200,
-    TauxReduction: "50%",
-    quantite: 1,
-  },
-  {
-    id: 3,
-    image: suplement,
-    name: "Product 3",
-    description: "Description of product 1",
-    priceReduction: 100,
-    priceOriginal: 200,
-    TauxReduction: "50%",
-    quantite: 1,
-  },
-  {
-    id: 4,
-    image: suplement,
-    name: "Product 4",
-    description: "Description of product 1",
-    priceReduction: 100,
-    priceOriginal: 200,
-    TauxReduction: "50%",
-    quantite: 1,
-  },
-  {
-    id: 5,
-    image: suplement,
-    name: "Product 5",
-    description: "Description of product 1",
-    priceReduction: 100,
-    priceOriginal: 200,
-    TauxReduction: "50%",
-    quantite: 1,
-  },
-];
-
 const Welcome = () => {
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:8080/api/v1/produit/find/reduction").then((res) => {
+      setProducts(res.data);
+      console.log(res.data);
+    });
+  }, []);
+
   return (
     <div className="Welcome">
       <div className="hero">
@@ -106,7 +64,7 @@ const Welcome = () => {
       </div>
       <div className="NouveautContainer">
         <h2>Nos Réductions</h2>
-        <Carousel items={items} />
+        <Carousel products={products} />
       </div>
       <div className="ComitementContainer1">
         <h2>Nos Engagements</h2>

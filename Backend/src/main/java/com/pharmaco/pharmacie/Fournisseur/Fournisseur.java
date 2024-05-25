@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 import com.pharmaco.pharmacie.Commande.Commande;
+import com.pharmaco.pharmacie.Produit.Produit;
 
 @Entity
 public class Fournisseur {
@@ -21,6 +22,9 @@ public class Fournisseur {
 
     @OneToMany(mappedBy = "fournisseur")
     private List<Commande> commandes;
+
+    @OneToMany(mappedBy = "fournisseur")
+    private List<Produit> produits;
 
     public Fournisseur() {
     }

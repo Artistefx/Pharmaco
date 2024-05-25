@@ -1,15 +1,26 @@
-import { useState , useContext } from "react";
-import source1 from "./Assets/commitement1.webp";
-import source2 from "./Assets/commitement2.webp";
-import source3 from "./Assets/commitement3.webp";
-import source4 from "./Assets/commitement4.webp";
+import { useState, useContext, useEffect } from "react";
+import axios from 'axios';
 import "./ProductDisplay.css";
 import { CartContext } from "../Panier/CartProvider";
 
 const ProductDisplay = (props) => {
   const [quantity, setQuantity] = useState(1);
-  const [source, setSource] = useState(source1);
-  const { addToCart } =useContext(CartContext);
+  const [source, setSource] = useState();
+  const { addToCart } = useContext(CartContext);
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8080/api/v1/produit/find/id/11")
+      .then((response) => {
+        setProduct(response.data);
+        setSource(response.data.image1);
+        console.log(response.data.image1);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the data!", error);
+      });
+  }, []);
 
   const handleImageClick = (e) => {
     setSource(e.target.src);
@@ -25,12 +36,12 @@ const ProductDisplay = (props) => {
 
   const handleAddToCart = () => {
     addToCart({
-      id: props.product.id,
-      image: source,
-      name: props.product.name,
-      priceReduction: props.product.newPrice * quantity,
-      quantity: quantity,
-      TauxReduction : 0,
+      id: product.id,
+      image: product.image1,
+      name: product.name,
+      priceReduction: product.priceReduction * 10,
+      quantity: 10,
+      TauxReduction: (product.priceReduction / product.priceOriginal) * 100,
     });
   };
 
@@ -38,32 +49,30 @@ const ProductDisplay = (props) => {
     <div className="ProductDisplay">
       <div className="productdisplay-left">
         <div className="productdisplay-img-list">
-          <img src={source1} alt="" onClick={handleImageClick} />
-          <img src={source2} alt="" onClick={handleImageClick} />
-          <img src={source3} alt="" onClick={handleImageClick} />
-          <img src={source4} alt="" onClick={handleImageClick} />
+          <img src={product.image1} alt="" onClick={handleImageClick} />
+          <img src={product.image2} alt="" onClick={handleImageClick} />
         </div>
         <div className="productdisplay-img">
           <img className="productdisplay-main-img" src={source} alt="" />
         </div>
       </div>
       <div className="productdisplay-right relative">
-        <h1>{props.product.name}</h1>
+        <h1>{product.nom}</h1>
         <div className="productdisplay-right-prices">
           <div className="productdisplay-right-price-old">
-            {props.product.oldPrice}DH
+            {product.priceOriginal}DH
           </div>
           <div className="productdisplay-right-price-new">
-            {props.product.newPrice}DH
+            {product.priceReduction}DH
           </div>
         </div>
         <div className="productdisplay-right-description mb-3">
           <div>
-            <p className="inline-block">{props.product.description}</p>
+            <p className="inline-block">{product.description}</p>
           </div>
           <div>
             <h3 className="inline-block">Quantité en stock : </h3>
-            <p className="inline-block ml-5">{props.product.stock}</p>
+            <p className="inline-block ml-5">{30}</p>
           </div>
         </div>
         <div className="productdisplay-right-quantite flex items-center">
@@ -83,7 +92,9 @@ const ProductDisplay = (props) => {
         </div>
         <div className="Total">
           <h3 className="inline-block">Total :</h3>
-          <p className="inline-block ml-5">{props.product.newPrice * quantity}DH</p>
+          <p className="inline-block ml-5">
+            {props.product.newPrice * quantity}DH
+          </p>
         </div>
         <div className="productdisplay-right-buttons mt-1.5 absolute bottom-0 left-0">
           {quantity > 0 && quantity <= 10 ? (
