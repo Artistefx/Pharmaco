@@ -5,6 +5,7 @@ import ClientPage from './AjouterClient';
 import CommandePage from './CommandePage';
 import FacturePage from './FacturePage';
 import EmployeePage from './ajouterEmploye'
+import FournisseurPage from './ajouterFournisseur';
 function Dashboard() {
   const [selectedMenuItem, setSelectedMenuItem] = useState('Dashboard');
 
@@ -16,12 +17,16 @@ function Dashboard() {
     switch (selectedMenuItem) {
       case 'Produits':
         return <ProductPage />;
+        case 'Fournisseurs':
+          return <FournisseurPage />;
       case 'Clients':
         return <ClientPage />;
       case 'Commandes':
         return <CommandePage />;
       case 'Factures':
         return <FacturePage />;
+        case 'Fournisseurs':
+        return <ajouterFournisseur />;
         case 'Employes':
         return <EmployeePage />;
       default:
@@ -36,6 +41,9 @@ function Dashboard() {
         <ul>
           <li className={selectedMenuItem === 'Dashboard' ? 'active' : ''} onClick={() => handleMenuItemClick('Dashboard')}>
             Dashboard
+          </li>
+          <li className={selectedMenuItem === 'Dashboard' ? 'active' : ''} onClick={() => handleMenuItemClick('Fournisseurs')}>
+            Fournisseurs
           </li>
           <li className={selectedMenuItem === 'Produits' ? 'active' : ''} onClick={() => handleMenuItemClick('Produits')}>
             Produits
