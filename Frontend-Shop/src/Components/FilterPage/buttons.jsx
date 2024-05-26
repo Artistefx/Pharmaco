@@ -1,16 +1,15 @@
 import React from 'react';
-import Data from './data';
 
-function Buttons({ menuItems, filterItems, setItems }) {
+function Buttons({filterItems, setCategorie, setSearchTerm }) {
     return (
         <div className='d-flex justify-content-center mb-2'>
             <button className='btn btn-success btn-custom-size text-white p-2 px-4 mx-2 btn-lg fw-bold'
-                onClick={() => setItems(Data)}>
+                onClick={() => setSearchTerm("")}>
                 Tous
             </button>
-            {menuItems.map(val => (
-                <button className='btn btn-success btn-custom-size text-white p-2 px-4 mx-2 btn-lg fw-bold'
-                    onClick={() => filterItems(val)}>
+            {filterItems.map((val) => (
+                <button key={val.id} className='btn btn-success btn-custom-size text-white p-2 px-4 mx-2 btn-lg fw-bold'
+                    onClick={() => setCategorie(val)}>
                     {val}
                 </button>
             ))}

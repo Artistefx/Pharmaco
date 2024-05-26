@@ -22,9 +22,6 @@ public class Client {
     private String motDePasse;
     private String Sexe;
 
-    @OneToMany(mappedBy = "client" , fetch = FetchType.EAGER)
-    private List<Commande> commandes;
-
 
     public Client() {
     }

@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { CartContext } from "../Panier/CartProvider";
+import { useEffect } from "react";
 
 const Checkout = () => {
   const { cartItems } = useContext(CartContext);
@@ -36,7 +37,66 @@ const Checkout = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // redirect to success page
+    const commande = {
+      client: 3,
+      produits: cartItems
+        .map((item) => `${item.nom}: ${item.quantite}`)
+        .join(","),
+      montantTotal:
+        cartItems.reduce(
+          (acc, item) => acc + item.priceReduction * item.quantite,
+          0
+        ) + 30,
+      status: "En cours",
+      date: new Date().toISOString(),
+      addresse:
+        deliveryData.address + deliveryData.city + deliveryData.postalCode,
+      telephone: deliveryData.phoneNumber,
+      type: "Commande Client",
+    };
+    fetch("http://127.0.0.1:8080/api/v1/commande/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(commande),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
+    const facture = {
+      client: 3,
+      montantTotal:
+        cartItems.reduce(
+          (acc, item) => acc + item.priceReduction * item.quantite,
+          0
+        ) + 30,
+      date: new Date().toISOString(),
+      description: cartItems
+        .map((item) => `${item.nom}: ${item.quantite}`)
+        .join(","),
+    };
+    console.log(facture);
+    fetch("http://127.0.0.1:8080/api/v1/facture/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(facture),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
     window.location.href = "/orderSummary";
   };
 
