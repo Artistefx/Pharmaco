@@ -11,7 +11,8 @@ import Filter from "./Components/FilterPage/filter";
 import Footer from "./Components/Footer/footer";
 import ScrollToTop from "./Components/ScrollReset";
 import Cart from "./Components//Panier/CartComp";
-import "./App.css";
+import Dashboard from "./Components/Gestion/Dashboard";
+/* import "./App.css"; */
 
 function App() {
   const [isCartVisible, setIsCartVisible] = useState(false);
@@ -21,7 +22,7 @@ function App() {
   };
   return (
     <div className="App">
-      <Navbar toggleCart={toggleCart} />
+     {/*  <Navbar toggleCart={toggleCart} />
       {isCartVisible && <Cart />}
       <BrowserRouter>
         <ScrollToTop />
@@ -34,9 +35,11 @@ function App() {
           <Route path="/filtre" element={<Filter />} />
           <Route path="/somme" element={<sommePage />} />
           <Route path="/orderSummary" element={<SummaryPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </BrowserRouter>
-      <Footer />
+      <Footer /> */}
+      <Dashboard />
     </div>
   );
 }
