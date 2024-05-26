@@ -1,46 +1,105 @@
 pipeline {
     agent any
-    tools {nodejs "node 22"}
+    tools { nodejs "node 22" }
     environment {
         DOCKERHUB_CREDENTIALS = credentials('56')
-        IMAGE_NAME = 'artistefx/pharmaco'
+        GESTION_IMAGE_NAME = 'artistefx/pharmaco-gestion'
+        SHOP_IMAGE_NAME = 'artistefx/pharmaco-shop'
+        BACKEND_IMAGE_NAME = 'artistefx/pharmaco-backend'
     }
     stages {
-        stage('Build') {
+        stage('Build Frontend-Gestion') {
             steps {
-                bat 'npm install'
+                dir('Frontend-Gestion') {
+                    bat 'npm install'
+                }
             }
         }
-        /* stage('Deliver') {
+        stage('Build Frontend-Shop') {
             steps {
-                // Assuming the scripts are Windows batch files; change permissions not required on Windows
-                bat 'call .\\jenkins\\scripts\\deliver.bat'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                bat 'call .\\jenkins\\scripts\\kill.bat'
-            }
-        } */
-        stage('Build Docker Image') {
-            steps {
-                bat "docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} ."
+                dir('Frontend-Shop') {
+                    bat 'npm install'
+                }
             }
         }
-        stage('Push to DockerHub') {
+        stage('Build Backend') {
+            steps {
+                dir('Backend') {
+                    bat './gradlew build'
+                }
+            }
+        }
+        stage('Build Docker Image for Frontend-Gestion') {
+            steps {
+                dir('Frontend-Gestion') {
+                    bat "docker build -t ${GESTION_IMAGE_NAME}:${BUILD_NUMBER} ."
+                }
+            }
+        }
+        stage('Build Docker Image for Frontend-Shop') {
+            steps {
+                dir('Frontend-Shop') {
+                    bat "docker build -t ${SHOP_IMAGE_NAME}:${BUILD_NUMBER} ."
+                }
+            }
+        }
+        stage('Build Docker Image for Backend') {
+            steps {
+                dir('Backend') {
+                    bat "docker build -t ${BACKEND_IMAGE_NAME}:${BUILD_NUMBER} ."
+                }
+            }
+        }
+        stage('Push Frontend-Gestion to DockerHub') {
             withCredentials([usernamePassword(credentialsId: '56', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
-                bat "echo ${DOCKERHUB_PASSWORD} | docker login --username ${DOCKERHUB_USERNAME} --password-stdin"
-            bat "docker push ${IMAGE_NAME}:${BUILD_NUMBER}"
+                dir('Frontend-Gestion') {
+                    bat "echo ${DOCKERHUB_PASSWORD} | docker login --username ${DOCKERHUB_USERNAME} --password-stdin"
+                    bat "docker push ${GESTION_IMAGE_NAME}:${BUILD_NUMBER}"
+                }
+            }
+        }
+        stage('Push Frontend-Shop to DockerHub') {
+            withCredentials([usernamePassword(credentialsId: '56', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                dir('Frontend-Shop') {
+                    bat "echo ${DOCKERHUB_PASSWORD} | docker login --username ${DOCKERHUB_USERNAME} --password-stdin"
+                    bat "docker push ${SHOP_IMAGE_NAME}:${BUILD_NUMBER}"
+                }
+            }
+        }
+        stage('Push Backend to DockerHub') {
+            withCredentials([usernamePassword(credentialsId: '56', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                dir('Backend') {
+                    bat "echo ${DOCKERHUB_PASSWORD} | docker login --username ${DOCKERHUB_USERNAME} --password-stdin"
+                    bat "docker push ${BACKEND_IMAGE_NAME}:${BUILD_NUMBER}"
+                }
             }
         }
         stage('Clean Up Old Docker Images') {
             steps {
-                // Remove older images; keeps the latest one
-                bat "FOR /f \"skip=1\" %%i IN ('docker images -q ${IMAGE_NAME}') DO docker rmi %%i"
+                bat "FOR /f \"skip=1\" %%i IN ('docker images -q ${GESTION_IMAGE_NAME}') DO docker rmi %%i"
+                bat "FOR /f \"skip=1\" %%i IN ('docker images -q ${SHOP_IMAGE_NAME}') DO docker rmi %%i"
+                bat "FOR /f \"skip=1\" %%i IN ('docker images -q ${BACKEND_IMAGE_NAME}') DO docker rmi %%i"
             }
         }
-        stage('Deploy Container') {
+        stage('Deploy Backend Container') {
             steps {
-                // Stop and remove the old container if it exists, ignore errors
-                bat "docker rm -f app || exit 0"
-                bat "docker run --name app -d ${IMAGE_NAME}:${BUILD_NUMBER}"
+                // Stop and remove the old backend container if it exists, ignore errors
+                bat "docker rm -f backend || exit 0"
+                bat "docker run --name backend -d ${BACKEND_IMAGE_NAME}:${BUILD_NUMBER}"
+            }
+        }
+        stage('Deploy Frontend-Gestion Container') {
+            steps {
+                // Stop and remove the old frontend-gestion container if it exists, ignore errors
+                bat "docker rm -f frontend-gestion || exit 0"
+                bat "docker run --name frontend-gestion -d --link backend:backend ${GESTION_IMAGE_NAME}:${BUILD_NUMBER}"
+            }
+        }
+        stage('Deploy Frontend-Shop Container') {
+            steps {
+                // Stop and remove the old frontend-shop container if it exists, ignore errors
+                bat "docker rm -f frontend-shop || exit 0"
+                bat "docker run --name frontend-shop -d --link backend:backend ${SHOP_IMAGE_NAME}:${BUILD_NUMBER}"
                 // Clean up any stopped containers
                 bat "docker container prune -f -y"
             }
