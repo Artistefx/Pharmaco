@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm install
 
 # Copy the rest of the application code
-COPY Frontend-Gestion .
+COPY .
 
 # Build the React app
 RUN npm run build
