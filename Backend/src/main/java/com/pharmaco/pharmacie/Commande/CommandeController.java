@@ -1,5 +1,6 @@
 package com.pharmaco.pharmacie.Commande;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/api/v1/commande")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CommandeController {
     
     private final CommandeService commandeService;

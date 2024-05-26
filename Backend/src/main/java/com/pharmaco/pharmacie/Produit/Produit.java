@@ -39,9 +39,6 @@ public class Produit {
     @OneToOne(mappedBy = "produit")
     private Stock stock;
 
-    @ManyToMany(mappedBy = "produits")
-    private List<Commande> commandes;
-
     @ManyToOne
     private Fournisseur fournisseur;
    
@@ -147,15 +144,6 @@ public class Produit {
 
     public void setStock(Stock stock) {
         this.stock = stock;
-    }
-
-    @JsonIgnore
-    public List<Commande> getCommandes() {
-        return commandes;
-    }
-
-    public void setCommandes(List<Commande> commandes) {
-        this.commandes = commandes;
     }
 
     public Fournisseur getFournisseur() {
