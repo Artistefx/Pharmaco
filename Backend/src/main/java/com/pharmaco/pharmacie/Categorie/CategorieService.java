@@ -2,6 +2,7 @@ package com.pharmaco.pharmacie.Categorie;
 
 import java.util.List;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,6 +32,10 @@ public class CategorieService {
 
     public List<Categorie> findAll() {
         return categorieRepository.findAll();
+    }
+
+    public List<String> findTop5Names() {
+        return categorieRepository.findTop5Names(PageRequest.of(0, 5));
     }
 
     

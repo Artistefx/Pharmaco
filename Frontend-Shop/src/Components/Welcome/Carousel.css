@@ -1,0 +1,99 @@
+.card {
+    background-color: white;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 15px; /* Adjust as needed to create space between the cards */
+    padding: 20px;
+    font-family: Montserrat, sans-serif; /* Use a modern font */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .product-image {
+    width: 200px; /* Full width for the image */
+    height: 200px; /* Fixed height for the image */
+    margin-bottom: 16px; /* Space below the image */
+    object-fit: cover;
+  }
+  
+  .product-name {
+    color: #333; /* Dark grey color for the text */
+    font-size: 1.2em; /* Larger font size for product name */
+    margin-top: 8px; /* Space above the product name */
+    margin-bottom: 8px; /* Space below the product name */
+  }
+  
+  .product-description {
+    color: #777; /* Lighter grey for the description */
+    font-size: 1em;
+    margin-bottom: 16px; /* More space below the description */
+  }
+  
+  .price-container {
+    display: flex;
+    align-items: baseline; /* Aligns prices on the baseline */
+    justify-content: center;
+    margin-bottom: 16px; /* Space below the price */
+  }
+  
+  .new-price {
+    color: #E53935; /* Eye-catching color for the new price */
+    font-size: 1.6em; /* Large font size for the new price */
+    font-weight: bold;
+    margin-top: 20px; /* Space above the new price */
+    margin-right: 8px; /* Space between new price and original price */
+  }
+  
+  .original-price {
+    text-decoration: line-through;
+    color: #999;
+    margin-right: 4px; /* Space between the original price and the discount rate */
+    font-size: 1.2em; /* Slightly smaller font size for the original price */
+  }
+  
+  .discount-tag {
+    background-color: #C2185B; /* Pink background for the discount tag */
+    color: white;
+    padding: 4px 8px;
+    border-radius: 3px; /* Rounded corners for the tag */
+    font-size: 1em;
+    font-weight: bold;
+  }
+  
+  .add-to-cart-btn {
+    background-color: #FF4081; /* Match the button color to your brand */
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 12px 24px;
+    font-size: 1em;
+    cursor: pointer;
+    width: 100%; /* Full width button */
+    margin-top: auto; /* Push the button to the bottom */
+    transition: background-color 0.3s;
+  }
+  
+  .add-to-cart-btn:hover {
+    background-color: #c1356d; /* Darken button on hover */
+  }
+  
+  .card:hover {
+    transform: scale(1.04);
+  }
+
+  .slick-dots li button:before {
+    font-size: 12px; /* This increases the size of the dots */
+    color: rgb(0, 0, 0); /* This changes the color of the dots to white */
+}
+
+/* Style for active dot */
+.slick-dots li.slick-active button:before {
+    color: rgb(0, 0, 0) !important; /* Ensures the active dot is also white */
+}
+
+/* Optionally, if you want to increase the spacing around the dots */
+.slick-dots li {
+    margin: 0 5px; /* Adjust the space between dots */
+}

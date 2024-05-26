@@ -1,0 +1,189 @@
+
+
+.container {
+    height: 100%;
+    margin: 0;
+  
+    display: flex; 
+    flex-direction: row;
+    justify-content: center;
+    
+  }
+  .form-title {
+    margin-top: 120px; 
+    font-size: 26hpx;
+    color: #333;
+    margin-bottom: 2rem;
+    text-align: center;
+    margin-top: 0;
+  
+  }
+  .form-frame {
+    border: 5px solid #ffcc00;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    justify-content: center;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    }
+  
+  
+  
+    .form-container,
+  .additional-container {
+    position: relative;
+    border: 0px solid #ccc;
+    border-radius: 0px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #c9d6f0;
+    height: 100vh;
+    width: 50%;
+    margin: 0px; 
+    margin-top: 0px;
+    margin-bottom: 0px;
+   
+  }
+  
+  
+  .additional-container{
+    background-image: url(./images/pharma4.jpg); 
+      background-size:   cover;   
+      background-position: center; 
+  }
+  .loginLogo {
+    width: 80px; 
+    height: auto;
+    border-radius: 50%;
+  }
+  
+  .form-container  .loginHeader {
+    position: relative;
+    top: 5%; /* Place le logo au centre verticalement */
+    left: 50%; /* Place le logo au centre horizontalement */
+    transform: translate(-50%, -50%);
+    width: 100px; /* Taille du conteneur du logo */
+    height: 100px; /* Assurez-vous que la hauteur et la largeur sont égales pour un cercle parfait */
+    border-radius: 50%; /* Rend le conteneur circulaire */
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+    
+  .form-container{
+    position: relative; /* Ajoutez ceci pour que les éléments à l'intérieur soient positionnés par rapport à lui */
+    justify-content: center;
+    background-color: transparent;
+    flex-direction: column;
+  
+  }
+  
+  
+    .form-container .div {
+      margin-bottom: 10px;
+    }
+    
+    .form-container label {
+      font-weight: bold;
+      color: #353333;
+      width: calc(100% - 50%);
+    }
+    
+   
+    
+    .form-frame input[type="text"],
+    .form-frame input[type="email"],
+    .form-frame input[type="password"],
+    .form-frame input[type="date"],
+    .form-frame input[type="tel"],
+    .form-frame select{
+      color: #3a3636;
+      padding: 10px;
+      border: 1px solid #ccc;
+      margin-top: 5px;
+      outline: none; 
+      background-color: transparent;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-family: Verdana, Arial, Helvetica, sans-serif; 
+    }
+    .form-container input{
+      width: calc(100% - 50%);
+      display: block; /* Permettre au bouton d'occuper toute la largeur du conteneur */
+      margin: 0 auto;
+    }
+
+    .form-container select{
+      width: calc(100% - 50%);
+      display: block; /* Permettre au bouton d'occuper toute la largeur du conteneur */
+      margin: 0 auto;
+    }
+   
+    .form-container button {
+      font-size: 14px;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      background-color: #4C9AFF;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      width: calc(100% - 50%);
+      display: block; /* Permettre au bouton d'occuper toute la largeur du conteneur */
+      margin: 0 auto; /* Pour le centrer horizontalement */
+    }
+    .form-container button:hover {
+      background-color: #3578E5;
+    }
+  
+    
+    .form-frame label {
+      font-weight: bold;
+      
+    }
+  
+    .form-frame input[type="text"]:hover,
+  .form-frame input[type="email"]:hover,
+  .form-frame input[type="password"]:hover,
+  .form-frame input[type="date"]:hover,
+  .form-frame input[type="tel"]:hover {
+    border-color: #3578E5; 
+  }
+  
+  
+  
+  .login-link {
+    display: block; 
+    margin-top: 20px; 
+    text-align: center; 
+    color: hsl(210, 82%, 60%); 
+    text-decoration: none; 
+  }
+  
+  .login-link:hover {
+    text-decoration: underline; 
+  }
+  
+   .text-overlay {
+    position: absolute; 
+    top: 16%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    color: rgb(3, 3, 3); 
+    text-align: center;
+  }
+  
+  .text-overlay h1 {
+    font-size: 38px; 
+    font-weight: bold;
+  }
+  
+  .text-overlay p {
+    font-size: 20px;
+    font-weight: bold; 
+  
+  }
+  

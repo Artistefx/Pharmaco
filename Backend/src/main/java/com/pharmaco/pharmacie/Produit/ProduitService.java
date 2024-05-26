@@ -30,4 +30,20 @@ public class ProduitService {
     public Iterable<Produit> findAll() {
         return produitRepository.findAll();
     }
+
+    public Produit findProduitByNom(String nom) {
+        return produitRepository.findProduitByNom(nom);
+    }
+
+    public Iterable<Produit> findProduitByReduction() {
+        return produitRepository.findByIsReductionTrue();
+    }
+
+    public Iterable<Object[]> getProduitAndQuantite() {
+        return produitRepository.getProduitAndQuantite();
+    }
+
+    public Produit findProduitByCategorieNom(String categorieNom) {
+        return produitRepository.findFirstByCategorieNom(categorieNom).orElse(null);
+    }
 }

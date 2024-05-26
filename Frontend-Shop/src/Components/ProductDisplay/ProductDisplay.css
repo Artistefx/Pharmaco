@@ -1,0 +1,140 @@
+.ProductDisplay {
+  margin-top: 100px;
+  display: flex;
+  background-color: rgb(255, 255, 255);
+  margin-bottom: 100px;
+  margin-left: 20px;
+  
+  gap: 60px;
+}
+
+.productdisplay-left {
+  margin-top: 10px;
+  display: flex;
+  gap: 17px;
+  width: 40%;
+  margin-left: 60px;
+}
+
+.productdisplay-img-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.productdisplay-img-list img {
+  height: 63px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.3s ease; /* Smooth transition for scaling */
+  border: 2px solid transparent; /* Transparent border added */
+  box-sizing: border-box; /* Ensures the border is included in the element's dimensions */
+}
+
+.productdisplay-img-list img:hover {
+  border: 2px solid #ff4141; /* Border color changes on hover */
+  transform: scale(1.05); /* Slightly enlarges the hovered image */
+}
+
+.productdisplay-main-img {
+  width: 400px;
+  height: 400px;
+}
+
+.productdisplay-right {
+  width: 68%;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  margin-left: 60px;
+}
+
+.productdisplay-right h1 {
+  color: #3d3d3d;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.productdisplay-right-prices {
+  display: flex;
+  gap: 30px;
+  margin-top: 40px 0px;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.productdisplay-right-price-old {
+  color: #818181;
+  text-decoration: line-through;
+}
+
+.productdisplay-right-price-new {
+  color: #ff4141;
+}
+
+.productdisplay-right-description{
+  display: flex;
+  flex-direction: column;
+}
+
+.productdisplay-right-description h3 , .Total h3 {
+  color: #656565;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.productdisplay-right-description p , .Total p {
+  color: #000000;
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.productdisplay-right-quantite h3 {
+  color: #656565;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.productdisplay-right-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.productdisplay-right-buttons button {
+  padding: 20px 20px;
+  width: 230px;
+  height: 60px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  background-color: #ff4141;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  font-family: Montserrat;
+}
+
+.productdisplay-right-buttons button:hover {
+  background-color: #ff0000;
+}
+
+.productdisplay-right-quantite-selector {
+  display: flex;
+  align-items: center;
+}
+
+.productdisplay-right-quantite-selector button {
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  color: white;
+  background-color: #000000;
+  margin: 0 10px;
+}
+
+.productdisplay-right-quantite-selector span {
+  font-size: 18px;
+}

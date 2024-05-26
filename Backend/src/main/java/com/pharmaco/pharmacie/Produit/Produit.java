@@ -12,8 +12,10 @@ import jakarta.persistence.GeneratedValue;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pharmaco.pharmacie.Categorie.Categorie;
 import com.pharmaco.pharmacie.Commande.Commande;
+import com.pharmaco.pharmacie.Fournisseur.Fournisseur;
 import com.pharmaco.pharmacie.Stock.Stock;
 
 @Entity
@@ -27,10 +29,9 @@ public class Produit {
     private String description;
     private double priceReduction;
     private double priceOriginal;
+    private Boolean isReduction;
     private String image1;
     private String image2;
-    private String image3;
-    private String image4;
 
     @ManyToOne
     private Categorie categorie;
@@ -40,12 +41,15 @@ public class Produit {
 
     @ManyToMany(mappedBy = "produits")
     private List<Commande> commandes;
+
+    @ManyToOne
+    private Fournisseur fournisseur;
    
 
     public Produit() {
     }
 
-    public Produit(long id, String nom, String type, String description, double priceReduction, double priceOriginal, String image1, String image2, String image3, String image4) {
+    public Produit(long id, String nom, String type, String description, double priceReduction, double priceOriginal, String image1, String image2) {
         this.id = id;
         this.nom = nom;
         this.type = type;
@@ -54,8 +58,6 @@ public class Produit {
         this.priceOriginal = priceOriginal;
         this.image1 = image1;
         this.image2 = image2;
-        this.image3 = image3;
-        this.image4 = image4;
     }
 
     public long getId() {
@@ -82,20 +84,16 @@ public class Produit {
         return priceOriginal;
     }
 
+    public Boolean getIsReduction() {
+        return isReduction;
+    }
+
     public String getImage1() {
         return image1;
     }
 
     public String getImage2() {
         return image2;
-    }
-
-    public String getImage3() {
-        return image3;
-    }
-
-    public String getImage4() {
-        return image4;
     }
 
     public void setId(long id) {
@@ -122,6 +120,10 @@ public class Produit {
         this.priceOriginal = priceOriginal;
     }
 
+    public void setIsReduction(Boolean isReduction) {
+        this.isReduction = isReduction;
+    }
+
     public void setImage1(String image1) {
         this.image1 = image1;
     }
@@ -130,15 +132,39 @@ public class Produit {
         this.image2 = image2;
     }
 
-    public void setImage3(String image3) {
-        this.image3 = image3;
-    }
-
-    public void setImage4(String image4) {
-        this.image4 = image4;
-    }
-
-
-
     
+    public Categorie getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
+    }
+
+    public Stock getStock() {
+        return stock;
+    }
+
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
+
+    @JsonIgnore
+    public List<Commande> getCommandes() {
+        return commandes;
+    }
+
+    public void setCommandes(List<Commande> commandes) {
+        this.commandes = commandes;
+    }
+
+    public Fournisseur getFournisseur() {
+        return fournisseur;
+    }
+
+    public void setFournisseur(Fournisseur fournisseur) {
+        this.fournisseur = fournisseur;
+    }
+
+
 }

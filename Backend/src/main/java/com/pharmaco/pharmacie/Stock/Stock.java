@@ -1,6 +1,7 @@
 package com.pharmaco.pharmacie.Stock;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pharmaco.pharmacie.Produit.Produit;
 
 import jakarta.persistence.Entity;
@@ -52,6 +53,15 @@ public class Stock {
 
     public void setQuantite(int quantite) {
         this.quantite = quantite;
+    }
+
+    @JsonIgnore
+    public Produit getProduit() {
+        return produit;
+    }
+
+    public void setProduit(Produit produit) {
+        this.produit = produit;
     }
 
 }

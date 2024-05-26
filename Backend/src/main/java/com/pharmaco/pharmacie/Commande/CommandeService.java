@@ -26,4 +26,8 @@ public class CommandeService {
     public Commande findById(Long id) {
         return commandeRepository.findById(id).orElse(null);
     }
+
+    public Iterable<Commande> findAll() {
+        return commandeRepository.findAll();
+    }
 }
