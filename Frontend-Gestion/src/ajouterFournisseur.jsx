@@ -1,121 +1,198 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './ProductAjout.css';
 
 function FournisseurPage() {
-  const [supplierName, setSupplierName] = useState('');
-  const [address, setAddress] = useState('');
+  const [nomFournisseur, setNomFournisseur] = useState('');
+  const [adresse, setAdresse] = useState('');
   const [email, setEmail] = useState('');
   const [telephone, setTelephone] = useState('');
-  const [suppliers, setSuppliers] = useState([]);
+  const [fournisseurs, setFournisseurs] = useState([]);
   const [editIndex, setEditIndex] = useState(-1);
-  const [editedSupplierName, setEditedSupplierName] = useState('');
-  const [editedAddress, setEditedAddress] = useState('');
-  const [editedEmail, setEditedEmail] = useState('');
-  const [editedTelephone, setEditedTelephone] = useState('');
+  const [nomFournisseurModif, setNomFournisseurModif] = useState('');
+  const [adresseModif, setAdresseModif] = useState('');
+  const [emailModif, setEmailModif] = useState('');
+  const [telephoneModif, setTelephoneModif] = useState('');
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
 
+  const apiUrl = 'http://127.0.0.1:8088/api/v1/fournisseur';
+
+  
+  useEffect(() => {
+    fetch(`${apiUrl}/all`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Fetched suppliers:', data); // Log fetched data
+        setFournisseurs(data);
+      })
+      .catch(error => console.error('Error fetching suppliers:', error));
+  }, []);
+
   const handleInputChange = (setter) => (e) => setter(e.target.value);
 
-  const handleAddSupplier = () => {
-    if (!supplierName || !address || !email || !telephone) {
+  const handleAddFournisseur = (e) => {
+    e.preventDefault();
+
+    if (!nomFournisseur || !adresse || !email || !telephone) {
       setMessage('Veuillez remplir tous les champs correctement.');
       setMessageType('danger');
       return;
     }
 
-    const newSupplier = { id: Date.now().toString(), name: supplierName, address, email, telephone };
-    setSuppliers([...suppliers, newSupplier]);
-    setSupplierName('');
-    setAddress('');
-    setEmail('');
-    setTelephone('');
-    setMessage('Fournisseur ajouté avec succès !');
-    setMessageType('success');
+    const newFournisseur = {
+      nom: nomFournisseur,
+      adresse: adresse,
+      email: email,
+      telephone: telephone
+    };
+
+    fetch(`${apiUrl}/add`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newFournisseur),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Added fournisseur:', data); // Log added data
+        setFournisseurs([...fournisseurs, data]);
+        setNomFournisseur('');
+        setAdresse('');
+        setEmail('');
+        setTelephone('');
+        setMessage('Fournisseur ajouté avec succès !');
+        setMessageType('success');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setMessage('Erreur lors de l\'ajout du fournisseur.');
+        setMessageType('danger');
+      });
   };
 
-  const handleEditSupplier = (index) => {
-    const supplier = suppliers[index];
+  const handleEditFournisseur = (index) => {
+    const fournisseur = fournisseurs[index];
     setEditIndex(index);
-    setEditedSupplierName(supplier.name);
-    setEditedAddress(supplier.address);
-    setEditedEmail(supplier.email);
-    setEditedTelephone(supplier.telephone);
+    setNomFournisseurModif(fournisseur.nom);
+    setAdresseModif(fournisseur.adresse);
+    setEmailModif(fournisseur.email);
+    setTelephoneModif(fournisseur.telephone);
   };
 
   const handleSaveEdit = () => {
-    const updatedSuppliers = suppliers.map((supplier, index) =>
-      index === editIndex
-        ? { ...supplier, name: editedSupplierName, address: editedAddress, email: editedEmail, telephone: editedTelephone }
-        : supplier
-    );
-    setSuppliers(updatedSuppliers);
-    setEditIndex(-1);
-    setMessage('Fournisseur modifié avec succès !');
-    setMessageType('success');
+    const updatedFournisseur = {
+      ...fournisseurs[editIndex],
+      nom: nomFournisseurModif,
+      adresse: adresseModif,
+      email: emailModif,
+      telephone: telephoneModif
+    };
+
+    fetch(`${apiUrl}/update`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedFournisseur),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Updated fournisseur:', data); // Log updated data
+        const updatedFournisseurs = fournisseurs.map((fournisseur, index) =>
+          index === editIndex ? data : fournisseur
+        );
+        setFournisseurs(updatedFournisseurs);
+        setEditIndex(-1);
+        setMessage('Fournisseur modifié avec succès !');
+        setMessageType('success');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setMessage('Erreur lors de la modification du fournisseur.');
+        setMessageType('danger');
+      });
   };
 
-  const handleDeleteSupplier = (index) => {
-    const updatedSuppliers = suppliers.filter((_, i) => i !== index);
-    setSuppliers(updatedSuppliers);
-    setMessage('Fournisseur supprimé avec succès !');
-    setMessageType('success');
+  const handleDeleteFournisseur = (id) => {
+    fetch(`${apiUrl}/delete/${id}`, {
+      method: 'PUT',
+    })
+      .then(() => {
+        console.log('Deleted fournisseur ID:', id); // Log deleted ID
+        const updatedFournisseurs = fournisseurs.filter((fournisseur) => fournisseur.id !== id);
+        setFournisseurs(updatedFournisseurs);
+        setMessage('Fournisseur supprimé avec succès !');
+        setMessageType('success');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setMessage('Erreur lors de la suppression du fournisseur.');
+        setMessageType('danger');
+      });
   };
 
   return (
     <div className="container">
       <h1 className="mt-5">Ajouter un fournisseur</h1>
       {message && <div className={`alert alert-${messageType}`}>{message}</div>}
-      <div className="row mb-3">
-        <div className="col-md-6">
-          <label htmlFor="supplierName" className="form-label">Nom du fournisseur:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="supplierName"
-            value={supplierName}
-            onChange={handleInputChange(setSupplierName)}
-          />
+      <form onSubmit={handleAddFournisseur}>
+        <div className="row mb-3">
+          <div className="col-md-6">
+            <label htmlFor="nomFournisseur" className="form-label">Nom du fournisseur:</label>
+            <input
+              type="text"
+              className="form-control"
+              id="nomFournisseur"
+              value={nomFournisseur}
+              onChange={handleInputChange(setNomFournisseur)}
+            />
+          </div>
         </div>
-      </div>
-      <div className="row mb-3">
-        <div className="col-md-6">
-          <label htmlFor="address" className="form-label">Adresse:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="address"
-            value={address}
-            onChange={handleInputChange(setAddress)}
-          />
+        <div className="row mb-3">
+          <div className="col-md-6">
+            <label htmlFor="adresse" className="form-label">Adresse:</label>
+            <input
+              type="text"
+              className="form-control"
+              id="adresse"
+              value={adresse}
+              onChange={handleInputChange(setAdresse)}
+            />
+          </div>
+          <div className="col-md-6">
+            <label htmlFor="email" className="form-label">Email:</label>
+            <input
+              type="email"
+              className="form-control"
+              id="email"
+              value={email}
+              onChange={handleInputChange(setEmail)}
+            />
+          </div>
         </div>
-        <div className="col-md-6">
-          <label htmlFor="email" className="form-label">Email:</label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            value={email}
-            onChange={handleInputChange(setEmail)}
-          />
+        <div className="row mb-3">
+          <div className="col-md-6">
+            <label htmlFor="telephone" className="form-label">Téléphone:</label>
+            <input
+              type="text"
+              className="form-control"
+              id="telephone"
+              value={telephone}
+              onChange={handleInputChange(setTelephone)}
+            />
+          </div>
         </div>
-      </div>
-      <div className="row mb-3">
-        <div className="col-md-6">
-          <label htmlFor="telephone" className="form-label">Téléphone:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="telephone"
-            value={telephone}
-            onChange={handleInputChange(setTelephone)}
-          />
-        </div>
-      </div>
-      <div className="d-flex justify-content-center">
-        <button className="btn btn-outline-success" onClick={handleAddSupplier}>Ajouter le fournisseur</button>
-      </div>
+        <div className="d-flex justify-content-center">
+          <button type="submit" className="btn btn-outline-success">Ajouter le fournisseur</button>
+          </div>
+      </form>
       <h2 className="mt-5">Liste des fournisseurs</h2>
       <table className="table">
         <thead>
@@ -129,56 +206,56 @@ function FournisseurPage() {
           </tr>
         </thead>
         <tbody>
-          {suppliers.map((supplier, index) => (
+          {fournisseurs.map((fournisseur, index) => (
             <tr key={index}>
-              <td>{supplier.id}</td>
+              <td>{fournisseur.id}</td>
               <td>{editIndex === index ? (
                 <input
                   type="text"
                   className="form-control"
-                  value={editedSupplierName}
-                  onChange={handleInputChange(setEditedSupplierName)}
+                  value={nomFournisseurModif}
+                  onChange={handleInputChange(setNomFournisseurModif)}
                 />
               ) : (
-                supplier.name
+                fournisseur.nom
               )}</td>
               <td>{editIndex === index ? (
                 <input
                   type="text"
                   className="form-control"
-                  value={editedAddress}
-                  onChange={handleInputChange(setEditedAddress)}
+                  value={adresseModif}
+                  onChange={handleInputChange(setAdresseModif)}
                 />
               ) : (
-                supplier.address
+                fournisseur.adresse
               )}</td>
               <td>{editIndex === index ? (
                 <input
                   type="email"
                   className="form-control"
-                  value={editedEmail}
-                  onChange={handleInputChange(setEditedEmail)}
+                  value={emailModif}
+                  onChange={handleInputChange(setEmailModif)}
                 />
               ) : (
-                supplier.email
+                fournisseur.email
               )}</td>
               <td>{editIndex === index ? (
                 <input
                   type="text"
                   className="form-control"
-                  value={editedTelephone}
-                  onChange={handleInputChange(setEditedTelephone)}
+                  value={telephoneModif}
+                  onChange={handleInputChange(setTelephoneModif)}
                 />
               ) : (
-                supplier.telephone
+                fournisseur.telephone
               )}</td>
               <td>
                 {editIndex === index ? (
                   <button className="btn btn-success" onClick={handleSaveEdit}>Enregistrer</button>
                 ) : (
                   <>
-                    <button className="btn btn-info" onClick={() => handleEditSupplier(index)}>Modifier</button>
-                    <button className="btn btn-danger" onClick={() => handleDeleteSupplier(index)}>Supprimer</button>
+                    <button className="btn btn-primary" onClick={() => handleEditFournisseur(index)}>Modifier</button>
+                    <button className="btn btn-danger" onClick={() => handleDeleteFournisseur(fournisseur.id)}>Supprimer</button>
                   </>
                 )}
               </td>
