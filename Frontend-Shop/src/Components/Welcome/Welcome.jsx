@@ -4,7 +4,6 @@ import axios from "axios";
 /* import pharmaco from "./Assets/pharmaco.webp"; */
 import WelcomeOffer from "./WelcomeOffer";
 import "./Welcome.css";
-import suplement from "./Assets/Suplement.jpg";
 import comm1 from "./Assets/commitement1.webp";
 import comm2 from "./Assets/commitement2.webp";
 import comm3 from "./Assets/commitement3.webp";
@@ -12,10 +11,15 @@ import comm4 from "./Assets/commitement4.webp";
 import Carousel from "./Carousel";
 import AnimatedCard from "./AnimatedCard";
 import ShuffleHero from "./ShuffleHero";
+import { CartContext } from "../Panier/CartProvider";
 
 const Welcome = () => {
+  const { isConnected, user } = React.useContext(CartContext);
   const [products, setProducts] = useState([]);
   const [offers, setOffers] = useState([]);
+
+  console.log(user);
+  console.log(isConnected);
 
   useEffect(() => {
     axios

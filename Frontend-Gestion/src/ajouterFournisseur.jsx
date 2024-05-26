@@ -16,22 +16,26 @@ function FournisseurPage() {
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
 
-  const apiUrl = 'http://127.0.0.1:8088/api/v1/fournisseur';
+  const apiUrl = 'http://127.0.0.1:8080/api/v1/fournisseur';
 
   
   useEffect(() => {
-    fetch(`${apiUrl}/all`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok ' + response.statusText);
-        }
-        return response.json();
-      })
+    fetch(`${apiUrl}/all`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: null,
+    }).then(response => response.json())
       .then(data => {
-        console.log('Fetched suppliers:', data); // Log fetched data
+        console.log('Fournisseur:', data); // Log fetched data
         setFournisseurs(data);
       })
-      .catch(error => console.error('Error fetching suppliers:', error));
+      .catch((error) => {
+        console.error('Error:', error);
+        setMessage('Erreur lors de la récupération des fournisseurs.');
+        setMessageType('danger');
+      });
   }, []);
 
   const handleInputChange = (setter) => (e) => setter(e.target.value);

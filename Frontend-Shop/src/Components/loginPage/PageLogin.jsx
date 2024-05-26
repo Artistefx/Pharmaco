@@ -4,9 +4,12 @@ import logo1 from "../loginPage/LoginAssets/logo1.webp";
 import { MdOutlineAlternateEmail, MdLockOutline } from "react-icons/md";
 import { IoLogIn } from "react-icons/io5";
 import "./PageLogin.css";
+import { CartContext } from "../Panier/CartProvider";
 
 function PageLogin() {
   const videoRef = useRef(null);
+
+  const { ToggleIsConnected } = React.useContext(CartContext);
 
   useEffect(() => {
     const start = 10;
@@ -54,7 +57,8 @@ function PageLogin() {
       .then((data) => {
         if (data === true) {
           console.log("Success");
-          // Handle successful login (e.g., redirect to another page)
+          ToggleIsConnected();
+          window.location.href = "/";
         } else {
           console.log("Error: Invalid credentials");
           // Handle failed login (e.g., show error message)
