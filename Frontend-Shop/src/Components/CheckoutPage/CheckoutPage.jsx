@@ -2,8 +2,9 @@ import React, { useState, useContext } from "react";
 import { CartContext } from "../Panier/CartProvider";
 import { useEffect } from "react";
 
+
 const Checkout = () => {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems , user } = useContext(CartContext);
   const [paymentMethod, setPaymentMethod] = useState("card");
   const [formData, setFormData] = useState({
     cardNumber: "",
@@ -38,7 +39,7 @@ const Checkout = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const commande = {
-      client: 3,
+      client: user,
       produits: cartItems
         .map((item) => `${item.nom}: ${item.quantite}`)
         .join(","),
@@ -70,7 +71,7 @@ const Checkout = () => {
       });
 
     const facture = {
-      client: 3,
+      client: user,
       montantTotal:
         cartItems.reduce(
           (acc, item) => acc + item.priceReduction * item.quantite,
