@@ -62,7 +62,7 @@
 .OffreContainer {
   display: flex;
   justify-content: space-between;
-  max-width: 80%;
+  max-width: 90%;
   margin: auto;
   margin-top: 25px;
   gap: 20px;
@@ -82,8 +82,9 @@
 }
 
 .offer-image {
-  max-width: 100%;
-  object-fit: contain;
+  width: 320px;
+  height: 320px;
+  object-fit: cover;
   overflow-clip-margin: content-box;
   overflow: clip;
   display: block; /* Removes any extra space below the image */

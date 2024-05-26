@@ -1,26 +1,24 @@
 import { useState, useContext, useEffect } from "react";
-import axios from 'axios';
 import "./ProductDisplay.css";
 import { CartContext } from "../Panier/CartProvider";
 
 const ProductDisplay = (props) => {
   const [quantity, setQuantity] = useState(1);
+  const [stock, setStock] = useState(0);
   const [source, setSource] = useState();
   const { addToCart } = useContext(CartContext);
-  const [product, setProduct] = useState({});
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8080/api/v1/produit/find/id/11")
-      .then((response) => {
-        setProduct(response.data);
-        setSource(response.data.image1);
-        console.log(response.data.image1);
-      })
-      .catch((error) => {
-        console.error("There was an error fetching the data!", error);
-      });
-  }, []);
+    if (props.product.image1) {
+      setSource(props.product.image1);
+    }
+  }, [props.product.image1]);
+
+  useEffect(() => {
+    if (props.product.stock) {
+      setStock(props.product.stock);
+    }
+  }, [props.product.stock]);
 
   const handleImageClick = (e) => {
     setSource(e.target.src);
@@ -36,12 +34,12 @@ const ProductDisplay = (props) => {
 
   const handleAddToCart = () => {
     addToCart({
-      id: product.id,
-      image: product.image1,
-      name: product.name,
-      priceReduction: product.priceReduction * 10,
-      quantity: 10,
-      TauxReduction: (product.priceReduction / product.priceOriginal) * 100,
+      id: props.product.id,
+      image: props.product.image1,
+      nom: props.product.nom,
+      quantite: quantity,
+      priceReduction: props.product.priceReduction * quantity,
+      TauxReduction: Math.round((1 - props.product.priceReduction / props.product.priceOriginal) * 100),
     });
   };
 
@@ -49,30 +47,30 @@ const ProductDisplay = (props) => {
     <div className="ProductDisplay">
       <div className="productdisplay-left">
         <div className="productdisplay-img-list">
-          <img src={product.image1} alt="" onClick={handleImageClick} />
-          <img src={product.image2} alt="" onClick={handleImageClick} />
+          <img src={props.product.image1} alt="" onClick={handleImageClick} />
+          <img src={props.product.image2} alt="" onClick={handleImageClick} />
         </div>
         <div className="productdisplay-img">
           <img className="productdisplay-main-img" src={source} alt="" />
         </div>
       </div>
       <div className="productdisplay-right relative">
-        <h1>{product.nom}</h1>
+        <h1>{props.product.nom}</h1>
         <div className="productdisplay-right-prices">
           <div className="productdisplay-right-price-old">
-            {product.priceOriginal}DH
+            {props.product.priceOriginal}DH
           </div>
           <div className="productdisplay-right-price-new">
-            {product.priceReduction}DH
+            {props.product.priceReduction}DH
           </div>
         </div>
         <div className="productdisplay-right-description mb-3">
           <div>
-            <p className="inline-block">{product.description}</p>
+            <p className="inline-block">{props.product.description}</p>
           </div>
           <div>
             <h3 className="inline-block">Quantité en stock : </h3>
-            <p className="inline-block ml-5">{30}</p>
+            <p className="inline-block ml-5">{stock.quantite}</p>
           </div>
         </div>
         <div className="productdisplay-right-quantite flex items-center">
@@ -83,8 +81,8 @@ const ProductDisplay = (props) => {
             <button onClick={handleIncrease}>+</button>
           </div>
         </div>
-        <div className="mt-3 mb-3">
-          {quantity > 0 && quantity <= 10 ? (
+        <div>
+          {quantity > 0 && quantity <= stock.quantite ? (
             <p className="text-green-500 text-lg align-bottom">En stock</p>
           ) : (
             <p className="text-red-500 text-lg">En rupture de stock</p>
@@ -93,15 +91,15 @@ const ProductDisplay = (props) => {
         <div className="Total">
           <h3 className="inline-block">Total :</h3>
           <p className="inline-block ml-5">
-            {props.product.newPrice * quantity}DH
+            {
+              props.product.priceReduction * quantity
+            }DH
           </p>
         </div>
         <div className="productdisplay-right-buttons mt-1.5 absolute bottom-0 left-0">
-          {quantity > 0 && quantity <= 10 ? (
+          {quantity > 0 && quantity <= stock.quantite ? (
             <button onClick={handleAddToCart}>Ajouter au panier</button>
-          ) : (
-            <button disabled>Ajouter au panier</button>
-          )}
+          ) : (null)}
         </div>
       </div>
     </div>

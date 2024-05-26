@@ -21,7 +21,7 @@ export const CartProvider = ({ children }) => {
         )
       );
     } else {
-      setCartItems([...cartItems, { ...item, quantite: 1 }]);
+      setCartItems([...cartItems, { ...item, quantite: item.quantite }]);
     }
   };
 

@@ -141,7 +141,6 @@ public class Produit {
         this.categorie = categorie;
     }
 
-    @JsonIgnore
     public Stock getStock() {
         return stock;
     }

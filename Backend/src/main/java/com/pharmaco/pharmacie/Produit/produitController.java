@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping(path = "/api/v1/produit")
@@ -64,5 +66,20 @@ public class produitController {
     @GetMapping(path = "/find/reduction")
     public Iterable<Produit> findProduitByReduction() {
         return produitService.findProduitByReduction();
+    }
+
+    @GetMapping(path = "/get/quantite")
+    public Iterable<Object[]> getProduitAndQuantite() {
+        return produitService.getProduitAndQuantite();
+    }
+
+    @GetMapping(path = "/find/categorie/offre")
+    public List<Produit> findProduitByCategorie() {
+        List<Produit> produits = new ArrayList<>();
+        produits.add(produitService.findProduitByCategorieNom("Dermatologie"));
+        produits.add(produitService.findProduitByCategorieNom("Vitamines - Minéraux"));
+        produits.add(produitService.findProduitByCategorieNom("Douleurs - Fièvre"));
+        produits.add(produitService.findProduitByCategorieNom("Circulation sanguine"));
+        return produits;
     }
 }

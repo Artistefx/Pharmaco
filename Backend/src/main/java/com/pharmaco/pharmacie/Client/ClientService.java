@@ -30,4 +30,8 @@ public class ClientService {
     public Iterable<Client> findAll() {
         return clientRepository.findAll();
     }
+
+    public Client findByEmailAndPassword(String email, String motDePasse) {
+        return clientRepository.findByEmailAndMotDePasse(email, motDePasse);
+    }
 }

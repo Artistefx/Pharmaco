@@ -1,6 +1,4 @@
-// PageLogin.jsx
 import React, { useRef, useEffect } from "react";
-
 import video1 from "../loginPage/LoginAssets/video1.mp4";
 import logo1 from "../loginPage/LoginAssets/logo1.webp";
 import { MdOutlineAlternateEmail, MdLockOutline } from "react-icons/md";
@@ -31,6 +29,44 @@ function PageLogin() {
     }
   }, []);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    const email = data.get("email");
+    const password = data.get("password");
+    const user = {
+      email: email,
+      motDePasse: password,
+    };
+
+    console.log(user);
+
+    fetch("http://localhost:8080/api/v1/client/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        if (data === true) {
+          console.log("Success");
+          // Handle successful login (e.g., redirect to another page)
+        } else {
+          console.log("Error: Invalid credentials");
+          // Handle failed login (e.g., show error message)
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
+    e.target.reset();
+  };
+
   return (
     <div className="loginPage">
       <div className="videoContainer">
@@ -43,19 +79,26 @@ function PageLogin() {
           <img src={logo1} alt="Pharmaco Logo" className="loginLogo" />
         </div>
         <h1 className="loginTitle">Welcome to Pharmaco</h1>
-        <form className="loginForm">
+        <form className="loginForm" onSubmit={handleSubmit}>
           <div className="inputGroup">
             <MdOutlineAlternateEmail className="inputIcon" />
             <input
               type="email"
               placeholder="User name or Email"
               className="loginInput"
-            />{" "}
-            {/* Added className for styling */}
+              name="email"
+              required
+            />
           </div>
           <div className="inputGroup">
             <MdLockOutline className="inputIcon" />
-            <input type="password" placeholder="Password" />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              className="loginInput"
+              required
+            />
           </div>
           <a href="#" className="forgotPassword">
             Forgot Password?
@@ -69,7 +112,7 @@ function PageLogin() {
             Sign in with Google
           </button>
           <div className="signUpPrompt">
-            Don't have an account? <a href="#">Sign up</a>
+            Don't have an account? <a href="/signup">Sign up</a>
           </div>
         </form>
       </div>

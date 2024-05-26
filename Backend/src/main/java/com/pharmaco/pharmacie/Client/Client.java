@@ -17,9 +17,9 @@ public class Client {
     private long id;
     private String nom;
     private String prenom;
-    private String DateNaissance;
+    private String dateNaissance;
     private String email;
-    private String MotDePasse;
+    private String motDePasse;
     private String Sexe;
 
     @OneToMany(mappedBy = "client" , fetch = FetchType.EAGER)
@@ -33,9 +33,9 @@ public class Client {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
-        this.DateNaissance = DateNaissance;
+        this.dateNaissance = DateNaissance;
         this.email = email;
-        this.MotDePasse = MotDePasse;
+        this.motDePasse = MotDePasse;
         this.Sexe = Sexe;
     }
 
@@ -52,7 +52,7 @@ public class Client {
     }
 
     public String getDateNaissance() {
-        return DateNaissance;
+        return dateNaissance;
     }
 
     public String getEmail() {
@@ -60,7 +60,7 @@ public class Client {
     }
 
     public String getMotDePasse() {
-        return MotDePasse;
+        return motDePasse;
     }
 
     public String getSexe() {
@@ -80,7 +80,7 @@ public class Client {
     }
 
     public void setDateNaissance(String DateNaissance) {
-        this.DateNaissance = DateNaissance;
+        this.dateNaissance = DateNaissance;
     }
 
     public void setEmail(String email) {
@@ -88,7 +88,7 @@ public class Client {
     }
 
     public void setMotDePasse(String MotDePasse) {
-        this.MotDePasse = MotDePasse;
+        this.motDePasse = MotDePasse;
     }
 
     public void setSexe(String Sexe) {

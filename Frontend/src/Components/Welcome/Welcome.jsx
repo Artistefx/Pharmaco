@@ -14,13 +14,17 @@ import AnimatedCard from "./AnimatedCard";
 import ShuffleHero from "./ShuffleHero";
 
 const Welcome = () => {
-
   const [products, setProducts] = useState([]);
+  const [offers, setOffers] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/v1/produit/find/reduction").then((res) => {
-      setProducts(res.data);
-      console.log(res.data);
+    axios
+      .get("http://localhost:8080/api/v1/produit/find/reduction")
+      .then((res) => {
+        setProducts(res.data);
+      });
+    axios.get("http://localhost:8080/api/v1/produit/find/categorie/offre").then((res) => {
+      setOffers(res.data);
     });
   }, []);
 
@@ -32,34 +36,15 @@ const Welcome = () => {
       <div className="OffreContainer1">
         <h2>Nos Offres Du Mois</h2>
         <div className="OffreContainer">
-          <WelcomeOffer
-            link={`http://localhost:3000/productPage/${1}`}
-            img={suplement}
-            alt="pharmaco"
-            title="Antibiotiques"
-            description="Les antibiotiques sont des médicaments qui détruisent ou bloquent la croissance des bactéries."
-          />
-          <WelcomeOffer
-            link={`http://localhost:3000/productPage/${2}`}
-            img={suplement}
-            alt="pharmaco"
-            title="Antibiotiques"
-            description="Les antibiotiques sont des médicaments qui détruisent ou bloquent la croissance des bactéries."
-          />
-          <WelcomeOffer
-            link={`http://localhost:3000/productPage/${3}`}
-            img={suplement}
-            alt="pharmaco"
-            title="Antibiotiques"
-            description="Les antibiotiques sont des médicaments qui détruisent ou bloquent la croissance des bactéries."
-          />
-          <WelcomeOffer
-            link={`http://localhost:3000/productPage/${4}`}
-            img={suplement}
-            alt="pharmaco"
-            title="Antibiotiques"
-            description="Les antibiotiques sont des médicaments qui détruisent ou bloquent la croissance des bactéries."
-          />
+          {offers.map((offer) => (
+            <WelcomeOffer
+              link={`http://localhost:3000/productPage/${offer.id}`}
+              img={offer.image1}
+              alt={offer.nom}
+              title={offer.nom}
+              description={offer.description}
+            />
+          ))}
         </div>
       </div>
       <div className="NouveautContainer">

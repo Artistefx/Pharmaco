@@ -59,7 +59,6 @@ export default function Example() {
                       <div className="mt-8">
                         <div className="flow-root">
                           <ul
-                            role="list"
                             className="-my-6 divide-y divide-gray-200"
                           >
                             {cartItems.map((product) => (
@@ -67,7 +66,7 @@ export default function Example() {
                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                   <img
                                     src={product.image}
-                                    alt={product.name}
+                                    alt={product.nom}
                                     className="h-full w-full object-cover object-center"
                                   />
                                 </div>
@@ -76,9 +75,7 @@ export default function Example() {
                                   <div>
                                     <div className="flex justify-between text-base font-medium text-gray-900">
                                       <h3>
-                                        <a href={product.href}>
-                                          {product.name}
-                                        </a>
+                                        <a href={product.href}>{product.nom}</a>
                                       </h3>
                                       <p className="ml-4">
                                         {product.priceReduction *
@@ -128,7 +125,7 @@ export default function Example() {
                       </p>
                       <div className="mt-6">
                         <a
-                          href="/"
+                          href="/checkout"
                           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                         >
                           Checkout

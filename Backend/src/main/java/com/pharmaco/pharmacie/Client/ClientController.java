@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
 @RequestMapping(path = "/api/v1/client")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ClientController {
     
     private final ClientService clientService;
@@ -40,5 +42,14 @@ public class ClientController {
     @PostMapping(path = "/all")
     public Iterable<Client> FindAllClient () {
         return clientService.findAll();
+    }
+
+    @PostMapping(path = "/login")
+    public Boolean Login (@RequestBody Client c) {
+        Client client = clientService.findByEmailAndPassword(c.getEmail(), c.getMotDePasse());
+        if(client != null) {
+            return true;
+        }
+        return false;
     }
 }
