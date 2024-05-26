@@ -1,6 +1,9 @@
 pipeline {
     agent any
-    tools { nodejs "node 22" }
+    tools {
+        nodejs "node 22"
+        maven "maven-3.9.7"
+    }
     environment {
         DOCKERHUB_CREDENTIALS = credentials('56')
         GESTION_IMAGE_NAME = 'artistefx/pharmaco-gestion'
