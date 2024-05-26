@@ -5,8 +5,8 @@ FROM maven:3.8.1-openjdk-11-slim as build
 WORKDIR /app
 
 # Copy the pom.xml file and the source code to the working directory
-COPY Backend/pom.xml .
-COPY Backend/src ./src
+COPY pom.xml .
+COPY src ./src
 
 # Build the Spring Boot application
 RUN mvn clean package -DskipTests
