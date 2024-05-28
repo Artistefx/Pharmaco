@@ -1,13 +1,42 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline"; // Assurez-vous d'importer XMarkIcon
+
 import { useContext } from "react";
 import { CartContext } from "../Panier/CartProvider";
 
 export default function Example() {
   const [open, setOpen] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false); // State pour suivre l'état de connexion
 
   const { cartItems, removeFromCart } = useContext(CartContext);
+
+  // Fonction pour vérifier si l'utilisateur est connecté
+  const checkLogin = () => {
+    // Votre logique de vérification de connexion ici
+    // Par exemple, si vous avez une méthode pour vérifier l'état de connexion dans votre application, vous pouvez l'appeler ici
+    // Pour l'exemple, je vais simuler la vérification en définissant loggedIn à true après 2 secondes
+    setTimeout(() => {
+      setLoggedIn(true);
+    }, 2000);
+  };
+
+  // Fonction pour gérer le clic sur le bouton de paiement
+  const handleCheckoutClick = () => {
+    // Vérifier si l'utilisateur est connecté
+    if (loggedIn) {
+      // Rediriger vers la page de paiement
+      window.location.href = "/checkout";
+    } else {
+      // Rediriger vers la page de connexion
+      window.location.href = "/login";
+    }
+  };
+
+  // Appeler la fonction de vérification de connexion lorsque le composant est monté
+  useEffect(() => {
+    checkLogin();
+  }, []);
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -124,12 +153,13 @@ export default function Example() {
                         frais de livraison et taxes calculés lors du paiement
                       </p>
                       <div className="mt-6">
-                        <a
-                          href="/checkout"
+                        <button
+                          type="button"
                           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                          onClick={handleCheckoutClick}
                         >
                           Checkout
-                        </a>
+                        </button>
                       </div>
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>

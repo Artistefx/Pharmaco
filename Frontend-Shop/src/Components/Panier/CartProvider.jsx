@@ -4,17 +4,17 @@ export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(() => {
-    const savedCartItems = localStorage.getItem("cartItems");
+    const savedCartItems = sessionStorage.getItem("cartItems");
     return savedCartItems ? JSON.parse(savedCartItems) : [];
   });
 
   const [isConnected, setIsConnected] = useState(() => {
-    const savedIsConnected = localStorage.getItem("isConnected");
+    const savedIsConnected = sessionStorage.getItem("isConnected");
     return savedIsConnected === "true";
   });
 
   const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem("user");
+    const savedUser = sessionStorage.getItem("user");
     return savedUser ? savedUser : "";
   });
 
@@ -56,7 +56,7 @@ export const CartProvider = ({ children }) => {
       }
 
       setCartItems(updatedCartItems);
-      localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+      sessionStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
     } else {
       console.log("Item not found in cart.");
     }
@@ -64,7 +64,7 @@ export const CartProvider = ({ children }) => {
 
   const clearCart = () => {
     setCartItems([]);
-    localStorage.setItem("cartItems", JSON.stringify([]));
+    sessionStorage.setItem("cartItems", JSON.stringify([]));
   };
 
   const getCartTotal = () => {
@@ -75,15 +75,15 @@ export const CartProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
   useEffect(() => {
-    localStorage.setItem("isConnected", isConnected);
+    sessionStorage.setItem("isConnected", isConnected);
   }, [isConnected]);
 
   useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(user));
+    sessionStorage.setItem("user", JSON.stringify(user));
   }, [user]);
 
   return (
