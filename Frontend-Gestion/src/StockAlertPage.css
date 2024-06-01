@@ -1,0 +1,28 @@
+/* StockAlertPage.css */
+.stock-alerts {
+    padding: 20px;
+  }
+  
+  .stock-alerts h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .stock-alerts table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .stock-alerts th, .stock-alerts td {
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .stock-alerts th {
+    background-color: #f8f9fa;
+  }
+  
+  .stock-alerts .text-danger {
+    color: #dc3545;
+  }
+  

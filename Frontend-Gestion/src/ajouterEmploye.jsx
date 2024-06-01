@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './ProductAjout.css';
 
@@ -12,154 +12,240 @@ function EmployeePage() {
   const [role, setRole] = useState('');
   const [employees, setEmployees] = useState([]);
   const [editIndex, setEditIndex] = useState(-1);
-  const [editedNom, setEditedNom] = useState('');
-  const [editedPrenom, setEditedPrenom] = useState('');
-  const [editedEmail, setEditedEmail] = useState('');
-  const [editedTelephone, setEditedTelephone] = useState('');
-  const [editedUsername, setEditedUsername] = useState('');
-  const [editedMotDePasse, setEditedMotDePasse] = useState('');
-  const [editedRole, setEditedRole] = useState('');
+  const [nomModif, setNomModif] = useState('');
+  const [prenomModif, setPrenomModif] = useState('');
+  const [emailModif, setEmailModif] = useState('');
+  const [telephoneModif, setTelephoneModif] = useState('');
+  const [usernameModif, setUsernameModif] = useState('');
+  const [motDePasseModif, setMotDePasseModif] = useState('');
+  const [roleModif, setRoleModif] = useState('');
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
 
+  const apiUrl = 'http://127.0.0.1:8088/api/v1/employe';
+
+  useEffect(() => {
+    fetch(`${apiUrl}/all`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: null,
+    }).then(response => response.json())
+      .then(data => {
+        console.log('Employees:', data);
+        setEmployees(data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setMessage('Erreur lors de la récupération des employés.');
+        setMessageType('danger');
+      });
+  }, []);
+
   const handleInputChange = (setter) => (e) => setter(e.target.value);
 
-  const handleAddEmployee = () => {
+  const handleAddEmployee = (e) => {
+    e.preventDefault();
+
     if (!nom || !prenom || !email || !telephone || !username || !motDePasse || !role) {
       setMessage('Veuillez remplir tous les champs correctement.');
       setMessageType('danger');
       return;
     }
 
-    const newEmployee = { id: Date.now().toString(), nom, prenom, email, telephone, username, motDePasse, role };
-    setEmployees([...employees, newEmployee]);
-    setNom('');
-    setPrenom('');
-    setEmail('');
-    setTelephone('');
-    setUsername('');
-    setMotDePasse('');
-    setRole('');
-    setMessage('Employé ajouté avec succès !');
-    setMessageType('success');
+    const newEmployee = {
+      nom: nom,
+      prenom: prenom,
+      email: email,
+      telephone: telephone,
+      username: username,
+      motDePasse: motDePasse,
+      role: role
+    };
+
+    fetch(`${apiUrl}/add`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newEmployee),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Added employee:', data);
+        setEmployees([...employees, data]);
+        setNom('');
+        setPrenom('');
+        setEmail('');
+        setTelephone('');
+        setUsername('');
+        setMotDePasse('');
+        setRole('');
+        setMessage('Employé ajouté avec succès !');
+        setMessageType('success');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setMessage('Erreur lors de l\'ajout de l\'employé.');
+        setMessageType('danger');
+      });
   };
 
   const handleEditEmployee = (index) => {
     const employee = employees[index];
     setEditIndex(index);
-    setEditedNom(employee.nom);
-    setEditedPrenom(employee.prenom);
-    setEditedEmail(employee.email);
-    setEditedTelephone(employee.telephone);
-    setEditedUsername(employee.username);
-    setEditedMotDePasse(employee.motDePasse);
-    setEditedRole(employee.role);
+    setNomModif(employee.nom);
+    setPrenomModif(employee.prenom);
+    setEmailModif(employee.email);
+    setTelephoneModif(employee.telephone);
+    setUsernameModif(employee.username);
+    setMotDePasseModif(employee.motDePasse);
+    setRoleModif(employee.role);
   };
 
   const handleSaveEdit = () => {
-    const updatedEmployees = employees.map((employee, index) =>
-      index === editIndex
-        ? { ...employee, nom: editedNom, prenom: editedPrenom, email: editedEmail, telephone: editedTelephone, username: editedUsername, motDePasse: editedMotDePasse, role: editedRole }
-        : employee
-    );
-    setEmployees(updatedEmployees);
-    setEditIndex(-1);
-    setMessage('Employé modifié avec succès !');
-    setMessageType('success');
+    const updatedEmployee = {
+      ...employees[editIndex],
+      nom: nomModif,
+      prenom: prenomModif,
+      email: emailModif,
+      telephone: telephoneModif,
+      username: usernameModif,
+      motDePasse: motDePasseModif,
+      role: roleModif
+    };
+
+    fetch(`${apiUrl}/update`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedEmployee),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Updated employee:', data);
+        const updatedEmployees = employees.map((employee, index) =>
+          index === editIndex ? data : employee
+        );
+        setEmployees(updatedEmployees);
+        setEditIndex(-1);
+        setMessage('Employé modifié avec succès !');
+        setMessageType('success');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setMessage('Erreur lors de la modification de l\'employé.');
+        setMessageType('danger');
+      });
   };
 
-  const handleDeleteEmployee = (index) => {
-    const updatedEmployees = employees.filter((_, i) => i !== index);
-    setEmployees(updatedEmployees);
-    setMessage('Employé supprimé avec succès !');
-    setMessageType('success');
+  const handleDeleteEmployee = (id) => {
+    fetch(`${apiUrl}/delete/${id}`, {
+      method: 'PUT',
+    })
+      .then(() => {
+        console.log('Deleted employee ID:', id);
+        const updatedEmployees = employees.filter((employee) => employee.id !== id);
+        setEmployees(updatedEmployees);
+        setMessage('Employé supprimé avec succès !');
+        setMessageType('success');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setMessage('Erreur lors de la suppression de l\'employé.');
+        setMessageType('danger');
+      });
   };
 
   return (
     <div className="container">
       <h1 className="mt-5">Ajouter un employé</h1>
       {message && <div className={`alert alert-${messageType}`}>{message}</div>}
-      <div className="row mb-3">
-        <div className="col-md-6">
-          <label htmlFor="nom" className="form-label">Nom:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="nom"
-            value={nom}
-            onChange={handleInputChange(setNom)}
-          />
+      <form onSubmit={handleAddEmployee}>
+        <div className="row mb-3">
+          <div className="col-md-6">
+            <label htmlFor="nom" className="form-label">Nom:</label>
+            <input
+              type="text"
+              className="form-control"
+              id="nom"
+              value={nom}
+              onChange={handleInputChange(setNom)}
+            />
+          </div>
+          <div className="col-md-6">
+            <label htmlFor="prenom" className="form-label">Prénom:</label>
+            <input
+              type="text"
+              className="form-control"
+              id="prenom"
+              value={prenom}
+              onChange={handleInputChange(setPrenom)}
+            />
+          </div>
         </div>
-        <div className="col-md-6">
-          <label htmlFor="prenom" className="form-label">Prénom:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="prenom"
-            value={prenom}
-            onChange={handleInputChange(setPrenom)}
-          />
+        <div className="row mb-3">
+          <div className="col-md-6">
+            <label htmlFor="email" className="form-label">Email:</label>
+            <input
+              type="email"
+              className="form-control"
+              id="email"
+              value={email}
+              onChange={handleInputChange(setEmail)}
+            />
+          </div>
+          <div className="col-md-6">
+            <label htmlFor="telephone" className="form-label">Téléphone:</label>
+            <input
+              type="text"
+              className="form-control"
+              id="telephone"
+              value={telephone}
+              onChange={handleInputChange(setTelephone)}
+            />
+          </div>
         </div>
-      </div>
-      <div className="row mb-3">
-        <div className="col-md-6">
-          <label htmlFor="email" className="form-label">Email:</label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            value={email}
-            onChange={handleInputChange(setEmail)}
-          />
+        <div className="row mb-3">
+          <div className="col-md-6">
+            <label htmlFor="username" className="form-label">Nom d'utilisateur:</label>
+            <input
+              type="text"
+              className="form-control"
+              id="username"
+              value={username}
+              onChange={handleInputChange(setUsername)}
+            />
+          </div>
+          <div className="col-md-6">
+            <label htmlFor="motDePasse" className="form-label">Mot de passe:</label>
+            <input
+              type="password"
+              className="form-control"
+              id="motDePasse"
+              value={motDePasse}
+              onChange={handleInputChange(setMotDePasse)}
+            />
+          </div>
         </div>
-        <div className="col-md-6">
-          <label htmlFor="telephone" className="form-label">Téléphone:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="telephone"
-            value={telephone}
-            onChange={handleInputChange(setTelephone)}
-          />
+        <div className="row mb-3">
+          <div className="col-md-6">
+            <label htmlFor="role" className="form-label">Rôle:</label>
+            <input
+              type="text"
+              className="form-control"
+              id="role"
+              value={role}
+              onChange={handleInputChange(setRole)}
+            />
+          </div>
         </div>
-      </div>
-      <div className="row mb-3">
-        <div className="col-md-6">
-          <label htmlFor="username" className="form-label">Nom d'utilisateur:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="username"
-            value={username}
-            onChange={handleInputChange(setUsername)}
-          />
+        <div className="d-flex justify-content-center">
+          <button type="submit" className="btn btn-outline-success">Ajouter l'employé</button>
         </div>
-        <div className="col-md-6">
-          <label htmlFor="motDePasse" className="form-label">Mot de passe:</label>
-          <input
-            type="password"
-            className="form-control"
-            id="motDePasse"
-            value={motDePasse}
-            onChange={handleInputChange(setMotDePasse)}
-          />
-        </div>
-      </div>
-      <div className="row mb-3">
-        <div className="col-md-6">
-          <label htmlFor="role" className="form-label">Rôle:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="role"
-            value={role}
-            onChange={handleInputChange(setRole)}
-          />
-        </div>
-      </div>
-      <div className="d-flex justify-content-center">
-        <button className="btn btn-outline-success" onClick={handleAddEmployee}>Ajouter l'employé</button>
-      </div>
+      </form>
       <h2 className="mt-5">Liste des employés</h2>
       <table className="table">
         <thead>
@@ -177,89 +263,36 @@ function EmployeePage() {
         </thead>
         <tbody>
           {employees.map((employee, index) => (
-            <tr key={index}>
-              <td>{employee.id}</td>
-              <td>{editIndex === index ? (
-                <input
-                  type="text"
-                  className="form-control"
-                  value={editedNom}
-                  onChange={handleInputChange(setEditedNom)}
-                />
-              ) : (
-                employee.nom
-              )}</td>
-              <td>{editIndex === index ? (
-                <input
-                  type="text"
-                  className="form-control"
-                  value={editedPrenom}
-                  onChange={handleInputChange(setEditedPrenom)}
-                />
-              ) : (
-                employee.prenom
-              )}</td>
-              <td>{editIndex === index ? (
-                <input
-                  type="email"
-                  className="form-control"
-                  value={editedEmail}
-                  onChange={handleInputChange(setEditedEmail)}
-                />
-              ) : (
-                employee.email
-              )}</td>
-              <td>{editIndex === index ? (
-                <input
-                  type="text"
-                  className="form-control"
-                  value={editedTelephone}
-                  onChange={handleInputChange(setEditedTelephone)}
-                />
-              ) : (
-                employee.telephone
-              )}</td>
-              <td>{editIndex === index ? (
-                <input
-                  type="text"
-                  className="form-control"
-                  value={editedUsername}
-                  onChange={handleInputChange(setEditedUsername)}
-                />
-              ) : (
-                employee.username
-              )}</td>
-              <td>{editIndex === index ? (
-                <input
-                  type="password"
-                  className="form-control"
-                  value={editedMotDePasse}
-                  onChange={handleInputChange(setEditedMotDePasse)}
-                />
-              ) : (
-                employee.motDePasse
-              )}</td>
-              <td>{editIndex === index ? (
-                <input
-                  type="text"
-                  className="form-control"
-                  value={editedRole}
-                  onChange={handleInputChange(setEditedRole)}
-                />
-              ) : (
-                employee.role
-              )}</td>
-              <td>
-                {editIndex === index ? (
-                  <button className="btn btn-success" onClick={handleSaveEdit}>Enregistrer</button>
-                ) : (
-                  <>
-                    <button className="btn btn-info" onClick={() => handleEditEmployee(index)}>Modifier</button>
-                    <button className="btn btn-danger" onClick={() => handleDeleteEmployee(index)}>Supprimer</button>
-                  </>
-                )}
-              </td>
-            </tr>
+            editIndex === index ? (
+              <tr key={employee.id}>
+                <td>{employee.id}</td>
+                <td><input type="text" value={nomModif} onChange={handleInputChange(setNomModif)} /></td>
+                <td><input type="text" value={prenomModif} onChange={handleInputChange(setPrenomModif)} /></td>
+                <td><input type="email" value={emailModif} onChange={handleInputChange(setEmailModif)} /></td>
+                <td><input type="text" value={telephoneModif} onChange={handleInputChange(setTelephoneModif)} /></td>
+                <td><input type="text" value={usernameModif} onChange={handleInputChange(setUsernameModif)} /></td>
+                <td><input type="password" value={motDePasseModif} onChange={handleInputChange(setMotDePasseModif)} /></td>
+                <td><input type="text" value={roleModif} onChange={handleInputChange(setRoleModif)} /></td>
+                <td>
+                  <button onClick={handleSaveEdit} className="btn btn-success">Enregistrer</button>
+                </td>
+              </tr>
+            ) : (
+              <tr key={employee.id}>
+                <td>{employee.id}</td>
+                <td>{employee.nom}</td>
+                <td>{employee.prenom}</td>
+                <td>{employee.email}</td>
+                <td>{employee.telephone}</td>
+                <td>{employee.username}</td>
+                <td>{employee.motDePasse}</td>
+                <td>{employee.role}</td>
+                <td>
+                  <button onClick={() => handleEditEmployee(index)} className="btn btn-primary me-2">Modifier</button>
+                  <button onClick={() => handleDeleteEmployee(employee.id)} className="btn btn-danger">Supprimer</button>
+                </td>
+              </tr>
+            )
           ))}
         </tbody>
       </table>

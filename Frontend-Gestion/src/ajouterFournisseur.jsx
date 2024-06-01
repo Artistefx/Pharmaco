@@ -18,25 +18,30 @@ function FournisseurPage() {
 
   const apiUrl = 'http://127.0.0.1:8080/api/v1/fournisseur';
 
-  
   useEffect(() => {
-    fetch(`${apiUrl}/all`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: null,
-    }).then(response => response.json())
-      .then(data => {
-        console.log('Fournisseur:', data); // Log fetched data
-        setFournisseurs(data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        setMessage('Erreur lors de la récupération des fournisseurs.');
-        setMessageType('danger');
-      });
+    fetchFournisseurs();
   }, []);
+
+  const fetchFournisseurs = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/all`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: null,
+      });
+      if (!response.ok) {
+        throw new Error('Erreur lors de la récupération des fournisseurs.');
+      }
+      const data = await response.json();
+      setFournisseurs(data);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des fournisseurs:', error);
+      setMessage('Erreur lors de la récupération des fournisseurs.');
+      setMessageType('danger');
+    }
+  };
 
   const handleInputChange = (setter) => (e) => setter(e.target.value);
 
@@ -193,6 +198,7 @@ function FournisseurPage() {
             />
           </div>
         </div>
+               
         <div className="d-flex justify-content-center">
           <button type="submit" className="btn btn-outline-success">Ajouter le fournisseur</button>
           </div>
@@ -272,3 +278,4 @@ function FournisseurPage() {
 }
 
 export default FournisseurPage;
+
