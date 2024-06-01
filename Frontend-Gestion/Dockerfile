@@ -1,4 +1,4 @@
-# Use Node.js 21.1 as the base image
+# Use the official Node.js image as a base
 FROM node:21.1 as build
 
 # Set the working directory inside the container
@@ -17,13 +17,13 @@ COPY . .
 RUN npm run build
 
 # Verify the build output
-RUN ls -al /app/build
+RUN ls -al /app/dist
 
 # Use Nginx to serve the static files
 FROM nginx:alpine
 
 # Copy the build output from the previous stage to the nginx server directory
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
