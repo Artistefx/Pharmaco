@@ -1,5 +1,5 @@
-# Use a later Node.js version that supports modern syntax
-FROM node:16 as build
+# Use Node.js 21.1 as the base image
+FROM node:21.1 as build
 
 # Set the working directory inside the container
 WORKDIR /app
