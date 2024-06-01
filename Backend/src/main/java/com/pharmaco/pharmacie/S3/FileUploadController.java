@@ -31,9 +31,9 @@ public class FileUploadController {
 
     public FileUploadController(
         @Value("${aws.accessKeyId}") String accessKeyId,
-        @Value("${aws.secretKey}") String secretKey,
+        @Value("${aws.secKey}") String secKey,
         @Value("${aws.region}") String region) {
-        BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKeyId, secretKey);
+        BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKeyId, secKey);
         this.s3Client = AmazonS3ClientBuilder.standard()
                 .withRegion(Regions.fromName(region))
                 .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
