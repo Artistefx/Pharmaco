@@ -39,7 +39,7 @@ pipeline {
                 }
             }
         }
-        stage('Build Docker Image for Frontend-Shop') {
+        /* stage('Build Docker Image for Frontend-Shop') {
             steps {
                 dir('Frontend-Shop') {
                     bat "docker build -t ${SHOP_IMAGE_NAME}:${BUILD_NUMBER} ."
@@ -52,7 +52,7 @@ pipeline {
                     bat "docker build -t ${BACKEND_IMAGE_NAME}:${BUILD_NUMBER} ."
                 }
             }
-        }
+        } */
         stage('Push Frontend-Gestion to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: '56', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
@@ -63,7 +63,7 @@ pipeline {
                 }
             }
         }
-        stage('Push Frontend-Shop to DockerHub') {
+        /* stage('Push Frontend-Shop to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: '56', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
                     dir('Frontend-Shop') {
@@ -112,7 +112,7 @@ pipeline {
                 // Clean up any stopped containers
                 bat "docker container prune -f -y"
             }
-        }
+        } */
     }
     post {
         always {
