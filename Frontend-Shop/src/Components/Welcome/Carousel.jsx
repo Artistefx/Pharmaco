@@ -21,7 +21,15 @@ const Carousel = ({ products }) => {
   const { addToCart } = useContext(CartContext);
 
   const handleAddToCart = (item) => {
-    addToCart(item);
+    const item1 = {
+      id: item.id,
+      nom: item.nom,
+      quantite: 1,
+      priceReduction: item.priceReduction,
+      priceOriginal: item.priceOriginal,
+      image: item.image1
+    };
+    addToCart(item1);
   };
 
   return (

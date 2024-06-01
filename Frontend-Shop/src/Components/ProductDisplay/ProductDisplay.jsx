@@ -6,7 +6,7 @@ const ProductDisplay = (props) => {
   const [quantity, setQuantity] = useState(1);
   const [stock, setStock] = useState(0);
   const [source, setSource] = useState();
-  const { addToCart } = useContext(CartContext);
+  const { addToCart , feedbackMessage } = useContext(CartContext);
 
   useEffect(() => {
     if (props.product.image1) {
@@ -38,13 +38,18 @@ const ProductDisplay = (props) => {
       image: props.product.image1,
       nom: props.product.nom,
       quantite: quantity,
-      priceReduction: props.product.priceReduction * quantity,
+      priceReduction: props.product.priceReduction,
       TauxReduction: Math.round((1 - props.product.priceReduction / props.product.priceOriginal) * 100),
     });
   };
 
   return (
     <div className="ProductDisplay">
+      {feedbackMessage && (
+        <div className="fixed top-16 right-4 bg-green-500 text-white p-4 rounded shadow-lg z-50">
+          {feedbackMessage}
+        </div>
+      )}
       <div className="productdisplay-left">
         <div className="productdisplay-img-list">
           <img src={props.product.image1} alt="" onClick={handleImageClick} />

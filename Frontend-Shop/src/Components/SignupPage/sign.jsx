@@ -25,37 +25,71 @@ function Sign() {
       sexe: sexe,
     };
 
-    fetch("http://127.0.0.1:8080/api/v1/client/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        fetch("http://127.0.0.1:8080/api/v1/client/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            setUser(data);
-            ToggleIsConnected();
-            window.location.href = "/";
-          })
-          .catch((error) => {
-            console.error("Error registering user:", error);
-          });
+    const createUser = async (user) => {
+      try {
+        const response = await fetch(
+          "http://127.0.0.1:8080/api/v1/client/add",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user),
+          }
+        );
 
-        console.log("Success:", data);
-      })
-      .catch((error) => {
+        if (!response.ok) {
+          throw new Error(`Error creating user: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+      } catch (error) {
         console.error("Error creating user:", error);
-      });
+        throw error;
+      }
+    };
+
+    const registerUser = async (userData) => {
+      try {
+        const response = await fetch(
+          "http://127.0.0.1:8080/api/v1/client/register",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Error registering user: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error("Error registering user:", error);
+        throw error;
+      }
+    };
+
+    const handleUserCreationAndRegistration = async (user) => {
+      try {
+        const createdUser = await createUser(user);
+        const registeredUser = await registerUser(createdUser);
+
+        sessionStorage.setItem("user", JSON.stringify(registeredUser));
+        setUser(registeredUser); // Update state
+        ToggleIsConnected();
+        window.location.href = "/";
+      } catch (error) {
+        console.error("Error in user creation and registration flow:", error);
+      }
+    };
+
+    handleUserCreationAndRegistration(user);
   };
 
   return (

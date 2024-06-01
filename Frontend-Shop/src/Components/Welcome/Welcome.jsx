@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect , useContext } from "react";
 import axios from "axios";
 /* import pharmaco from "./Assets/pharmaco.webp"; */
 import WelcomeOffer from "./WelcomeOffer";
@@ -14,12 +14,10 @@ import ShuffleHero from "./ShuffleHero";
 import { CartContext } from "../Panier/CartProvider";
 
 const Welcome = () => {
-  const { isConnected, user } = React.useContext(CartContext);
   const [products, setProducts] = useState([]);
   const [offers, setOffers] = useState([]);
 
-  console.log(user);
-  console.log(isConnected);
+  const { feedbackMessage  } = useContext(CartContext);
 
   useEffect(() => {
     axios
@@ -34,6 +32,11 @@ const Welcome = () => {
 
   return (
     <div className="Welcome">
+      {feedbackMessage && (
+        <div className="fixed top-16 right-4 bg-green-500 text-white p-4 rounded shadow-lg z-50">
+          {feedbackMessage}
+        </div>
+      )}
       <div className="hero">
         <ShuffleHero />
       </div>

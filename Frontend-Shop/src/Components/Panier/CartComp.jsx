@@ -7,7 +7,9 @@ import { CartContext } from "../Panier/CartProvider";
 export default function Example() {
   const [open, setOpen] = useState(true);
 
-  const { cartItems, removeFromCart } = useContext(CartContext);
+  const { cartItems, removeFromCart , isConnected} = useContext(CartContext);
+
+  const url = isConnected ? "/checkout" : "/login";
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -125,7 +127,7 @@ export default function Example() {
                       </p>
                       <div className="mt-6">
                         <a
-                          href="/checkout"
+                          href={url}
                           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                         >
                           Checkout

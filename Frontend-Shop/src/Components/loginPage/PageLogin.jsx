@@ -9,7 +9,7 @@ import { CartContext } from "../Panier/CartProvider";
 function PageLogin() {
   const videoRef = useRef(null);
 
-  const { ToggleIsConnected } = React.useContext(CartContext);
+  const { ToggleIsConnected, setUser } = React.useContext(CartContext);
 
   useEffect(() => {
     const start = 10;
@@ -42,8 +42,6 @@ function PageLogin() {
       motDePasse: password,
     };
 
-    console.log(user);
-
     fetch("http://localhost:8080/api/v1/client/login", {
       method: "POST",
       headers: {
@@ -51,14 +49,27 @@ function PageLogin() {
       },
       body: JSON.stringify(user),
     })
-      .then((response) => {
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
         if (data === true) {
-          console.log("Success");
           ToggleIsConnected();
-          window.location.href = "/";
+          console.log(data);
+          fetch("http://localhost:8080/api/v1/client/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              sessionStorage.setItem("user", JSON.stringify(data));
+              setUser(data); // Update state
+              window.location.href = "/";
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
         } else {
           console.log("Error: Invalid credentials");
           // Handle failed login (e.g., show error message)

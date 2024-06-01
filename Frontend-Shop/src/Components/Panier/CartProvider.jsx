@@ -4,19 +4,22 @@ export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(() => {
-    const savedCartItems = localStorage.getItem("cartItems");
+    const savedCartItems = sessionStorage.getItem("cartItems");
     return savedCartItems ? JSON.parse(savedCartItems) : [];
   });
 
   const [isConnected, setIsConnected] = useState(() => {
-    const savedIsConnected = localStorage.getItem("isConnected");
+    const savedIsConnected = sessionStorage.getItem("isConnected");
     return savedIsConnected === "true";
   });
 
   const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem("user");
-    return savedUser ? savedUser : "";
+    const savedUser = sessionStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
   });
+
+  const [feedbackMessage, setFeedbackMessage] = useState('');
+  
 
   const ToggleIsConnected = () => {
     setIsConnected((prevState) => !prevState);
@@ -36,6 +39,13 @@ export const CartProvider = ({ children }) => {
     } else {
       setCartItems([...cartItems, { ...item, quantite: item.quantite }]);
     }
+
+    setFeedbackMessage(`Added ${item.nom} to the cart`);
+
+    // Clear the feedback message after 3 seconds
+    setTimeout(() => {
+      setFeedbackMessage('');
+    }, 4000);
   };
 
   const removeFromCart = (item) => {
@@ -56,15 +66,28 @@ export const CartProvider = ({ children }) => {
       }
 
       setCartItems(updatedCartItems);
-      localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+      sessionStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
     } else {
       console.log("Item not found in cart.");
     }
+
+    setFeedbackMessage(`Removed ${item.nom} from the cart`);
+
+    // Clear the feedback message after 3 seconds
+    setTimeout(() => {
+      setFeedbackMessage('');
+    }, 4000);
   };
 
   const clearCart = () => {
     setCartItems([]);
-    localStorage.setItem("cartItems", JSON.stringify([]));
+    sessionStorage.setItem("cartItems", JSON.stringify([]));
+
+    setFeedbackMessage('Cleared the cart');
+    // Clear the feedback message after 3 seconds
+    setTimeout(() => {
+      setFeedbackMessage('');
+    }, 4000);
   };
 
   const getCartTotal = () => {
@@ -75,15 +98,15 @@ export const CartProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
   useEffect(() => {
-    localStorage.setItem("isConnected", isConnected);
+    sessionStorage.setItem("isConnected", isConnected);
   }, [isConnected]);
 
   useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(user));
+    sessionStorage.setItem("user", JSON.stringify(user));
   }, [user]);
 
   return (
@@ -98,6 +121,7 @@ export const CartProvider = ({ children }) => {
         ToggleIsConnected,
         user,
         setUser,
+        feedbackMessage,
       }}
     >
       {children}
