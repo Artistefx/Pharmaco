@@ -24,7 +24,8 @@ public class Commande {
     private String status;
     private String produits;
     private double MontantTotal;
-    private int client;
+    private String client;
+    private String UrlOrdonnance;
 
     @ManyToOne
     private Fournisseur fournisseur;   
@@ -35,7 +36,7 @@ public class Commande {
     public Commande() {
     }
 
-    public Commande(long id, String date, String status, String Adresse , int client , String telephone , double MontantTotal , String produits) {
+    public Commande(long id, String date, String status, String Adresse , String client , String telephone , double MontantTotal , String produits , String UrlOrdonnance) {
         this.id = id; 
         this.date = date;
         this.status = status;
@@ -44,6 +45,7 @@ public class Commande {
         this.telephone = telephone;
         this.produits = produits;
         this.client = client;
+        this.UrlOrdonnance = UrlOrdonnance;
     }
 
     public long getId() {
@@ -86,8 +88,12 @@ public class Commande {
         return facture;
     }
 
-    public int getClient() {
+    public String getClient() {
         return client;
+    }
+
+    public String getUrlOrdonnance() {
+        return UrlOrdonnance;
     }
 
     public void setFournisseur(Fournisseur fournisseur) {
@@ -131,7 +137,11 @@ public class Commande {
         this.produits = produits;
     }
 
-    public void setClient(int client) {
+    public void setClient(String client) {
         this.client = client;
+    }
+
+    public void setUrlOrdonnance(String UrlOrdonnance) {
+        this.UrlOrdonnance = UrlOrdonnance;
     }
 }
