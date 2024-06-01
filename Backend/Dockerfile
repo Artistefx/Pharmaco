@@ -1,5 +1,5 @@
-# Use the official Maven image as a base
-FROM maven:3.9.6-eclipse-temurin-11 as build
+# Use the official Maven image as a base with JDK 17
+FROM maven:3.9.6-eclipse-temurin-17 as build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -12,7 +12,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Use the official OpenJDK image as a base for running the application
-FROM eclipse-temurin:11-jre
+FROM eclipse-temurin:17-jre
 
 # Copy the built jar file from the previous stage to the current stage
 COPY --from=build /app/target/*.jar /app/app.jar
