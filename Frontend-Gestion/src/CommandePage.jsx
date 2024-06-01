@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function CommandePage() {
@@ -6,32 +6,81 @@ function CommandePage() {
   const [date, setDate] = useState('');
   const [status, setStatus] = useState('');
   const [montantTotal, setMontantTotal] = useState('');
+  const [clientId, setClientId] = useState('');
+  const [fournisseurId, setFournisseurId] = useState('');
   const [commandes, setCommandes] = useState([]);
   const [editIndex, setEditIndex] = useState(-1);
   const [editedType, setEditedType] = useState('');
   const [editedDate, setEditedDate] = useState('');
   const [editedStatus, setEditedStatus] = useState('');
   const [editedMontantTotal, setEditedMontantTotal] = useState('');
+  const [editedClientId, setEditedClientId] = useState('');
+  const [editedFournisseurId, setEditedFournisseurId] = useState('');
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
+
+  const apiUrl = 'http://127.0.0.1:8088/api/v1/commande';
+
+  const fetchCommandes = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/all`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Erreur lors de la récupération des commandes');
+      }
+      const data = await response.json();
+      setCommandes(data);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des commandes:', error);
+      setMessage('Erreur lors de la récupération des commandes.');
+      setMessageType('danger');
+    }
+  };
+
+  useEffect(() => {
+    fetchCommandes();
+  }, []);
 
   const handleInputChange = (setter) => (e) => setter(e.target.value);
 
   const handleAddCommande = () => {
-    if (!type || !date || !status || !montantTotal) {
+    if (!type || !date || !status || !montantTotal || !clientId || !fournisseurId) {
       setMessage('Veuillez remplir tous les champs correctement.');
       setMessageType('danger');
       return;
     }
 
-    const newCommande = { id: Date.now().toString(), type, date, status, montantTotal };
-    setCommandes([...commandes, newCommande]);
-    setType('');
-    setDate('');
-    setStatus('');
-    setMontantTotal('');
-    setMessage('Commande ajoutée avec succès !');
-    setMessageType('success');
+    const newCommande = { type, date, status, montantTotal, clientId, fournisseurId };
+
+    fetch(`${apiUrl}/add`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newCommande),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Added commande:', data);
+        setCommandes([...commandes, data]);
+        setType('');
+        setDate('');
+        setStatus('');
+        setMontantTotal('');
+        setClientId('');
+        setFournisseurId('');
+        setMessage('Commande ajoutée avec succès !');
+        setMessageType('success');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setMessage('Erreur lors de l\'ajout de la commande.');
+        setMessageType('danger');
+      });
   };
 
   const handleEditCommande = (index) => {
@@ -41,25 +90,62 @@ function CommandePage() {
     setEditedDate(commande.date);
     setEditedStatus(commande.status);
     setEditedMontantTotal(commande.montantTotal);
+    setEditedClientId(commande.clientId);
+    setEditedFournisseurId(commande.fournisseurId);
   };
 
   const handleSaveEdit = () => {
-    const updatedCommandes = commandes.map((commande, index) =>
-      index === editIndex
-        ? { ...commande, type: editedType, date: editedDate, status: editedStatus, montantTotal: editedMontantTotal }
-        : commande
-    );
-    setCommandes(updatedCommandes);
-    setEditIndex(-1);
-    setMessage('Commande modifiée avec succès !');
-    setMessageType('success');
+    const updatedCommande = {
+      ...commandes[editIndex],
+      type: editedType,
+      date: editedDate,
+      status: editedStatus,
+      montantTotal: editedMontantTotal,
+      clientId: editedClientId,
+      fournisseurId: editedFournisseurId
+    };
+
+    fetch(`${apiUrl}/update/${updatedCommande.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedCommande),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Updated commande:', data);
+        const updatedCommandes = commandes.map((commande, index) =>
+          index === editIndex ? data : commande
+        );
+        setCommandes(updatedCommandes);
+        setEditIndex(-1);
+        setMessage('Commande modifiée avec succès !');
+        setMessageType('success');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setMessage('Erreur lors de la modification de la commande.');
+        setMessageType('danger');
+      });
   };
 
-  const handleDeleteCommande = (index) => {
-    const updatedCommandes = commandes.filter((_, i) => i !== index);
-    setCommandes(updatedCommandes);
-    setMessage('Commande supprimée avec succès !');
-    setMessageType('success');
+  const handleDeleteCommande = (id) => {
+    fetch(`${apiUrl}/delete/${id}`, {
+      method: 'DELETE',
+    })
+      .then(() => {
+        console.log('Deleted commande ID:', id);
+        const updatedCommandes = commandes.filter((commande) => commande.id !== id);
+        setCommandes(updatedCommandes);
+        setMessage('Commande supprimée avec succès !');
+        setMessageType('success');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setMessage('Erreur lors de la suppression de la commande.');
+        setMessageType('danger');
+      });
   };
 
   return (
@@ -118,6 +204,28 @@ function CommandePage() {
           />
         </div>
       </div>
+      <div className="row mb-3">
+        <div className="col-md-6">
+          <label htmlFor="clientId" className="form-label">Client ID:</label>
+          <input
+            type="text"
+            className="form-control"
+            id="clientId"
+            value={clientId}
+            onChange={handleInputChange(setClientId)}
+          />
+        </div>
+        <div className="col-md-6">
+          <label htmlFor="fournisseurId" className="form-label">Fournisseur ID:</label>
+          <input
+            type="text"
+            className="form-control"
+            id="fournisseurId"
+            value={fournisseurId}
+            onChange={handleInputChange(setFournisseurId)}
+          />
+        </div>
+      </div>
       <div className="d-flex justify-content-center">
         <button className="btn btn-outline-success" onClick={handleAddCommande}>Ajouter la commande</button>
       </div>
@@ -130,6 +238,8 @@ function CommandePage() {
             <th>Date</th>
             <th>Status</th>
             <th>Montant Total</th>
+            <th>Client ID</th>
+            <th>Fournisseur ID</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -185,13 +295,33 @@ function CommandePage() {
               ) : (
                 commande.montantTotal
               )}</td>
+              <td>{editIndex === index ? (
+                <input
+                  type="text"
+                  className="form-control"
+                  value={editedClientId}
+                  onChange={handleInputChange(setEditedClientId)}
+                />
+              ) : (
+                commande.clientId
+              )}</td>
+              <td>{editIndex === index ? (
+                <input
+                  type="text"
+                  className="form-control"
+                  value={editedFournisseurId}
+                  onChange={handleInputChange(setEditedFournisseurId)}
+                />
+              ) : (
+                commande.fournisseurId
+              )}</td>
               <td>
                 {editIndex === index ? (
                   <button className="btn btn-success" onClick={handleSaveEdit}>Enregistrer</button>
                 ) : (
                   <>
                     <button className="btn btn-info" onClick={() => handleEditCommande(index)}>Modifier</button>
-                    <button className="btn btn-danger" onClick={() => handleDeleteCommande(index)}>Supprimer</button>
+                    <button className="btn btn-danger" onClick={() => handleDeleteCommande(commande.id)}>Supprimer</button>
                   </>
                 )}
               </td>

@@ -1,34 +1,81 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function FacturePage() {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [montantTotal, setMontantTotal] = useState('');
+  const [commandeId, setCommandeId] = useState('');
   const [factures, setFactures] = useState([]);
   const [editIndex, setEditIndex] = useState(-1);
   const [editedDescription, setEditedDescription] = useState('');
   const [editedDate, setEditedDate] = useState('');
   const [editedMontantTotal, setEditedMontantTotal] = useState('');
+  const [editedCommandeId, setEditedCommandeId] = useState('');
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
 
+  const apiUrl = 'http://127.0.0.1:8088/api/v1/facture';
+
+  const fetchFactures = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/all`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Erreur lors de la récupération des factures');
+      }
+      const data = await response.json();
+      setFactures(data);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des factures:', error);
+      setMessage('Erreur lors de la récupération des factures.');
+      setMessageType('danger');
+    }
+  };
+
+  useEffect(() => {
+    fetchFactures();
+  }, []);
+
   const handleInputChange = (setter) => (e) => setter(e.target.value);
 
-  const handleAddFacture = () => {
-    if (!description || !date || !montantTotal) {
+  const handleAddFacture = async () => {
+    if (!description || !date || !montantTotal || !commandeId) {
       setMessage('Veuillez remplir tous les champs correctement.');
       setMessageType('danger');
       return;
     }
 
-    const newFacture = { id: Date.now().toString(), description, date, montantTotal };
-    setFactures([...factures, newFacture]);
-    setDescription('');
-    setDate('');
-    setMontantTotal('');
-    setMessage('Facture ajoutée avec succès !');
-    setMessageType('success');
+    const newFacture = { description, date, montantTotal, commandeId };
+
+    try {
+      const response = await fetch(`${apiUrl}/add`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newFacture),
+      });
+      if (!response.ok) {
+        throw new Error('Erreur lors de l\'ajout de la facture');
+      }
+      const data = await response.json();
+      setFactures([...factures, data]);
+      setDescription('');
+      setDate('');
+      setMontantTotal('');
+      setCommandeId('');
+      setMessage('Facture ajoutée avec succès !');
+      setMessageType('success');
+    } catch (error) {
+      console.error('Erreur lors de l\'ajout de la facture:', error);
+      setMessage('Erreur lors de l\'ajout de la facture.');
+      setMessageType('danger');
+    }
   };
 
   const handleEditFacture = (index) => {
@@ -37,25 +84,61 @@ function FacturePage() {
     setEditedDescription(facture.description);
     setEditedDate(facture.date);
     setEditedMontantTotal(facture.montantTotal);
+    setEditedCommandeId(facture.commandeId);
   };
 
-  const handleSaveEdit = () => {
-    const updatedFactures = factures.map((facture, index) =>
-      index === editIndex
-        ? { ...facture, description: editedDescription, date: editedDate, montantTotal: editedMontantTotal }
-        : facture
-    );
-    setFactures(updatedFactures);
-    setEditIndex(-1);
-    setMessage('Facture modifiée avec succès !');
-    setMessageType('success');
+  const handleSaveEdit = async () => {
+    const updatedFacture = {
+      ...factures[editIndex],
+      description: editedDescription,
+      date: editedDate,
+      montantTotal: editedMontantTotal,
+      commandeId: editedCommandeId,
+    };
+
+    try {
+      const response = await fetch(`${apiUrl}/update/${updatedFacture.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedFacture),
+      });
+      if (!response.ok) {
+        throw new Error('Erreur lors de la modification de la facture');
+      }
+      const data = await response.json();
+      const updatedFactures = factures.map((facture, index) =>
+        index === editIndex ? data : facture
+      );
+      setFactures(updatedFactures);
+      setEditIndex(-1);
+      setMessage('Facture modifiée avec succès !');
+      setMessageType('success');
+    } catch (error) {
+      console.error('Erreur lors de la modification de la facture:', error);
+      setMessage('Erreur lors de la modification de la facture.');
+      setMessageType('danger');
+    }
   };
 
-  const handleDeleteFacture = (index) => {
-    const updatedFactures = factures.filter((_, i) => i !== index);
-    setFactures(updatedFactures);
-    setMessage('Facture supprimée avec succès !');
-    setMessageType('success');
+  const handleDeleteFacture = async (id) => {
+    try {
+      const response = await fetch(`${apiUrl}/delete/${id}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        throw new Error('Erreur lors de la suppression de la facture');
+      }
+      const updatedFactures = factures.filter((facture) => facture.id !== id);
+      setFactures(updatedFactures);
+      setMessage('Facture supprimée avec succès !');
+      setMessageType('success');
+    } catch (error) {
+      console.error('Erreur lors de la suppression de la facture:', error);
+      setMessage('Erreur lors de la suppression de la facture.');
+      setMessageType('danger');
+    }
   };
 
   return (
@@ -95,6 +178,16 @@ function FacturePage() {
             onChange={handleInputChange(setMontantTotal)}
           />
         </div>
+        <div className="col-md-6">
+          <label htmlFor="commandeId" className="form-label">ID de la commande:</label>
+          <input
+            type="text"
+            className="form-control"
+            id="commandeId"
+            value={commandeId}
+            onChange={handleInputChange(setCommandeId)}
+          />
+        </div>
       </div>
       <div className="d-flex justify-content-center">
         <button className="btn btn-outline-success" onClick={handleAddFacture}>Ajouter la facture</button>
@@ -107,6 +200,7 @@ function FacturePage() {
             <th>Description</th>
             <th>Date</th>
             <th>Montant Total</th>
+            <th>Commande ID</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -144,13 +238,23 @@ function FacturePage() {
               ) : (
                 facture.montantTotal
               )}</td>
+              <td>{editIndex === index ? (
+                <input
+                  type="text"
+                  className="form-control"
+                  value={editedCommandeId}
+                  onChange={handleInputChange(setEditedCommandeId)}
+                />
+              ) : (
+                facture.commandeId
+              )}</td>
               <td>
                 {editIndex === index ? (
                   <button className="btn btn-success" onClick={handleSaveEdit}>Enregistrer</button>
                 ) : (
                   <>
                     <button className="btn btn-info" onClick={() => handleEditFacture(index)}>Modifier</button>
-                    <button className="btn btn-danger" onClick={() => handleDeleteFacture(index)}>Supprimer</button>
+                    <button className="btn btn-danger" onClick={() => handleDeleteFacture(facture.id)}>Supprimer</button>
                   </>
                 )}
               </td>

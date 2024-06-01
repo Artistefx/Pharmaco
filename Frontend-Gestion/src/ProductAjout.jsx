@@ -1,89 +1,186 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './ProductAjout.css';
 
 function ProductPage() {
   const [productName, setProductName] = useState('');
   const [category, setCategory] = useState('');
-  const [quantity, setQuantity] = useState(0);
   const [supplier, setSupplier] = useState('');
   const [description, setDescription] = useState('');
   const [originalPrice, setOriginalPrice] = useState(0);
   const [priceAfterDiscount, setPriceAfterDiscount] = useState(0);
   const [image1, setImage1] = useState(null);
   const [image2, setImage2] = useState(null);
+  const [isReduced, setIsReduced] = useState(false);
+  const [productType, setProductType] = useState('');
   const [products, setProducts] = useState([]);
   const [editIndex, setEditIndex] = useState(-1);
   const [editedProductName, setEditedProductName] = useState('');
   const [editedCategory, setEditedCategory] = useState('');
-  const [editedQuantity, setEditedQuantity] = useState(0);
   const [editedSupplier, setEditedSupplier] = useState('');
   const [editedDescription, setEditedDescription] = useState('');
   const [editedOriginalPrice, setEditedOriginalPrice] = useState(0);
   const [editedPriceAfterDiscount, setEditedPriceAfterDiscount] = useState(0);
+  const [editedIsReduced, setEditedIsReduced] = useState(false);
+  const [editedProductType, setEditedProductType] = useState('');
   const [editedImage1, setEditedImage1] = useState(null);
   const [editedImage2, setEditedImage2] = useState(null);
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
 
-  const handleInputChange = (setter) => (e) => setter(e.target.value);
-  const handleFileChange = (setter) => (e) => setter(e.target.files[0]);
+  const apiUrl = 'http://127.0.0.1:8088/api/v1/produit';
 
-  const handleAddProduct = () => {
-    if (!productName || !category || quantity <= 0 || !supplier || !description || originalPrice <= 0 || priceAfterDiscount <= 0) {
+  useEffect(() => {
+    fetch(`${apiUrl}/all`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: null,
+    }).then(response => response.json())
+      .then(data => {
+        console.log('Products:', data); 
+        setProducts(data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setMessage('Erreur lors de la récupération des produits.');
+        setMessageType('danger');
+      });
+  }, []);
+
+  const handleInputChange = (setter) => (e) => setter(e.target.value);
+
+  const handleFileChange = (setter) => (e) => {
+    const file = e.target.files[0];
+    setter(file);
+  };
+
+  const handleAddProduct = (e) => {
+    e.preventDefault();
+    if (!productName || !category || !supplier || !description || originalPrice <= 0 || priceAfterDiscount <= 0) {
       setMessage('Veuillez remplir tous les champs correctement.');
       setMessageType('danger');
       return;
     }
 
-    const newProduct = { id: Date.now().toString(), name: productName, category, quantity, supplier, description, originalPrice, priceAfterDiscount, image1, image2 };
-    setProducts([...products, newProduct]);
-    setProductName('');
-    setCategory('');
-    setQuantity(0);
-    setSupplier('');
-    setDescription('');
-    setOriginalPrice(0);
-    setPriceAfterDiscount(0);
-    setImage1(null);
-    setImage2(null);
-    setMessage('Produit ajouté avec succès !');
-    setMessageType('success');
+    const newProduct = {
+      nom: productName,
+      categorie_id: category,
+      fournisseur_id: supplier,
+      description: description,
+      price_original: originalPrice,
+      price_reduction: priceAfterDiscount,
+      type: productType,
+      is_reduction: isReduced,
+      image1: image1,
+      image2: image2
+    };
+
+    fetch(`${apiUrl}/add`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newProduct),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Added product:', data); 
+        setProducts([...products, data]);
+        setProductName('');
+        setCategory('');
+        setSupplier('');
+        setDescription('');
+        setOriginalPrice(0);
+        setPriceAfterDiscount(0);
+        setIsReduced(false);
+        setProductType('');
+        setImage1(null);
+        setImage2(null);
+        setMessage('Produit ajouté avec succès !');
+        setMessageType('success');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setMessage('Erreur lors de l\'ajout du produit.');
+        setMessageType('danger');
+      });
   };
 
   const handleEditProduct = (index) => {
     const product = products[index];
     setEditIndex(index);
-    setEditedProductName(product.name);
-    setEditedCategory(product.category);
-    setEditedQuantity(product.quantity);
-    setEditedSupplier(product.supplier);
+    setEditedProductName(product.nom);
+    setEditedCategory(product.categorie_id);
+    setEditedSupplier(product.fournisseur_id);
     setEditedDescription(product.description);
-    setEditedOriginalPrice(product.originalPrice);
-    setEditedPriceAfterDiscount(product.priceAfterDiscount);
+    setEditedOriginalPrice(product.price_original);
+    setEditedPriceAfterDiscount(product.price_reduction);
+    setEditedIsReduced(product.is_reduction);
+    setEditedProductType(product.type);
     setEditedImage1(product.image1);
     setEditedImage2(product.image2);
   };
 
   const handleSaveEdit = () => {
-    const updatedProducts = products.map((product, index) =>
-      index === editIndex
-        ? { ...product, name: editedProductName, category: editedCategory, quantity: editedQuantity, supplier: editedSupplier, description: editedDescription, originalPrice: editedOriginalPrice, priceAfterDiscount: editedPriceAfterDiscount, image1: editedImage1, image2: editedImage2 }
-        : product
-    );
-    setProducts(updatedProducts);
-    setEditIndex(-1);
-    setMessage('Produit modifié avec succès !');
-    setMessageType('success');
+    const updatedProduct = {
+      ...products[editIndex],
+      nom: editedProductName,
+      categorie_id: editedCategory,
+      fournisseur_id: editedSupplier,
+      description: editedDescription,
+      price_original: editedOriginalPrice,
+      price_reduction: editedPriceAfterDiscount,
+      is_reduction: editedIsReduced,
+      type: editedProductType,
+      image1: editedImage1,
+      image2: editedImage2
+    };
+
+    fetch(`${apiUrl}/update`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedProduct),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Updated product:', data); 
+        const updatedProducts = products.map((product, index) =>
+          index === editIndex ? data : product
+        );
+        setProducts(updatedProducts);
+        setEditIndex(-1);
+        setMessage('Produit modifié avec succès !');
+        setMessageType('success');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setMessage('Erreur lors de la modification du produit.');
+        setMessageType('danger');
+      });
   };
 
-  const handleDeleteProduct = (index) => {
-    const updatedProducts = products.filter((_, i) => i !== index);
-    setProducts(updatedProducts);
-    setMessage('Produit supprimé avec succès !');
-    setMessageType('success');
+  const handleDeleteProduct = (id) => {
+    fetch(`${apiUrl}/delete/${id}`, {
+      method: 'PUT',
+    })
+      .then(() => {
+        console.log('Deleted product ID'); 
+        const updatedProducts = products.filter((product) => product.id !== id);
+        setProducts(updatedProducts);
+        setMessage('Produit supprimé avec succès !');
+        setMessageType('success');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setMessage('Erreur lors de la suppression du produit.');
+        setMessageType('danger');
+      });
   };
-
+  
   return (
     <div className="container">
       <h1 className="mt-5">Ajouter un produit</h1>
@@ -100,32 +197,22 @@ function ProductPage() {
           />
         </div>
         <div className="col-md-6">
-          <label htmlFor="category" className="form-label">Catégorie:</label>
-          <select
+          <label htmlFor="category" className="form-label">Catégorie:</label >     
+             <select
             className="form-control"
             id="category"
             value={category}
             onChange={handleInputChange(setCategory)}
           >
             <option value="">Sélectionnez une catégorie</option>
-            <option value="Antidiabétiques">Antidiabétiques</option>
-            <option value="Hormones thyroïdiennes">Hormones thyroïdiennes</option>
-            <option value="Analgésiques">Analgésiques</option>
-            <option value="Antihypertenseurs">Antihypertenseurs</option>
+            <option value="1">Antidiabétiques</option>
+            <option value="2">Hormones thyroïdiennes</option>
+            <option value="3">Analgésiques</option>
+            <option value="4">Antihypertenseurs</option>
           </select>
         </div>
       </div>
       <div className="row mb-3">
-        <div className="col-md-6">
-          <label htmlFor="quantity" className="form-label">Quantité:</label>
-          <input
-            type="number"
-            className="form-control"
-            id="quantity"
-            value={quantity}
-            onChange={handleInputChange(setQuantity)}
-          />
-        </div>
         <div className="col-md-6">
           <label htmlFor="supplier" className="form-label">Fournisseur:</label>
           <input
@@ -171,6 +258,30 @@ function ProductPage() {
       </div>
       <div className="row mb-3">
         <div className="col-md-6">
+          <div className="form-check">
+            <input
+              type="checkbox"
+              className="form-check-input"
+              id="isReduced"
+              checked={isReduced}
+              onChange={(e) => setIsReduced(e.target.checked)}
+            />
+            <label className="form-check-label" htmlFor="isReduced">Réduction activée</label>
+          </div>
+        </div>
+        <div className="col-md-6">
+          <label htmlFor="productType" className="form-label">Type de produit:</label>
+          <input
+            type="text"
+            className="form-control"
+            id="productType"
+            value={productType}
+            onChange={handleInputChange(setProductType)}
+          />
+        </div>
+      </div>
+      <div className="row mb-3">
+        <div className="col-md-6">
           <label htmlFor="image1" className="form-label">Image 1 du produit:</label>
           <input
             type="file"
@@ -199,11 +310,12 @@ function ProductPage() {
             <th>ID</th>
             <th>Nom</th>
             <th>Catégorie</th>
-            <th>Quantité</th>
             <th>Fournisseur</th>
             <th>Description</th>
             <th>Prix original</th>
             <th>Prix après réduction</th>
+            <th>Est réduit</th>
+            <th>Type de produit</th>
             <th>Image 1</th>
             <th>Image 2</th>
             <th>Actions</th>
@@ -221,7 +333,7 @@ function ProductPage() {
                   onChange={handleInputChange(setEditedProductName)}
                 />
               ) : (
-                product.name
+                product.nom
               )}</td>
               <td>{editIndex === index ? (
                 <select
@@ -230,23 +342,13 @@ function ProductPage() {
                   onChange={handleInputChange(setEditedCategory)}
                 >
                   <option value="">Sélectionnez une catégorie</option>
-                  <option value="Antidiabétiques">Antidiabétiques</option>
-                  <option value="Hormones thyroïdiennes">Hormones thyroïdiennes</option>
-                  <option value="Analgésiques">Analgésiques</option>
-                  <option value="Antihypertenseurs">Antihypertenseurs</option>
+                  <option value="1">Antidiabétiques</option>
+                  <option value="2">Hormones thyroïdiennes</option>
+                  <option value="3">Analgésiques</option>
+                  <option value="4">Antihypertenseurs</option>
                 </select>
               ) : (
-                product.category
-              )}</td>
-              <td>{editIndex === index ? (
-                <input
-                  type="number"
-                  className="form-control"
-                  value={editedQuantity}
-                  onChange={handleInputChange(setEditedQuantity)}
-                />
-              ) : (
-                product.quantity
+                product.categorie_id
               )}</td>
               <td>{editIndex === index ? (
                 <input
@@ -256,7 +358,7 @@ function ProductPage() {
                   onChange={handleInputChange(setEditedSupplier)}
                 />
               ) : (
-                product.supplier
+                product.fournisseur_id
               )}</td>
               <td>{editIndex === index ? (
                 <input
@@ -276,7 +378,7 @@ function ProductPage() {
                   onChange={handleInputChange(setEditedOriginalPrice)}
                 />
               ) : (
-                product.originalPrice
+                product.price_original
               )}</td>
               <td>{editIndex === index ? (
                 <input
@@ -286,37 +388,41 @@ function ProductPage() {
                   onChange={handleInputChange(setEditedPriceAfterDiscount)}
                 />
               ) : (
-                product.priceAfterDiscount
+                product.price_reduction
               )}</td>
+              <td>{editIndex === index ? (
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  checked={editedIsReduced}
+                  onChange={(e) => setEditedIsReduced(e.target.checked)}
+                />
+              ) : (
+                product.is_reduction ? 'Oui' : 'Non'
+              )}</td>
+              <td>{editIndex === index ? (
+                <input
+                  type="text"
+                  className="form-control"
+                  value={editedProductType}
+                  onChange={handleInputChange(setEditedProductType)}
+                />
+              ) : (
+                product.type
+              )}</td>
+                  
+               <td>{product.image1}</td>
+              <td>{product.image2}</td>
               <td>
                 {editIndex === index ? (
-                  <input
-                    type="file"
-                    className="form-control"
-                    onChange={handleFileChange(setEditedImage1)}
-                  />
-                ) : (
-                  product.image1 && <img src={URL.createObjectURL(product.image1)} alt={product.name} width="50" />
-                )}
-              </td>
-              <td>
-                {editIndex === index ? (
-                  <input
-                    type="file"
-                    className="form-control"
-                    onChange={handleFileChange(setEditedImage2)}
-                  />
-                ) : (
-                  product.image2 && <img src={URL.createObjectURL(product.image2)} alt={product.name} width="50" />
-                )}
-              </td>
-              <td>
-                {editIndex === index ? (
-                  <button className="btn btn-success" onClick={handleSaveEdit}>Enregistrer</button>
+                  <>
+                    <button className="btn btn-outline-success btn-sm" onClick={handleSaveEdit}>Enregistrer</button>
+                    <button className="btn btn-outline-secondary btn-sm ms-1" onClick={() => setEditIndex(-1)}>Annuler</button>
+                  </>
                 ) : (
                   <>
-                    <button className="btn btn-info" onClick={() => handleEditProduct(index)}>Modifier</button>
-                    <button className="btn btn-danger" onClick={() => handleDeleteProduct(index)}>Supprimer</button>
+                    <button className="btn btn-primary" onClick={() => handleEditProduct(index)}>Modifier</button>
+                    <button className="btn btn-danger ms-1" onClick={() => handleDeleteProduct(product.id)}>Supprimer</button>
                   </>
                 )}
               </td>
@@ -329,3 +435,5 @@ function ProductPage() {
 }
 
 export default ProductPage;
+
+

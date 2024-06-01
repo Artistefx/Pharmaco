@@ -87,8 +87,8 @@ public class Client {
         this.email = email;
     }
 
-    public void setMotDePasse(String MotDePasse) {
-        this.motDePasse = MotDePasse;
+    public void setMotDePasse(String motDePasse) {
+        this.motDePasse = motDePasse;
     }
 
     public void setSexe(String Sexe) {

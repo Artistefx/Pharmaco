@@ -6,6 +6,8 @@ import CommandePage from './CommandePage';
 import FacturePage from './FacturePage';
 import EmployeePage from './ajouterEmploye'
 import FournisseurPage from './ajouterFournisseur';
+import StockPage from './AjouterStock';
+import StockAlertPage from './StockAlertPage';
 function Dashboard() {
   const [selectedMenuItem, setSelectedMenuItem] = useState('Dashboard');
 
@@ -15,20 +17,24 @@ function Dashboard() {
 
   const renderPage = () => {
     switch (selectedMenuItem) {
-      case 'Produits':
-        return <ProductPage />;
+     
         case 'Fournisseurs':
           return <FournisseurPage />;
+          case 'Produits':
+            return <ProductPage />;
       case 'Clients':
         return <ClientPage />;
+        case 'Stocks':
+            return <StockPage />;
       case 'Commandes':
         return <CommandePage />;
       case 'Factures':
         return <FacturePage />;
-        case 'Fournisseurs':
-        return <ajouterFournisseur />;
+      
         case 'Employes':
         return <EmployeePage />;
+        case 'StockAlerts':
+          return <StockAlertPage />;
       default:
         return <DashboardStats />; // Affiche les statistiques et informations générales par défaut
     }
@@ -42,8 +48,11 @@ function Dashboard() {
           <li className={selectedMenuItem === 'Dashboard' ? 'active' : ''} onClick={() => handleMenuItemClick('Dashboard')}>
             Dashboard
           </li>
-          <li className={selectedMenuItem === 'Dashboard' ? 'active' : ''} onClick={() => handleMenuItemClick('Fournisseurs')}>
+          <li className={selectedMenuItem === 'Fournisseurs' ? 'active' : ''} onClick={() => handleMenuItemClick('Fournisseurs')}>
             Fournisseurs
+          </li>
+          <li className={selectedMenuItem === 'Stocks' ? 'active' : ''} onClick={() => handleMenuItemClick('Stocks')}>
+            Stocks
           </li>
           <li className={selectedMenuItem === 'Produits' ? 'active' : ''} onClick={() => handleMenuItemClick('Produits')}>
             Produits
@@ -59,6 +68,9 @@ function Dashboard() {
           </li>
           <li className={selectedMenuItem === 'Employes' ? 'active' : ''} onClick={() => handleMenuItemClick('Employes')}>
             Employes
+          </li>
+          <li className={selectedMenuItem === 'StockAlerts' ? 'active' : ''} onClick={() => handleMenuItemClick('StockAlerts')}>
+            Stock Alerts
           </li>
         </ul>
       </div>
