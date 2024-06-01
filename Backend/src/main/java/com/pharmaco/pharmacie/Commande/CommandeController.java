@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/api/v1/commande")
 @CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CommandeController {
     
     private final CommandeService commandeService;
@@ -43,4 +44,6 @@ public class CommandeController {
     public Iterable<Commande> FindAllCommande () {
         return commandeService.findAll();
     }
+
+    
 }

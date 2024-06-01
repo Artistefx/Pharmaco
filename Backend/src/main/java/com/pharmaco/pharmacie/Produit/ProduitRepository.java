@@ -19,4 +19,10 @@ public interface ProduitRepository extends JpaRepository<Produit, Long> {
     Iterable<Object[]> getProduitAndQuantite();
 
     Optional<Produit> findFirstByCategorieNom(String categorieNom);
+
+    //get produit with name like
+    Iterable<Produit> findByNomContaining(String nom);
+
+    //get produit by categorie
+    Iterable<Produit> findByCategorieNom(String categorieNom);
 }

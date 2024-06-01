@@ -1,10 +1,9 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect , useContext } from "react";
 import axios from "axios";
 /* import pharmaco from "./Assets/pharmaco.webp"; */
 import WelcomeOffer from "./WelcomeOffer";
 import "./Welcome.css";
-import suplement from "./Assets/Suplement.jpg";
 import comm1 from "./Assets/commitement1.webp";
 import comm2 from "./Assets/commitement2.webp";
 import comm3 from "./Assets/commitement3.webp";
@@ -12,10 +11,13 @@ import comm4 from "./Assets/commitement4.webp";
 import Carousel from "./Carousel";
 import AnimatedCard from "./AnimatedCard";
 import ShuffleHero from "./ShuffleHero";
+import { CartContext } from "../Panier/CartProvider";
 
 const Welcome = () => {
   const [products, setProducts] = useState([]);
   const [offers, setOffers] = useState([]);
+
+  const { feedbackMessage  } = useContext(CartContext);
 
   useEffect(() => {
     axios
@@ -30,6 +32,11 @@ const Welcome = () => {
 
   return (
     <div className="Welcome">
+      {feedbackMessage && (
+        <div className="fixed top-16 right-4 bg-green-500 text-white p-4 rounded shadow-lg z-50">
+          {feedbackMessage}
+        </div>
+      )}
       <div className="hero">
         <ShuffleHero />
       </div>

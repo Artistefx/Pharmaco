@@ -1,17 +1,13 @@
 package com.pharmaco.pharmacie.Commande;
 
-import java.util.List;
 
-import com.pharmaco.pharmacie.Client.Client;
 import com.pharmaco.pharmacie.Facture.Facture;
 import com.pharmaco.pharmacie.Fournisseur.Fournisseur;
-import com.pharmaco.pharmacie.Produit.Produit;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
@@ -23,17 +19,16 @@ public class Commande {
     private long id;
     private String type;
     private String date;
+    private String addresse;
+    private String telephone;
     private String status;
+    private String produits;
     private double MontantTotal;
-
-    @ManyToOne
-    private Client client;
+    private String client;
+    private String UrlOrdonnance;
 
     @ManyToOne
     private Fournisseur fournisseur;   
-
-    @ManyToMany
-    private List<Produit> produits;
 
     @OneToOne(mappedBy = "commande")
     private Facture facture;
@@ -41,11 +36,16 @@ public class Commande {
     public Commande() {
     }
 
-    public Commande(long id, String date, String status, double MontantTotal) {
-        this.id = id;
+    public Commande(long id, String date, String status, String Adresse , String client , String telephone , double MontantTotal , String produits , String UrlOrdonnance) {
+        this.id = id; 
         this.date = date;
         this.status = status;
         this.MontantTotal = MontantTotal;
+        this.addresse = Adresse;
+        this.telephone = telephone;
+        this.produits = produits;
+        this.client = client;
+        this.UrlOrdonnance = UrlOrdonnance;
     }
 
     public long getId() {
@@ -68,6 +68,43 @@ public class Commande {
         return MontantTotal;
     }
 
+    public String getAddresse() {
+        return addresse;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public String getProduits() {
+        return produits;
+    }
+
+    public Fournisseur getFournisseur() {
+        return fournisseur;
+    }
+
+    public Facture getFacture() {
+        return facture;
+    }
+
+    public String getClient() {
+        return client;
+    }
+
+    public String getUrlOrdonnance() {
+        return UrlOrdonnance;
+    }
+
+    public void setFournisseur(Fournisseur fournisseur) {
+        this.fournisseur = fournisseur;
+    }
+
+    public void setFacture(Facture facture) {
+        this.facture = facture;
+    }
+
+
     public void setId(long id) {
         this.id = id;
     }
@@ -88,7 +125,23 @@ public class Commande {
         this.MontantTotal = MontantTotal;
     }
 
-    
+    public void setAddresse(String addresse) {
+        this.addresse = addresse;
+    }
 
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
 
+    public void setProduits(String produits) {
+        this.produits = produits;
+    }
+
+    public void setClient(String client) {
+        this.client = client;
+    }
+
+    public void setUrlOrdonnance(String UrlOrdonnance) {
+        this.UrlOrdonnance = UrlOrdonnance;
+    }
 }

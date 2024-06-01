@@ -4,9 +4,12 @@ import logo1 from "../loginPage/LoginAssets/logo1.webp";
 import { MdOutlineAlternateEmail, MdLockOutline } from "react-icons/md";
 import { IoLogIn } from "react-icons/io5";
 import "./PageLogin.css";
+import { CartContext } from "../Panier/CartProvider";
 
 function PageLogin() {
   const videoRef = useRef(null);
+
+  const { ToggleIsConnected, setUser } = React.useContext(CartContext);
 
   useEffect(() => {
     const start = 10;
@@ -39,8 +42,6 @@ function PageLogin() {
       motDePasse: password,
     };
 
-    console.log(user);
-
     fetch("http://localhost:8080/api/v1/client/login", {
       method: "POST",
       headers: {
@@ -48,13 +49,27 @@ function PageLogin() {
       },
       body: JSON.stringify(user),
     })
-      .then((response) => {
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
         if (data === true) {
-          console.log("Success");
-          // Handle successful login (e.g., redirect to another page)
+          ToggleIsConnected();
+          console.log(data);
+          fetch("http://localhost:8080/api/v1/client/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              sessionStorage.setItem("user", JSON.stringify(data));
+              setUser(data); // Update state
+              window.location.href = "/";
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
         } else {
           console.log("Error: Invalid credentials");
           // Handle failed login (e.g., show error message)

@@ -1,9 +1,11 @@
 import React, { useState, useContext } from "react";
 import { CartContext } from "../Panier/CartProvider";
+import { useEffect } from "react";
 
 const Checkout = () => {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, user , clearCart } = useContext(CartContext);
   const [paymentMethod, setPaymentMethod] = useState("card");
+  const [uploadedFile, setUploadedFile] = useState(null);
   const [formData, setFormData] = useState({
     cardNumber: "",
     expDate: "",
@@ -24,6 +26,11 @@ const Checkout = () => {
     setPaymentMethod(event.target.id);
   };
 
+  const handleFileChange = (e) => {
+    setUploadedFile(e.target.files[0]);
+    console.log(uploadedFile);
+  };
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -36,8 +43,88 @@ const Checkout = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // redirect to success page
-    window.location.href = "/orderSummary";
+    if (uploadedFile) {
+      const fileData = new FormData();
+      fileData.append("file", uploadedFile);
+
+      fetch("http://localhost:8080/api/v1/s3/upload", {
+        method: "POST",
+        body: fileData,
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          console.log("File upload successfull");
+          const url = data;
+          console.log(url);
+          const commande = {
+            client: user,
+            produits: cartItems
+              .map((item) => `${item.nom}: ${item.quantite}`)
+              .join(","),
+            montantTotal:
+              cartItems.reduce(
+                (acc, item) => acc + item.priceReduction * item.quantite,
+                0
+              ) + 30,
+            status: "En cours",
+            date: new Date().toISOString(),
+            addresse:
+              deliveryData.address +
+              deliveryData.city +
+              deliveryData.postalCode,
+            telephone: deliveryData.phoneNumber,
+            type: "Commande Client",
+            urlOrdonnance: url,
+          };
+          fetch("http://127.0.0.1:8080/api/v1/commande/add", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(commande),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("Success:", data);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        })
+        .catch((error) => {
+          console.error("File upload error:", error);
+        });
+    }
+
+    const facture = {
+      client: user,
+      montantTotal:
+        cartItems.reduce(
+          (acc, item) => acc + item.priceReduction * item.quantite,
+          0
+        ) + 30,
+      date: new Date().toISOString(),
+      description: cartItems
+        .map((item) => `${item.nom}: ${item.quantite}`)
+        .join(","),
+    };
+    console.log(facture);
+    fetch("http://127.0.0.1:8080/api/v1/facture/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(facture),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
+    /* window.location.href = "/orderSummary"; */
   };
 
   return (
@@ -104,6 +191,25 @@ const Checkout = () => {
                 onChange={handleDeliveryInputChange}
                 className="px-4 py-3.5 bg-white text-[#333] w-full text-sm border rounded-md focus:border-[#007bff] outline-none"
               />
+            </div>
+            <div className="flex items-center mt-3">
+              <input
+                type="file"
+                onChange={handleFileChange}
+                className="hidden"
+                id="file-upload"
+              />
+              <label
+                htmlFor="file-upload"
+                className="px-6 py-3.5 text-sm bg-gray-600 text-white rounded-md hover:bg-gray-700 cursor-pointer"
+              >
+                Upload File
+              </label>
+              {uploadedFile && (
+                <span className="ml-4 text-sm text-green-600">
+                  File uploaded: {uploadedFile.name}
+                </span>
+              )}
             </div>
             <h3 className="text-xl font-bold text-[#333] mt-6">
               Choisir le mode de paiement
@@ -206,7 +312,7 @@ const Checkout = () => {
                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                       <img
                         src={product.image}
-                        alt={product.name}
+                        alt={product.nom}
                         className="h-full w-full object-cover object-center"
                       />
                     </div>
@@ -215,7 +321,7 @@ const Checkout = () => {
                       <div>
                         <div className="flex justify-between text-base font-medium text-gray-900">
                           <h3>
-                            <a href={product.href}>{product.name}</a>
+                            <a href={product.href}>{product.nom}</a>
                           </h3>
                           <p className="ml-4">
                             {product.priceReduction * product.quantite} DH

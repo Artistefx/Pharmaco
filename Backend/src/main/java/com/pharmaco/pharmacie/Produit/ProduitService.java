@@ -46,4 +46,12 @@ public class ProduitService {
     public Produit findProduitByCategorieNom(String categorieNom) {
         return produitRepository.findFirstByCategorieNom(categorieNom).orElse(null);
     }
+
+    public Iterable<Produit> findByNomContaining(String nom) {
+        return produitRepository.findByNomContaining(nom);
+    }
+
+    public Iterable<Produit> findByCategorieNom(String categorieNom) {
+        return produitRepository.findByCategorieNom(categorieNom);
+    }
 }

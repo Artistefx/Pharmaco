@@ -53,7 +53,7 @@ public class produitController {
         return produitService.findById(id);
     }
 
-    @PostMapping(path = "/all")
+    @GetMapping(path = "/all")
     public Iterable<Produit> findAll() {
         return produitService.findAll();
     }
@@ -82,4 +82,15 @@ public class produitController {
         produits.add(produitService.findProduitByCategorieNom("Circulation sanguine"));
         return produits;
     }
+
+    @GetMapping(path = "/find/nom/like/{nom}")
+    public Iterable<Produit> findByNomContaining(@PathVariable String nom) {
+        return produitService.findByNomContaining(nom);
+    }
+
+    @GetMapping(path = "/find/categorie/{categorieNom}")
+    public Iterable<Produit> findByCategorieNom(@PathVariable String categorieNom) {
+        return produitService.findByCategorieNom(categorieNom);
+    }
+
 }

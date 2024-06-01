@@ -52,4 +52,9 @@ public class ClientController {
         }
         return false;
     }
+
+    @PostMapping(path = "/register")
+    public long GetId (@RequestBody Client c) {
+        return clientService.findByEmailAndPassword(c.getEmail(), c.getMotDePasse()).getId();
+    }
 }

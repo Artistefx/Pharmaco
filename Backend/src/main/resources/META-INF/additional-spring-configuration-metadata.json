@@ -1,0 +1,47 @@
+{"properties": [
+  {
+    "name": "aws.accessKeyId",
+    "type": "java.lang.String",
+    "description": "A description for 'aws.accessKeyId'"
+  },
+  {
+    "name": "aws.secretKey",
+    "type": "java.lang.String",
+    "description": "A description for 'aws.secretKey'"
+  },
+  {
+    "name": "aws.region",
+    "type": "java.lang.String",
+    "description": "A description for 'aws.region'"
+  },
+  {
+    "name": "aws.secretKey",
+    "type": "java.lang.String",
+    "description": "A description for 'aws.secretKey'"
+  },
+  {
+    "name": "aws.s3.bucketName",
+    "type": "java.lang.String",
+    "description": "A description for 'aws.s3.bucketName'"
+  },
+  {
+    "name": "aws.bucketName",
+    "type": "java.lang.String",
+    "description": "A description for 'aws.bucketName'"
+  },
+  {
+    "name": "aws.secretKey",
+    "type": "java.lang.String",
+    "description": "A description for 'aws.secretKey'"
+  },
+  {
+    "name": "aws.accessKeyId",
+    "type": "java.lang.String",
+    "description": "A description for 'aws.accessKeyId'"
+  },
+  {
+    "name": "aws.access.key",
+    "type": "java.lang.String",
+    "description": "A description for 'aws.access.key'"
+  }
+]}

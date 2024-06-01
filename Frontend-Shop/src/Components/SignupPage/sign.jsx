@@ -1,43 +1,95 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./signStyle.css";
 import { BsBoxArrowRight } from "react-icons/bs";
 import logo from "./images/logo.jpg";
+import { CartContext } from "../Panier/CartProvider";
 
 function Sign() {
+  const { setUser, ToggleIsConnected } = useContext(CartContext);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
     const nom = data.get("nom");
     const prenom = data.get("prenom");
     const email = data.get("email");
-    const MotDePasse = data.get("password");
-    const DateNaissance = data.get("DateN");
-    const Sexe = data.get("sexe");
+    const motDePasse = data.get("password");
+    const dateNaissance = data.get("DateN");
+    const sexe = data.get("sexe");
     const user = {
       nom: nom,
       prenom: prenom,
       email: email,
-      motDePasse: MotDePasse,
-      dateNaissance: DateNaissance,
-      sexe: Sexe,
+      motDePasse: motDePasse,
+      dateNaissance: dateNaissance,
+      sexe: sexe,
     };
 
-    console.log(user);
-    
-    fetch('http://127.0.0.1:8080/api/v1/client/add', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(user),
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Success:', data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+    const createUser = async (user) => {
+      try {
+        const response = await fetch(
+          "http://127.0.0.1:8080/api/v1/client/add",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Error creating user: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error("Error creating user:", error);
+        throw error;
+      }
+    };
+
+    const registerUser = async (userData) => {
+      try {
+        const response = await fetch(
+          "http://127.0.0.1:8080/api/v1/client/register",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Error registering user: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error("Error registering user:", error);
+        throw error;
+      }
+    };
+
+    const handleUserCreationAndRegistration = async (user) => {
+      try {
+        const createdUser = await createUser(user);
+        const registeredUser = await registerUser(createdUser);
+
+        sessionStorage.setItem("user", JSON.stringify(registeredUser));
+        setUser(registeredUser); // Update state
+        ToggleIsConnected();
+        window.location.href = "/";
+      } catch (error) {
+        console.error("Error in user creation and registration flow:", error);
+      }
+    };
+
+    handleUserCreationAndRegistration(user);
   };
 
   return (
@@ -51,7 +103,13 @@ function Sign() {
         <h1 className="form-title">Create your account</h1>
         <form onSubmit={handleSubmit}>
           <div className="div">
-            <input type="text" name="nom" id="nom" placeholder="First name" />
+            <input
+              type="text"
+              name="nom"
+              id="nom"
+              placeholder="First name"
+              required
+            />
             <br />
           </div>
           <div className="div">
@@ -60,6 +118,7 @@ function Sign() {
               name="prenom"
               id="prenom"
               placeholder="Last name"
+              required
             />
             <br />
           </div>
@@ -67,7 +126,7 @@ function Sign() {
             <input
               type="email"
               name="email"
-              id="Email"
+              id="email"
               placeholder="Email"
               required
             />
@@ -88,8 +147,8 @@ function Sign() {
               type="date"
               name="DateN"
               id="DateN"
-              required
               placeholder="Date of birth"
+              required
             />
             <br />
           </div>

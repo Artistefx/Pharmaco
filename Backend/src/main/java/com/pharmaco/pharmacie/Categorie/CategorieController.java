@@ -8,12 +8,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 
 
 @RestController
 @RequestMapping(path = "/api/v1/categorie")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CategorieController {
     
     private final CategorieService categorieService;
@@ -47,7 +50,7 @@ public class CategorieController {
         return categorieService.findAll();
     }
 
-    @PostMapping(path = "/top5")
+    @GetMapping(path = "/top5")
     public List<String> FindTop5Categorie () {
         return categorieService.findTop5Names();
     }
