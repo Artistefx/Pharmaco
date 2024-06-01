@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/api/v1/stock")
-@CrossOrigin(origins = "http://localhost:5173")
-
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:3000"})
 public class StockController {
     
     private final StockService stockService;

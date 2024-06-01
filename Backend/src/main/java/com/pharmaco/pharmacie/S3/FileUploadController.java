@@ -18,7 +18,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping(path = "/api/v1/s3")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:3000"})
 public class FileUploadController {
 
     private final AmazonS3 s3Client;
