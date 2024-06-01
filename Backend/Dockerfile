@@ -14,11 +14,20 @@ COPY src ./src
 # Build the Spring Boot application
 RUN mvn clean package -DskipTests --settings /root/.m2/settings.xml
 
+# Verify the build output
+RUN ls -al /app/target
+
 # Use the official OpenJDK image as a base for running the application
 FROM eclipse-temurin:17-jre
 
+# Set the working directory inside the container
+WORKDIR /app
+
 # Copy the built jar file from the previous stage to the current stage
 COPY --from=build /app/target/*.jar /app/app.jar
+
+# Verify the copy process
+RUN ls -al /app
 
 # Expose port 8080
 EXPOSE 8080
