@@ -4,12 +4,15 @@ FROM maven:3.9.6-eclipse-temurin-17 as build
 # Set the working directory inside the container
 WORKDIR /app
 
+# Copy the Maven settings file
+COPY settings.xml /root/.m2/settings.xml
+
 # Copy the pom.xml file and the source code to the working directory
 COPY pom.xml .
 COPY src ./src
 
 # Build the Spring Boot application
-RUN mvn clean package -DskipTests
+RUN mvn clean package -DskipTests --settings /root/.m2/settings.xml
 
 # Use the official OpenJDK image as a base for running the application
 FROM eclipse-temurin:17-jre
