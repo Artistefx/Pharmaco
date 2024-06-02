@@ -31,13 +31,13 @@ pipeline {
                 }
             }
         }
-        /* stage('Build Docker Image for Frontend-Gestion') {
+         stage('Build Docker Image for Frontend-Gestion') {
             steps {
                 dir('Frontend-Gestion') {
                     bat "docker build -t ${GESTION_IMAGE_NAME}:${BUILD_NUMBER} ."
                 }
             }
-        } */
+        } 
         
          stage('Build Docker Image for Frontend-Shop') {
             steps {
@@ -46,14 +46,14 @@ pipeline {
                 }
             }
         } 
-        /* stage('Build Docker Image for Backend') {
+         stage('Build Docker Image for Backend') {
             steps {
                 dir('Backend') {
                     bat "docker build --no-cache -t ${BACKEND_IMAGE_NAME}:${BUILD_NUMBER} ."
                 }
             }
-        }  */
-        /* stage('Push Frontend-Gestion to DockerHub') {
+        }  
+         stage('Push Frontend-Gestion to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: '56', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
                     script {
@@ -64,8 +64,7 @@ pipeline {
                     }
                 }
             }
-        } */
-        /* Uncomment the following stages when needed
+        } 
         stage('Push Frontend-Shop to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: '56', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
@@ -97,29 +96,6 @@ pipeline {
                 bat "FOR /f \"skip=1\" %%i IN ('docker images -q ${BACKEND_IMAGE_NAME}') DO docker rmi %%i"
             }
         }
-        stage('Deploy Backend Container') {
-            steps {
-                // Stop and remove the old backend container if it exists, ignore errors
-                bat "docker rm -f backend || exit 0"
-                bat "docker run --name backend -d ${BACKEND_IMAGE_NAME}:${BUILD_NUMBER}"
-            }
-        }
-        stage('Deploy Frontend-Gestion Container') {
-            steps {
-                // Stop and remove the old frontend-gestion container if it exists, ignore errors
-                bat "docker rm -f frontend-gestion || exit 0"
-                bat "docker run --name frontend-gestion -d --link backend:backend ${GESTION_IMAGE_NAME}:${BUILD_NUMBER}"
-            }
-        }
-        stage('Deploy Frontend-Shop Container') {
-            steps {
-                // Stop and remove the old frontend-shop container if it exists, ignore errors
-                bat "docker rm -f frontend-shop || exit 0"
-                bat "docker run --name frontend-shop -d --link backend:backend ${SHOP_IMAGE_NAME}:${BUILD_NUMBER}"
-                // Clean up any stopped containers
-                bat "docker container prune -f -y"
-            }
-        } */
     }
     post {
         always {
