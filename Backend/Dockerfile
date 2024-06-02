@@ -33,7 +33,7 @@ EXPOSE 8080
 ENV SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/pharmaco
 ENV SPRING_DATASOURCE_USERNAME=root
 ENV SPRING_DATASOURCE_PASSWORD=123456
-ENV SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MySQL5Dialect
+ENV SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.MySQL8Dialect
 
 # The default command to run when the container starts
 CMD ["java", "-jar", "/app/app.war"]
