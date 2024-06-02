@@ -89,13 +89,6 @@ pipeline {
                 }
             }
         }
-        stage('Clean Up Old Docker Images') {
-            steps {
-                bat "FOR /f \"skip=1\" %%i IN ('docker images -q ${GESTION_IMAGE_NAME}') DO docker rmi -f %%i"
-                bat "FOR /f \"skip=1\" %%i IN ('docker images -q ${SHOP_IMAGE_NAME}') DO docker rmi -f %%i"
-                bat "FOR /f \"skip=1\" %%i IN ('docker images -q ${BACKEND_IMAGE_NAME}') DO docker rmi -f %%i"
-            }
-        }
     }
     post {
         always {
