@@ -42,14 +42,14 @@ pipeline {
          stage('Build Docker Image for Frontend-Shop') {
             steps {
                 dir('Frontend-Shop') {
-                    bat "docker build --no-cache -t ${SHOP_IMAGE_NAME}:${BUILD_NUMBER} ."
+                    bat "docker build -t ${SHOP_IMAGE_NAME}:${BUILD_NUMBER} ."
                 }
             }
         } 
          stage('Build Docker Image for Backend') {
             steps {
                 dir('Backend') {
-                    bat "docker build --no-cache -t ${BACKEND_IMAGE_NAME}:${BUILD_NUMBER} ."
+                    bat "docker build -t ${BACKEND_IMAGE_NAME}:${BUILD_NUMBER} ."
                 }
             }
         }  
