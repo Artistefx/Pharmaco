@@ -15,7 +15,7 @@ function FacturePage() {
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
 
-  const apiUrl = 'http://127.0.0.1:8088/api/v1/facture';
+  const apiUrl = 'http://127.0.0.1:8080/api/v1/facture';
 
   const fetchFactures = async () => {
     try {
@@ -200,7 +200,6 @@ function FacturePage() {
             <th>Description</th>
             <th>Date</th>
             <th>Montant Total</th>
-            <th>Commande ID</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -237,16 +236,6 @@ function FacturePage() {
                 />
               ) : (
                 facture.montantTotal
-              )}</td>
-              <td>{editIndex === index ? (
-                <input
-                  type="text"
-                  className="form-control"
-                  value={editedCommandeId}
-                  onChange={handleInputChange(setEditedCommandeId)}
-                />
-              ) : (
-                facture.commandeId
               )}</td>
               <td>
                 {editIndex === index ? (

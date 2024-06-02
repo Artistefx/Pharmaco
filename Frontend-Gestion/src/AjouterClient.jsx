@@ -20,7 +20,7 @@ function ClientPage() {
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
 
-  const apiUrl = 'http://127.0.0.1:8088/api/v1/client';
+  const apiUrl = 'http://127.0.0.1:8080/api/v1/client';
 
   useEffect(() => {
     fetch(`${apiUrl}/all`, {

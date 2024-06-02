@@ -19,7 +19,7 @@ function CommandePage() {
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
 
-  const apiUrl = 'http://127.0.0.1:8088/api/v1/commande';
+  const apiUrl = 'http://127.0.0.1:8080/api/v1/commande';
 
   const fetchCommandes = async () => {
     try {
@@ -238,8 +238,6 @@ function CommandePage() {
             <th>Date</th>
             <th>Status</th>
             <th>Montant Total</th>
-            <th>Client ID</th>
-            <th>Fournisseur ID</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -294,26 +292,6 @@ function CommandePage() {
                 />
               ) : (
                 commande.montantTotal
-              )}</td>
-              <td>{editIndex === index ? (
-                <input
-                  type="text"
-                  className="form-control"
-                  value={editedClientId}
-                  onChange={handleInputChange(setEditedClientId)}
-                />
-              ) : (
-                commande.clientId
-              )}</td>
-              <td>{editIndex === index ? (
-                <input
-                  type="text"
-                  className="form-control"
-                  value={editedFournisseurId}
-                  onChange={handleInputChange(setEditedFournisseurId)}
-                />
-              ) : (
-                commande.fournisseurId
               )}</td>
               <td>
                 {editIndex === index ? (

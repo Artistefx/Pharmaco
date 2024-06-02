@@ -13,7 +13,7 @@ function StockPage() {
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
 
-  const apiUrl = 'http://127.0.0.1:8088/api/v1/stock';
+  const apiUrl = 'http://127.0.0.1:8080/api/v1/stock';
 
   const fetchStocks = async () => {
     try {
@@ -27,6 +27,7 @@ function StockPage() {
         throw new Error('Erreur lors de la récupération des stocks');
       }
       const data = await response.json();
+      console.log('Stocks:', data);
       setStocks(data);
     } catch (error) {
       console.error('Erreur lors de la récupération des stocks:', error);
@@ -90,8 +91,8 @@ function StockPage() {
       produitId: editedProduitId
     };
 
-    fetch(`${apiUrl}/update/${updatedStock.id}`, {
-      method: 'PUT',
+    fetch(`${apiUrl}/update`, {
+      method: 'Post',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -181,7 +182,6 @@ function StockPage() {
             <th>ID</th>
             <th>Nom</th>
             <th>Quantité</th>
-            <th>Produit ID</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -207,16 +207,6 @@ function StockPage() {
                   onChange={handleInputChange(setEditedQuantite)}
                 />
               ) : (                stock.quantite
-              )}</td>
-              <td>{editIndex === index ? (
-                <input
-                  type="text"
-                  className="form-control"
-                  value={editedProduitId}
-                  onChange={handleInputChange(setEditedProduitId)}
-                />
-              ) : (
-                stock.produitId
               )}</td>
               <td>
                 {editIndex === index ? (

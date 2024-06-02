@@ -1,5 +1,5 @@
 # Use the official Node.js image as a base
-FROM node:14 as build
+FROM node:21.1 as build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -16,8 +16,14 @@ COPY . .
 # Build the React app
 RUN npm run build
 
+# Verify the build output
+RUN ls -al /app/build
+
 # Use Nginx to serve the static files
 FROM nginx:alpine
+
+# Copy the NGINX configuration file
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy the build output from the previous stage to the nginx server directory
 COPY --from=build /app/build /usr/share/nginx/html
