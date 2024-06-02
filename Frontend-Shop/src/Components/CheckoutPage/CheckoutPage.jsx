@@ -47,7 +47,7 @@ const Checkout = () => {
       const fileData = new FormData();
       fileData.append("file", uploadedFile);
 
-      fetch("http://localhost:8080/api/v1/s3/upload", {
+      fetch("http://localhost:8086/api/v1/s3/upload", {
         method: "POST",
         body: fileData,
       })
@@ -76,7 +76,7 @@ const Checkout = () => {
             type: "Commande Client",
             urlOrdonnance: url,
           };
-          fetch("http://127.0.0.1:8080/api/v1/commande/add", {
+          fetch("http://127.0.0.1:8086/api/v1/commande/add", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -110,7 +110,7 @@ const Checkout = () => {
         .join(","),
     };
     console.log(facture);
-    fetch("http://127.0.0.1:8080/api/v1/facture/add", {
+    fetch("http://127.0.0.1:8086/api/v1/facture/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

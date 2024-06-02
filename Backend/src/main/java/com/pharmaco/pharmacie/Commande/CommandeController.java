@@ -1,6 +1,6 @@
 package com.pharmaco.pharmacie.Commande;
 
-import org.hibernate.mapping.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

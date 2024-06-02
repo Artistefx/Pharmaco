@@ -42,7 +42,7 @@ function PageLogin() {
       motDePasse: password,
     };
 
-    fetch("http://localhost:8080/api/v1/client/login", {
+    fetch("http://localhost:8086/api/v1/client/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -54,7 +54,7 @@ function PageLogin() {
         if (data === true) {
           ToggleIsConnected();
           console.log(data);
-          fetch("http://localhost:8080/api/v1/client/register", {
+          fetch("http://localhost:8086/api/v1/client/register", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

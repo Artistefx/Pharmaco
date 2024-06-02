@@ -1,13 +1,9 @@
 package com.pharmaco.pharmacie.Commande;
 
 import java.util.Arrays;
-
-import org.hibernate.mapping.List;
 import org.springframework.stereotype.Service;
-
 import com.pharmaco.pharmacie.Client.Client;
 import com.pharmaco.pharmacie.Client.ClientRepository;
-
 import jakarta.transaction.Transactional;
 
 @Service

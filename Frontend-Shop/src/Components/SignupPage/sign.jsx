@@ -28,7 +28,7 @@ function Sign() {
     const createUser = async (user) => {
       try {
         const response = await fetch(
-          "http://127.0.0.1:8080/api/v1/client/add",
+          "http://127.0.0.1:8086/api/v1/client/add",
           {
             method: "POST",
             headers: {
@@ -53,7 +53,7 @@ function Sign() {
     const registerUser = async (userData) => {
       try {
         const response = await fetch(
-          "http://127.0.0.1:8080/api/v1/client/register",
+          "http://127.0.0.1:8086/api/v1/client/register",
           {
             method: "POST",
             headers: {
