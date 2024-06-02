@@ -42,7 +42,7 @@ pipeline {
          stage('Build Docker Image for Frontend-Shop') {
             steps {
                 dir('Frontend-Shop') {
-                    bat "docker build -t ${SHOP_IMAGE_NAME}:${BUILD_NUMBER} ."
+                    bat "docker build --no-cache -t ${SHOP_IMAGE_NAME}:${BUILD_NUMBER} ."
                 }
             }
         } 
