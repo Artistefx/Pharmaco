@@ -23,7 +23,7 @@ function CommandePage() {
 
   const fetchCommandes = async () => {
     try {
-      const response = await fetch(`${apiUrl}/all`, {
+      const response = await fetch(`${apiUrl}/enCoursDeTraitement`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -44,6 +44,8 @@ function CommandePage() {
   useEffect(() => {
     fetchCommandes();
   }, []);
+
+  console.log(commandes);
 
   const handleInputChange = (setter) => (e) => setter(e.target.value);
 
@@ -105,8 +107,8 @@ function CommandePage() {
       fournisseurId: editedFournisseurId
     };
 
-    fetch(`${apiUrl}/update/${updatedCommande.id}`, {
-      method: 'PUT',
+    fetch(`${apiUrl}/update`, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -189,8 +191,8 @@ function CommandePage() {
           >
             <option value="">Sélectionnez le status</option>
            
-            <option value="en cours">En cours</option>
-            <option value="en attente">En attente</option>
+            <option value="en cours">En cours de verification</option>
+            <option value="en attente">En Cours de Traitement</option>
           </select>
         </div>
         <div className="col-md-6">
@@ -277,8 +279,8 @@ function CommandePage() {
                 >
                   <option value="">Sélectionnez le status</option>
                   <option value="livrée">Livrée</option>
-                  <option value="en cours">En cours</option>
-                  <option value="en attente">En attente</option>
+                  <option value="en cours">En Cours de Traitement</option>
+                  <option value="en attente">En cours de verification</option>
                 </select>
               ) : (
                 commande.status

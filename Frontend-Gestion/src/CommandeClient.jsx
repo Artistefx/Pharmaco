@@ -11,10 +11,35 @@ function CommandePageClient() {
     setSelectedCommandeId(id);
   };
 
-  // Utilisation des données fictives commandesData
+  const apiUrl = 'http://127.0.0.1:8080/api/v1/commande';
+
+  
   useEffect(() => {
-    setCommandes(commandesData);
+    fetchCommandes();
   }, []);
+
+  const fetchCommandes = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/enCoursDeVerification`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: null,
+      });
+      if (!response.ok) {
+        throw new Error('Erreur lors de la récupération des fournisseurs.');
+      }
+      const data = await response.json();
+      setCommandes(data);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des fournisseurs:', error);
+      setMessage('Erreur lors de la récupération des fournisseurs.');
+      setMessageType('danger');
+    }
+  };
+
+  console.log(commandes);
 
   if (selectedCommandeId) {
     return <CommandeDetails commandeId={selectedCommandeId} />;
@@ -26,8 +51,9 @@ function CommandePageClient() {
       <table className="table">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Numéro de Commande</th>
+            <th>Date de Commande</th>
+            <th>Statut</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -35,7 +61,8 @@ function CommandePageClient() {
           {commandes.map((commande, index) => (
             <tr key={index}>
               <td>{commande.id}</td>
-              <td>{commande.numCommande}</td>
+              <td>{commande.date}</td>
+              <td>{commande.status}</td>
               <td>
                 <button
                   onClick={() => handleCommandeClick(commande.id)}
