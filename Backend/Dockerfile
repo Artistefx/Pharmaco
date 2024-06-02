@@ -20,8 +20,8 @@ FROM eclipse-temurin:17-jre
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the built jar file from the previous stage to the current stage
-COPY --from=build /app/target/*.jar /app/app.jar
+# Copy the built war file from the previous stage to the current stage
+COPY --from=build /app/target/*.war /app/app.war
 
 # Verify the copy process
 RUN ls -al /app
@@ -30,6 +30,4 @@ RUN ls -al /app
 EXPOSE 8080
 
 # The default command to run when the container starts
-CMD ["java", "-jar", "/app/app.jar"]
-
-# This is a minor change to force Docker to rebuild
+CMD ["java", "-jar", "/app/app.war"]
