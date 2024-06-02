@@ -53,7 +53,7 @@ pipeline {
                 }
             }
         } */
-        stage('Push Frontend-Gestion to DockerHub') {
+        /* stage('Push Frontend-Gestion to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: '56', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
                     script {
@@ -64,7 +64,7 @@ pipeline {
                     }
                 }
             }
-        }
+        } */
         /* Uncomment the following stages when needed
         stage('Push Frontend-Shop to DockerHub') {
             steps {
