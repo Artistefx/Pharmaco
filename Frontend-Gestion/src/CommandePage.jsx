@@ -161,10 +161,10 @@ function CommandePage() {
             value={type}
             onChange={handleInputChange(setType)}
           >
-            <option value="">Sélectionnez le type</option>
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
+            <option value="">Type de la commande</option>
+            <option value="A">Client</option>
+            <option value="B">Fournisseur</option>
+           
           </select>
         </div>
         <div className="col-md-6">
@@ -188,7 +188,7 @@ function CommandePage() {
             onChange={handleInputChange(setStatus)}
           >
             <option value="">Sélectionnez le status</option>
-            <option value="livrée">Livrée</option>
+           
             <option value="en cours">En cours</option>
             <option value="en attente">En attente</option>
           </select>

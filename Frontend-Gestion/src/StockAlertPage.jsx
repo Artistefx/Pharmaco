@@ -23,7 +23,7 @@ function StockAlertPage() {
     setRedirectProductId(productId);
   };
 
-  // Si un ID de produit est défini pour redirection, afficher la page de commande
+
   if (redirectProductId) {
     return <CommandePage productId={redirectProductId} />;
   }
@@ -37,7 +37,7 @@ function StockAlertPage() {
             <th>Product Name</th>
             <th>Stock Quantity</th>
             <th>Alert</th>
-            <th>Action</th>
+            <th>Action</th> 
           </tr>
         </thead>
         <tbody>
@@ -53,12 +53,12 @@ function StockAlertPage() {
                 )}
               </td>
               <td>
-                {/* Utiliser une fonction pour rediriger vers la page de commande avec l'ID du produit */}
+                
                 <button
-                  onClick={() => redirectToCommandPage(product.id)}
-                  className="btn btn-primary"
+                  className="btn btn-info"
+                  onClick={() => handleViewDetail(commande.id)}
                 >
-                  Commander
+                  Voir Détail
                 </button>
               </td>
             </tr>
