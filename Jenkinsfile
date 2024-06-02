@@ -49,7 +49,7 @@ pipeline {
         stage('Build Docker Image for Backend') {
             steps {
                 dir('Backend') {
-                    bat "docker build -t ${BACKEND_IMAGE_NAME}:${BUILD_NUMBER} ."
+                    bat "docker build --no-cache -t ${BACKEND_IMAGE_NAME}:${BUILD_NUMBER} ."
                 }
             }
         } 
