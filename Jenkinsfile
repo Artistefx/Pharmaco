@@ -56,8 +56,10 @@ pipeline {
         stage('Push Frontend-Gestion to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: '56', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                    script {
+                        bat 'docker login -u %DOCKERHUB_USERNAME% -p %DOCKERHUB_PASSWORD%'
+                    }
                     dir('Frontend-Gestion') {
-                        bat 'echo %DOCKERHUB_PASSWORD% | docker login --username %DOCKERHUB_USERNAME% --password-stdin'
                         bat "docker push ${GESTION_IMAGE_NAME}:${BUILD_NUMBER}"
                     }
                 }
@@ -67,8 +69,10 @@ pipeline {
         stage('Push Frontend-Shop to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: '56', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                    script {
+                        bat 'docker login -u %DOCKERHUB_USERNAME% -p %DOCKERHUB_PASSWORD%'
+                    }
                     dir('Frontend-Shop') {
-                        bat 'echo %DOCKERHUB_PASSWORD% | docker login --username %DOCKERHUB_USERNAME% --password-stdin'
                         bat "docker push ${SHOP_IMAGE_NAME}:${BUILD_NUMBER}"
                     }
                 }
@@ -77,8 +81,10 @@ pipeline {
         stage('Push Backend to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: '56', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                    script {
+                        bat 'docker login -u %DOCKERHUB_USERNAME% -p %DOCKERHUB_PASSWORD%'
+                    }
                     dir('Backend') {
-                        bat 'echo %DOCKERHUB_PASSWORD% | docker login --username %DOCKERHUB_USERNAME% --password-stdin'
                         bat "docker push ${BACKEND_IMAGE_NAME}:${BUILD_NUMBER}"
                     }
                 }
