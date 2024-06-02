@@ -7,7 +7,7 @@ function StockAlertPage() {
   const [redirectProductId, setRedirectProductId] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/v1/stock/all', {
+    fetch('http://localhost:8086/api/v1/stock/all', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -21,11 +21,11 @@ const Welcome = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/v1/produit/find/reduction")
+      .get("http://localhost:8086/api/v1/produit/find/reduction")
       .then((res) => {
         setProducts(res.data);
       });
-    axios.get("http://localhost:8080/api/v1/produit/find/categorie/offre").then((res) => {
+    axios.get("http://localhost:8086/api/v1/produit/find/categorie/offre").then((res) => {
       setOffers(res.data);
     });
   }, []);

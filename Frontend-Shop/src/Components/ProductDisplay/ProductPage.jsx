@@ -10,7 +10,7 @@ const ProductPage = () => {
 
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:8080/api/v1/produit/find/id/${productId}`)
+      .get(`http://127.0.0.1:8086/api/v1/produit/find/id/${productId}`)
       .then((response) => {
         setProduct(response.data);
       })

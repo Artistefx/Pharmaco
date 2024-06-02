@@ -9,6 +9,8 @@ import FournisseurPage from "./ajouterFournisseur";
 import StockPage from "./AjouterStock";
 import StockAlertPage from "./StockAlertPage";
 import CommandePageClient from "./CommandeClient";
+import logo from "../public/logo.png";
+
 function Dashboard() {
   const [selectedMenuItem, setSelectedMenuItem] = useState("Dashboard");
 
@@ -37,14 +39,14 @@ function Dashboard() {
       case "StockAlerts":
         return <StockAlertPage />;
       default:
-        return <DashboardStats />; 
+        return <DashboardStats />;
     }
   };
 
   return (
     <div className="dashboard">
       <div className="sidebar">
-        <h2>Pharmaco</h2>
+        <img src={logo} alt="Pharmaco Logo" className="sidebar-logo" /> {/* Add logo here */}
         <ul>
           <li
             className={selectedMenuItem === "Dashboard" ? "active" : ""}
@@ -111,7 +113,6 @@ function Dashboard() {
         </ul>
       </div>
       <div className="main-content">
-        <h2>{selectedMenuItem}</h2>
         {renderPage()}
       </div>
     </div>

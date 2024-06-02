@@ -1,16 +1,105 @@
-.navbar{
-    padding: 20px 0px;
+.navbar {
+    padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-.navbar.logo{
-    width: 150px;
-}
-.navbar-menu{
+    background: linear-gradient(to right, #97d9cb, #17625d);
+    flex-wrap: nowrap; /* Empêcher le retour à la ligne */
+    width: 100%; /* S'assurer que la navbar s'étend sur toute la largeur */
+    box-sizing: border-box; /* Inclure le padding dans la largeur totale */
+  }
+  
+  .navbar-container {
+    width: 100%; /* S'assurer que le conteneur prend toute la largeur */
+    max-width: 1200px; /* Ajouter une largeur maximale pour le conteneur */
+    margin: 0 auto; /* Centrer le conteneur */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+    margin-left: 20px; /* Ajouter de la marge à gauche pour éloigner le logo de la bordure */
+  }
+  
+  .navbar-logo img {
+    height: 40px; /* Ajuster cette valeur selon vos besoins */
+    width: 40px; /* S'assurer que la largeur est la même que la hauteur pour un cercle parfait */
+    border-radius: 50%; /* Rendre l'image ronde */
+  }
+  
+  .navbar-menu {
     display: flex;
     list-style: none;
     gap: 20px;
-    color:#49557e ;
-    font-size:18px ;
-}
+    color: #49557e;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+    flex-grow: 1; /* Faire en sorte que le menu prenne l'espace restant */
+    justify-content: center; /* Centrer les éléments du menu */
+  }
+  
+  .navbar-menu a {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .navbar-menu a:hover {
+    background-color: #17625d;
+    color: white;
+  }
+  
+  .navbar-icons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 20px; /* Ajouter de la marge à droite pour éloigner les icônes de la bordure */
+  }
+  
+  .navbar-icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+  }
+  
+  .navbar-icon-btn:hover {
+    background-color: #17625d;
+  }
+  
+  .navbar-icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .navbar-container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .navbar-menu {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+  
+    .navbar-icons {
+      margin-top: 10px;
+    }
+  }
+  

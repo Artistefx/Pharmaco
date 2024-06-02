@@ -17,19 +17,21 @@ function Card1({ item }) {
                 className="w-full h-48 object-cover"
               />
             </div>
-            <div className="card-body">
-              <div className="card-title fw-bold fs-4">
-                {val.nom} -- {val.priceReduction} DH
+            <div className="card-body d-flex flex-column justify-content-between">
+              <div>
+                <div className="card-title fw-bold fs-4">
+                  {val.nom} -- {val.priceReduction} DH
+                </div>
+                <div className="card-text">{val.description}</div>
               </div>
-              <div className="card-text">{val.description}</div>
-            </div>
-            <div className="position-absolute bottom-0 start-50 translate-middle-x mb-3">
-              <Link
-                to={`/productPage/${val.id}`}
-                className="btn btn-dark text-white"
-              >
-                Plus de détails
-              </Link>
+              <div className="mt-auto">
+                <Link
+                  to={`/productPage/${val.id}`}
+                  className="btn btn-dark text-white w-100"
+                >
+                  Plus de détails
+                </Link>
+              </div>
             </div>
           </div>
         ))}
@@ -41,7 +43,8 @@ function Card1({ item }) {
           border-radius: 15px;
           box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
           width: 350px;
-          height: auto;
+          display: flex;
+          flex-direction: column;
         }
 
         .card-img-top img {
@@ -51,6 +54,9 @@ function Card1({ item }) {
 
         .card-body {
           padding: 10px;
+          flex-grow: 1;
+          display: flex;
+          flex-direction: column;
         }
 
         .card-title {
@@ -66,10 +72,13 @@ function Card1({ item }) {
           font-size: 14px;
           border-radius: 5px;
         }
+
+        .mt-auto {
+          margin-top: auto;
+        }
       `}</style>
     </div>
   );
 }
 
 export default Card1;
-
