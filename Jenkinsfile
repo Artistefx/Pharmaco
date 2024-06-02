@@ -5,9 +5,9 @@ pipeline {
         maven "maven-3.9.7"
     }
     environment {
-        GESTION_IMAGE_NAME = 'artistefx/pharmaco-gestion'
-        SHOP_IMAGE_NAME = 'artistefx/pharmaco-shop'
-        BACKEND_IMAGE_NAME = 'artistefx/pharmaco-backend'
+        GESTION_IMAGE_NAME = 'artistehmz/pharmaco-gestion'
+        SHOP_IMAGE_NAME = 'artistehmz/pharmaco-shop'
+        BACKEND_IMAGE_NAME = 'artistehmz/pharmaco-backend'
     }
     stages {
         stage('Build Frontend-Gestion') {
