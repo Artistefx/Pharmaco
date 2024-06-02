@@ -66,11 +66,11 @@ const Checkout = () => {
                 (acc, item) => acc + item.priceReduction * item.quantite,
                 0
               ) + 30,
-            status: "En cours",
-            date: new Date().toISOString(),
+            status: "En cours de verification",
+            date: new Date().toISOString().split('T')[0],
             addresse:
-              deliveryData.address +
-              deliveryData.city +
+              deliveryData.address + " " +
+              deliveryData.city + " " +
               deliveryData.postalCode,
             telephone: deliveryData.phoneNumber,
             type: "Commande Client",
@@ -86,6 +86,7 @@ const Checkout = () => {
             .then((response) => response.json())
             .then((data) => {
               console.log("Success:", data);
+              window.location.href = "/orderSummary";
             })
             .catch((error) => {
               console.error("Error:", error);
@@ -124,7 +125,7 @@ const Checkout = () => {
         console.error("Error:", error);
       });
 
-    /* window.location.href = "/orderSummary"; */
+    
   };
 
   return (

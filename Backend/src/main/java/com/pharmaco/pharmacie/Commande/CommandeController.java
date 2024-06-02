@@ -1,5 +1,6 @@
 package com.pharmaco.pharmacie.Commande;
 
+import org.hibernate.mapping.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,10 +39,30 @@ public class CommandeController {
     public Commande FindCommande (@PathVariable Long id) {
         return commandeService.findById(id);
     }
+
+    @PostMapping(path = "/info/{id}")
+    public java.util.List<Object> FindCommandeinfo (@PathVariable Long id) {
+        return commandeService.findByInfo(id);
+    }
     
     @PostMapping(path = "/all")
     public Iterable<Commande> FindAllCommande () {
         return commandeService.findAll();
+    }
+
+    @PutMapping(path = "/updateStatus/{id}")
+    public void UpdateStatus (@PathVariable Long id) {
+        commandeService.updateStatusToEnCoursDeTraitement(id);
+    }
+
+    @PostMapping(path = "/enCoursDeTraitement")
+    public Iterable<Commande> FindCommandeEnCoursDeTraitement () {
+        return commandeService.getCommandeEnCoursDeTraitement();
+    }
+
+    @PostMapping(path = "/enCoursDeVerification")
+    public Iterable<Commande> FindCommandeEnCoursDeVerification () {
+        return commandeService.getCommandeEnCoursDeVerification();
     }
 
     

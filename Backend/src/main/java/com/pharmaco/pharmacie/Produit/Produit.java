@@ -5,16 +5,10 @@ package com.pharmaco.pharmacie.Produit;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.GeneratedValue;
-
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pharmaco.pharmacie.Categorie.Categorie;
-import com.pharmaco.pharmacie.Commande.Commande;
 import com.pharmaco.pharmacie.Fournisseur.Fournisseur;
 import com.pharmaco.pharmacie.Stock.Stock;
 
