@@ -9,7 +9,7 @@ function CommandeDetails({ commandeId }) {
   const [age, setAge] = useState(null);
   const [isAccepted, setIsAccepted] = useState(false);
 
-  const apiUrl = "http://127.0.0.1:8080/api/v1/commande";
+  const apiUrl = "http://127.0.0.1:8086/api/v1/commande";
 
   useEffect(() => {
     fetchCommande();

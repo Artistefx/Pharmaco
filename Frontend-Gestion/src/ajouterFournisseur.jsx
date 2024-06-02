@@ -16,7 +16,7 @@ function FournisseurPage() {
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
 
-  const apiUrl = 'http://127.0.0.1:8080/api/v1/fournisseur';
+  const apiUrl = 'http://127.0.0.1:8086/api/v1/fournisseur';
 
   useEffect(() => {
     fetchFournisseurs();
@@ -200,7 +200,7 @@ function FournisseurPage() {
         </div>
                
         <div className="d-flex justify-content-center">
-          <button type="submit" className="btn btn-outline-success">Ajouter le fournisseur</button>
+          <button type="submit" className="btn btn-outline-success" style={{Color:'#20c997'}}>Ajouter le fournisseur</button>
           </div>
       </form>
       <h2 className="mt-5">Liste des fournisseurs</h2>

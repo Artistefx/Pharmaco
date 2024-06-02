@@ -13,7 +13,7 @@ function StockPage() {
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
 
-  const apiUrl = 'http://127.0.0.1:8080/api/v1/stock';
+  const apiUrl = 'http://127.0.0.1:8086/api/v1/stock';
 
   const fetchStocks = async () => {
     try {

@@ -16,10 +16,10 @@ function Filter() {
       try {
         let result;
         if (searchTerm.length === 0) {
-          result = await axios.get(`http://localhost:8080/api/v1/produit/all`);
+          result = await axios.get(`http://localhost:8086/api/v1/produit/all`);
         } else {
           result = await axios.get(
-            `http://localhost:8080/api/v1/produit/find/nom/like/${searchTerm}`
+            `http://localhost:8086/api/v1/produit/find/nom/like/${searchTerm}`
           );
         }
         setItems(result.data);
@@ -34,7 +34,7 @@ function Filter() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await axios.get(`http://127.0.0.1:8080/api/v1/categorie/top5`);
+        const result = await axios.get(`http://127.0.0.1:8086/api/v1/categorie/top5`);
         setCategories(result.data);
         console.log(categories)
       } catch (error) {
@@ -48,7 +48,7 @@ function Filter() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await axios.get(`http://127.0.0.1:8080/api/v1/produit/find/categorie/${categorie}`);
+        const result = await axios.get(`http://127.0.0.1:8086/api/v1/produit/find/categorie/${categorie}`);
         setItems(result.data);
         console.log(categories)
       } catch (error) {
