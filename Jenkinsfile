@@ -39,20 +39,20 @@ pipeline {
             }
         } */
         
-        /* stage('Build Docker Image for Frontend-Shop') {
+         stage('Build Docker Image for Frontend-Shop') {
             steps {
                 dir('Frontend-Shop') {
                     bat "docker build -t ${SHOP_IMAGE_NAME}:${BUILD_NUMBER} ."
                 }
             }
-        } */
-        stage('Build Docker Image for Backend') {
+        } 
+        /* stage('Build Docker Image for Backend') {
             steps {
                 dir('Backend') {
                     bat "docker build --no-cache -t ${BACKEND_IMAGE_NAME}:${BUILD_NUMBER} ."
                 }
             }
-        } 
+        }  */
         /* stage('Push Frontend-Gestion to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: '56', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
