@@ -31,28 +31,28 @@ pipeline {
                 }
             }
         }
-        stage('Build Docker Image for Frontend-Gestion') {
+        /* stage('Build Docker Image for Frontend-Gestion') {
             steps {
                 dir('Frontend-Gestion') {
                     bat "docker build -t ${GESTION_IMAGE_NAME}:${BUILD_NUMBER} ."
                 }
             }
-        }
-        /* Uncomment the following stages when needed
-        stage('Build Docker Image for Frontend-Shop') {
+        } */
+        
+        /* stage('Build Docker Image for Frontend-Shop') {
             steps {
                 dir('Frontend-Shop') {
                     bat "docker build -t ${SHOP_IMAGE_NAME}:${BUILD_NUMBER} ."
                 }
             }
-        }
+        } */
         stage('Build Docker Image for Backend') {
             steps {
                 dir('Backend') {
                     bat "docker build -t ${BACKEND_IMAGE_NAME}:${BUILD_NUMBER} ."
                 }
             }
-        } */
+        } 
         /* stage('Push Frontend-Gestion to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: '56', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
