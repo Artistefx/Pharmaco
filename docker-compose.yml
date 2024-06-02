@@ -21,7 +21,7 @@ services:
     image: artistehmz/pharmaco-backend:64
     container_name: backend
     ports:
-      - "8086:8080"
+      - "8086:8086"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/pharmaco
       SPRING_DATASOURCE_USERNAME: root
