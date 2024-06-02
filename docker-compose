@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  frontend-gestion:
+    image: artistehmz/pharmaco-gestion:latest
+    container_name: frontend-gestion
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+  frontend-shop:
+    image: artistehmz/pharmaco-shop:latest
+    container_name: frontend-shop
+    ports:
+      - "3000:82"
+    depends_on:
+      - backend
+
+  backend:
+    image: artistehmz/pharmaco-backend:latest
+    container_name: backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/pharmaco
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123456
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQLDialect
