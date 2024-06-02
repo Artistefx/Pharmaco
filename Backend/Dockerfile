@@ -4,9 +4,6 @@ FROM maven:3.9.6-eclipse-temurin-17 as build
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the Maven settings file (if needed)
-# COPY settings.xml /root/.m2/settings.xml
-
 # Copy the pom.xml file and the source code to the working directory
 COPY pom.xml .
 COPY src ./src
