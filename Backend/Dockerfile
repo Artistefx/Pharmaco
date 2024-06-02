@@ -29,5 +29,11 @@ RUN ls -al /app
 # Expose port 8080
 EXPOSE 8080
 
+# Set environment variables for database connection
+ENV SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/pharmaco
+ENV SPRING_DATASOURCE_USERNAME=root
+ENV SPRING_DATASOURCE_PASSWORD=123456
+ENV SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MySQL5Dialect
+
 # The default command to run when the container starts
 CMD ["java", "-jar", "/app/app.war"]
