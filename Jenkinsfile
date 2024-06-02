@@ -5,7 +5,6 @@ pipeline {
         maven "maven-3.9.7"
     }
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('56')
         GESTION_IMAGE_NAME = 'artistefx/pharmaco-gestion'
         SHOP_IMAGE_NAME = 'artistefx/pharmaco-shop'
         BACKEND_IMAGE_NAME = 'artistefx/pharmaco-backend'
@@ -39,7 +38,8 @@ pipeline {
                 }
             }
         }
-        /* stage('Build Docker Image for Frontend-Shop') {
+        /* Uncomment the following stages when needed
+        stage('Build Docker Image for Frontend-Shop') {
             steps {
                 dir('Frontend-Shop') {
                     bat "docker build -t ${SHOP_IMAGE_NAME}:${BUILD_NUMBER} ."
@@ -57,17 +57,18 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: '56', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
                     dir('Frontend-Gestion') {
-                        bat "echo ${DOCKERHUB_PASSWORD} | docker login --username ${DOCKERHUB_USERNAME} --password-stdin"
+                        bat 'echo %DOCKERHUB_PASSWORD% | docker login --username %DOCKERHUB_USERNAME% --password-stdin'
                         bat "docker push ${GESTION_IMAGE_NAME}:${BUILD_NUMBER}"
                     }
                 }
             }
         }
-        /* stage('Push Frontend-Shop to DockerHub') {
+        /* Uncomment the following stages when needed
+        stage('Push Frontend-Shop to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: '56', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
                     dir('Frontend-Shop') {
-                        bat "echo ${DOCKERHUB_PASSWORD} | docker login --username ${DOCKERHUB_USERNAME} --password-stdin"
+                        bat 'echo %DOCKERHUB_PASSWORD% | docker login --username %DOCKERHUB_USERNAME% --password-stdin'
                         bat "docker push ${SHOP_IMAGE_NAME}:${BUILD_NUMBER}"
                     }
                 }
@@ -77,7 +78,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: '56', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
                     dir('Backend') {
-                        bat "echo ${DOCKERHUB_PASSWORD} | docker login --username ${DOCKERHUB_USERNAME} --password-stdin"
+                        bat 'echo %DOCKERHUB_PASSWORD% | docker login --username %DOCKERHUB_USERNAME% --password-stdin'
                         bat "docker push ${BACKEND_IMAGE_NAME}:${BUILD_NUMBER}"
                     }
                 }
