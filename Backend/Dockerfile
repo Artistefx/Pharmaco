@@ -31,3 +31,5 @@ EXPOSE 8080
 
 # The default command to run when the container starts
 CMD ["java", "-jar", "/app/app.jar"]
+
+# This is a minor change to force Docker to rebuild
