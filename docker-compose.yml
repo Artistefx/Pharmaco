@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   frontend-gestion:
-    image: artistehmz/pharmaco-gestion:56
+    image: artistehmz/pharmaco-gestion:64
     container_name: frontend-gestion
     ports:
       - "5173:80"
@@ -10,7 +10,7 @@ services:
       - backend
 
   frontend-shop:
-    image: artistehmz/pharmaco-shop:56
+    image: artistehmz/pharmaco-shop:64
     container_name: frontend-shop
     ports:
       - "3000:80"
@@ -18,7 +18,7 @@ services:
       - backend
 
   backend:
-    image: artistehmz/pharmaco-backend:56
+    image: artistehmz/pharmaco-backend:64
     container_name: backend
     ports:
       - "8080:8080"
