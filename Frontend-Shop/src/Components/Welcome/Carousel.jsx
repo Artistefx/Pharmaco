@@ -11,7 +11,7 @@ const Carousel = ({ products }) => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 2, // Adjust based on the number of items you want to show
+    slidesToShow: 3, // Adjust based on the number of items you want to show
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2500,
