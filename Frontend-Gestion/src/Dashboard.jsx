@@ -8,6 +8,7 @@ import EmployeePage from './ajouterEmploye'
 import FournisseurPage from './ajouterFournisseur';
 import StockPage from './AjouterStock';
 import StockAlertPage from './StockAlertPage';
+import CommandePageClient from './CommandeClient'
 function Dashboard() {
   const [selectedMenuItem, setSelectedMenuItem] = useState('Dashboard');
 
@@ -30,7 +31,8 @@ function Dashboard() {
         return <CommandePage />;
       case 'Factures':
         return <FacturePage />;
-      
+        case 'Commandes des clients':
+          return <CommandePageClient />;
         case 'Employes':
         return <EmployeePage />;
         case 'StockAlerts':
@@ -62,6 +64,9 @@ function Dashboard() {
           </li>
           <li className={selectedMenuItem === 'Commandes' ? 'active' : ''} onClick={() => handleMenuItemClick('Commandes')}>
             Commandes
+          </li>
+          <li className={selectedMenuItem === 'Commandes des clients' ? 'active' : ''} onClick={() => handleMenuItemClick('Commandes des clients')}>
+            Commandes des clients
           </li>
           <li className={selectedMenuItem === 'Factures' ? 'active' : ''} onClick={() => handleMenuItemClick('Factures')}>
             Factures
